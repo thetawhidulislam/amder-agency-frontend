@@ -13,14 +13,26 @@ export function SectionHeading({
   title,
   intro,
   className,
+  as = "h2",
+  accent = false,
 }: {
   title: string;
   intro?: string;
   className?: string;
+  as?: "h1" | "h2";
+  accent?: boolean;
 }) {
+  const Heading = as;
   return (
     <div className={cn("max-w-2xl", className)}>
-      <h2 className="font-display text-3xl font-semibold tracking-tight text-balance sm:text-5xl">{title}</h2>
+      <Heading
+        className={cn(
+          "font-display text-3xl font-semibold tracking-tight text-balance sm:text-5xl",
+          accent && "before:mb-6 before:block before:h-1 before:w-12 before:bg-brand"
+        )}
+      >
+        {title}
+      </Heading>
       {intro ? <p className="mt-4 text-lg text-muted">{intro}</p> : null}
     </div>
   );

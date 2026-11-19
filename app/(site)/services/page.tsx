@@ -16,11 +16,12 @@ export default async function ServicesPage() {
   const [services, settings] = await Promise.all([getServices(), getSettings()]);
   return (
     <>
-      <div className="pt-8 before:mx-auto before:mt-12 before:block before:h-1 before:w-12 before:bg-brand">
+      <div className="pt-8">
         <ServicesSection
           services={services}
           title="Our services"
           intro="Digital marketing, creative design, video production, and web development with SEO. Use one team or all four."
+          pageTitle
         />
       </div>
       <CtaBand whatsapp={whatsappLink(settings.whatsapp)} />

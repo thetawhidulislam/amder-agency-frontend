@@ -7,15 +7,17 @@ export function ServicesSection({
   services,
   title = "What we do",
   intro = "Specialist departments, coordinated under one roof, so you brief one agency and get the full result.",
+  pageTitle = false,
 }: {
   services: Service[];
   title?: string;
   intro?: string;
+  pageTitle?: boolean;
 }) {
   return (
     <Section id="services">
       <Container>
-        <SectionHeading title={title} intro={intro} />
+        <SectionHeading title={title} intro={intro} as={pageTitle ? "h1" : "h2"} accent={pageTitle} />
 
         {services.length === 0 ? (
           <p className="mt-12 border-t border-line pt-8 text-muted">
