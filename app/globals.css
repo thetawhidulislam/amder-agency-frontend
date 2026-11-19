@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #0b0b0b;
+  --color-paper: #ffffff;
+  --color-brand: #e11d27;
+  --color-brand-dark: #bd141d;
+  --color-brand-contrast: #ffffff;
+}
+
+@theme inline {
+  --color-page: var(--page);
+  --color-fg: var(--fg);
+  --color-surface: var(--surface);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --font-display: var(--font-display-src), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-body-src), ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --page: #ffffff;
+  --fg: #0b0b0b;
+  --surface: #f4f4f4;
+  --muted: rgb(11 11 11 / 0.66);
+  --line: rgb(11 11 11 / 0.14);
+}
+
+.theme-dark {
+  --page: #0b0b0b;
+  --fg: #ffffff;
+  --surface: #161616;
+  --muted: rgb(255 255 255 / 0.7);
+  --line: rgb(255 255 255 / 0.18);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--page);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: var(--color-brand);
+  color: var(--color-brand-contrast);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .rise {
+    animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation-delay: calc(var(--i, 0) * 110ms);
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
