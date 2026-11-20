@@ -5,7 +5,7 @@ import { Reveal } from "@/components/motion/reveal";
 
 export function CtaBand({ whatsapp, title = "Let's build, promote and grow, together." }: { whatsapp: string | null; title?: string }) {
   return (
-    <section className="bg-ink pb-12 pt-20 sm:pb-16 sm:pt-24 lg:pb-20 lg:pt-28">
+    <section className="bg-ink pt-20 sm:pt-24 lg:pt-28">
       <Reveal y={0} className="overflow-visible">
         <Container>
           <div className="cta-card relative isolate overflow-hidden rounded-3xl bg-brand p-8 sm:p-12 lg:p-16">

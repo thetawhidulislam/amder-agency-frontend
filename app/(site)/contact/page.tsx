@@ -84,7 +84,7 @@ export default async function ContactPage({ searchParams }: Props) {
             </dl>
           </div>
 
-          <div className="rounded-3xl border border-line bg-white p-6 shadow-[var(--shadow-card)] sm:p-10">
+          <div className="rounded-3xl border border-line bg-white p-10 shadow-[var(--shadow-card)]">
             <ContactForm services={services} defaultServiceId={defaultServiceId} />
           </div>
         </div>
