@@ -10,23 +10,25 @@ export function ServicesSection({
   title = "What we do",
   intro = "Specialist departments, coordinated under one roof, so you brief one agency and get the full result.",
   pageTitle = false,
+  showHeading = true,
 }: {
   services: Service[];
   title?: string;
   intro?: string;
   pageTitle?: boolean;
+  showHeading?: boolean;
 }) {
   return (
     <Section id="services">
       <Container>
-        <SectionHeading title={title} intro={intro} as={pageTitle ? "h1" : "h2"} />
+        {showHeading ? <SectionHeading title={title} intro={intro} as={pageTitle ? "h1" : "h2"} /> : null}
 
         {services.length === 0 ? (
           <p className="mt-12 border-t border-line pt-8 text-muted">
             Services will appear here once they are added in the admin panel.
           </p>
         ) : (
-          <ul className="mt-14 border-t border-line">
+          <ul className={showHeading ? "mt-14 border-t border-line" : "border-t border-line"}>
             {services.map((s, index) => (
               <li key={s.id} className="border-b border-line">
                 <Reveal delay={index < 6 ? index * 80 : 0} y={16}>

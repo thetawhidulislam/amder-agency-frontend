@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { Container } from "@/components/shared/container";
 import { navLinks, siteConfig } from "@/config/site";
 import type { Service, Settings } from "@/lib/types";
@@ -8,7 +9,7 @@ export function Footer({ settings, services }: { settings: Settings; services: S
   const socials = Object.entries(settings.socials ?? {}).filter(([, url]) => url);
 
   return (
-    <footer className="theme-dark border-t-4 border-brand bg-page py-14 text-fg">
+    <footer className="theme-dark border-t-4 border-brand bg-page pt-14 text-fg">
       <Container className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
         <div>
           <Link href="/" aria-label="Amader Agency home" className="inline-flex items-center gap-3">
@@ -53,20 +54,36 @@ export function Footer({ settings, services }: { settings: Settings; services: S
           <ul className="mt-4 space-y-2 text-sm text-muted">
             {settings.phone ? (
               <li>
-                <a href={`tel:${settings.phone.replace(/\s/g, "")}`} className="hover:text-white">
-                  {settings.phone}
-                </a>
+                <span className="flex items-center gap-2">
+                  <Phone aria-hidden="true" className="size-4 shrink-0 text-brand" />
+                  <a href={`tel:${settings.phone.replace(/\s/g, "")}`} className="hover:text-white">
+                    {settings.phone}
+                  </a>
+                </span>
               </li>
             ) : null}
-            {settings.whatsapp ? <li>WhatsApp: {settings.whatsapp}</li> : null}
+            {settings.whatsapp ? (
+              <li className="flex items-center gap-2">
+                <MessageCircle aria-hidden="true" className="size-4 shrink-0 text-brand" />
+                <span>WhatsApp: {settings.whatsapp}</span>
+              </li>
+            ) : null}
             {settings.email ? (
               <li>
-                <a href={`mailto:${settings.email}`} className="hover:text-white">
-                  {settings.email}
-                </a>
+                <span className="flex items-center gap-2">
+                  <Mail aria-hidden="true" className="size-4 shrink-0 text-brand" />
+                  <a href={`mailto:${settings.email}`} className="hover:text-white">
+                    {settings.email}
+                  </a>
+                </span>
               </li>
             ) : null}
-            {settings.address ? <li>{settings.address}</li> : null}
+            {settings.address ? (
+              <li className="flex items-center gap-2">
+                <MapPin aria-hidden="true" className="size-4 shrink-0 text-brand" />
+                <span>{settings.address}</span>
+              </li>
+            ) : null}
             {socials.map(([name, url]) => (
               <li key={name}>
                 <a href={url} target="_blank" rel="noopener noreferrer" className="capitalize hover:text-white">
@@ -81,6 +98,11 @@ export function Footer({ settings, services }: { settings: Settings; services: S
       <Container className="mt-12 border-t border-line pt-6 text-xs text-muted">
         &copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
       </Container>
+      <div aria-hidden="true" className="mt-14 h-[8vw] max-h-32 overflow-hidden">
+        <p className="whitespace-nowrap font-display text-[13vw] font-bold leading-[0.8] tracking-tighter text-white/[0.08]">
+          AMADER AGENCY
+        </p>
+      </div>
     </footer>
   );
 }

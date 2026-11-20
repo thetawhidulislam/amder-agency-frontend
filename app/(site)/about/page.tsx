@@ -3,6 +3,7 @@ import { CtaBand } from "@/components/home/cta-band";
 import { Industries } from "@/components/home/industries";
 import { Why } from "@/components/home/why";
 import { Container, Section, SectionHeading } from "@/components/shared/container";
+import { PageHeader } from "@/components/shared/page-header";
 import { philosophy } from "@/config/site";
 import { getSettings } from "@/lib/api-server";
 import { whatsappLink } from "@/lib/utils";
@@ -21,11 +22,11 @@ export default async function AboutPage() {
     <>
       <Section className="pb-16">
         <Container>
-          <h1 className="before:mb-6 before:block before:h-1 before:w-12 before:bg-brand max-w-4xl font-display text-5xl font-semibold leading-[1.02] tracking-tight text-balance sm:text-7xl">
-            Creative thinking. Strategic execution. Business growth.
-          </h1>
+          <PageHeader
+            title="Creative thinking. Strategic execution. Business growth."
+            intro="Every business has a story. Every brand has the potential to grow."
+          />
           <div className="mt-10 max-w-2xl space-y-5 text-lg text-muted">
-            <p>Every business has a story. Every brand has the potential to grow.</p>
             <p>
               At Amader Agency, we believe business growth requires more than just advertising. It requires the right
               strategy, creative communication and consistent execution.

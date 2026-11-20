@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Container, Section, SectionHeading } from "@/components/shared/container";
 import { PortfolioCard } from "@/components/shared/portfolio-card";
+import { PortfolioEmptyState } from "@/components/shared/portfolio-empty-state";
 import type { PortfolioListItem } from "@/lib/types";
 
 export function FeaturedWork({ items }: { items: PortfolioListItem[] }) {
@@ -13,11 +14,15 @@ export function FeaturedWork({ items }: { items: PortfolioListItem[] }) {
             View all projects
           </Link>
         </div>
-        <div className="mt-12 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-          {items.map((item) => (
-            <PortfolioCard key={item.id} item={item} />
-          ))}
-        </div>
+        {items.length === 0 ? (
+          <PortfolioEmptyState className="mt-12" />
+        ) : (
+          <div className="mt-12 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+            {items.map((item, index) => (
+              <PortfolioCard key={item.id} item={item} featured={index === 0} />
+            ))}
+          </div>
+        )}
       </Container>
     </Section>
   );

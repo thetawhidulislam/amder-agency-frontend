@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { CircleCheck, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -50,7 +51,10 @@ export function ContactForm({ services, defaultServiceId = "" }: { services: Ser
   if (sent) {
     return (
       <div role="status" className="border-l-2 border-brand py-2 pl-6">
-        <h2 className="font-display text-3xl font-semibold">Message received</h2>
+        <div className="flex items-center gap-3">
+          <CircleCheck aria-hidden="true" className="contact-success-icon size-8 shrink-0 text-brand" />
+          <h2 className="font-display text-3xl font-semibold">Message received</h2>
+        </div>
         <p className="mt-3 max-w-md text-muted">Thank you. Our team will contact you soon on the number you gave us.</p>
         <Button variant="outline" className="mt-6" onClick={() => setSent(false)}>
           Send another message
@@ -60,23 +64,23 @@ export function ContactForm({ services, defaultServiceId = "" }: { services: Ser
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-5">
+    <form onSubmit={handleSubmit(onSubmit)} noValidate className="public-contact-form space-y-5">
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label="Your name" htmlFor="name" error={errors.name?.message}>
-          <Input id="name" autoComplete="name" aria-invalid={!!errors.name} {...register("name")} />
+          <Input id="name" autoComplete="name" aria-invalid={!!errors.name} className="contact-field" {...register("name")} />
         </Field>
         <Field label="Phone or WhatsApp number" htmlFor="phone" error={errors.phone?.message}>
-          <Input id="phone" type="tel" autoComplete="tel" aria-invalid={!!errors.phone} {...register("phone")} />
+          <Input id="phone" type="tel" autoComplete="tel" aria-invalid={!!errors.phone} className="contact-field" {...register("phone")} />
         </Field>
       </div>
 
       <Field label="Email (optional)" htmlFor="email" error={errors.email?.message}>
-        <Input id="email" type="email" autoComplete="email" aria-invalid={!!errors.email} {...register("email")} />
+        <Input id="email" type="email" autoComplete="email" aria-invalid={!!errors.email} className="contact-field" {...register("email")} />
       </Field>
 
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label="Service you need" htmlFor="serviceId">
-          <Select id="serviceId" {...register("serviceId")}>
+          <Select id="serviceId" className="contact-field" {...register("serviceId")}>
             <option value="">Not sure yet</option>
             {services.map((s) => (
               <option key={s.id} value={s.id}>
@@ -86,7 +90,7 @@ export function ContactForm({ services, defaultServiceId = "" }: { services: Ser
           </Select>
         </Field>
         <Field label="Budget (optional)" htmlFor="budget">
-          <Select id="budget" {...register("budget")}>
+          <Select id="budget" className="contact-field" {...register("budget")}>
             <option value="">Select a range</option>
             {budgetOptions.map((b) => (
               <option key={b} value={b}>
@@ -98,7 +102,7 @@ export function ContactForm({ services, defaultServiceId = "" }: { services: Ser
       </div>
 
       <Field label="Tell us about your business and what you need" htmlFor="message" error={errors.message?.message}>
-        <Textarea id="message" rows={5} aria-invalid={!!errors.message} {...register("message")} />
+        <Textarea id="message" rows={5} aria-invalid={!!errors.message} className="contact-field" {...register("message")} />
       </Field>
 
       {/* Honeypot: hidden from people, bots fill it. */}
@@ -114,7 +118,14 @@ export function ContactForm({ services, defaultServiceId = "" }: { services: Ser
       ) : null}
 
       <Button type="submit" size="lg" disabled={isSubmitting}>
-        {isSubmitting ? "Sending..." : "Send message"}
+        {isSubmitting ? (
+          <>
+            <Loader2 aria-hidden="true" className="contact-submit-spinner size-4 animate-spin" />
+            Sending...
+          </>
+        ) : (
+          "Send message"
+        )}
       </Button>
     </form>
   );

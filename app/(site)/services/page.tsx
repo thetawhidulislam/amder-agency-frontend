@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { CtaBand } from "@/components/home/cta-band";
+import { Container, Section } from "@/components/shared/container";
+import { PageHeader } from "@/components/shared/page-header";
 import { ServicesSection } from "@/components/home/services-section";
 import { getServices, getSettings } from "@/lib/api-server";
 import { whatsappLink } from "@/lib/utils";
@@ -16,14 +18,15 @@ export default async function ServicesPage() {
   const [services, settings] = await Promise.all([getServices(), getSettings()]);
   return (
     <>
-      <div className="pt-8">
-        <ServicesSection
-          services={services}
-          title="Our services"
-          intro="Digital marketing, creative design, video production, and web development with SEO. Use one team or all four."
-          pageTitle
-        />
-      </div>
+      <Section className="pb-0">
+        <Container>
+          <PageHeader
+            title="Our services"
+            intro="Digital marketing, creative design, video production, and web development with SEO. Use one team or all four."
+          />
+        </Container>
+      </Section>
+      <ServicesSection services={services} showHeading={false} />
       <CtaBand whatsapp={whatsappLink(settings.whatsapp)} />
     </>
   );

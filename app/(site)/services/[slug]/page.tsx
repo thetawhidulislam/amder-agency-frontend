@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Check } from "lucide-react";
 import { notFound } from "next/navigation";
 import { CtaBand } from "@/components/home/cta-band";
 import { Container, Section, SectionHeading } from "@/components/shared/container";
@@ -44,30 +44,39 @@ export default async function ServiceDetailPage({ params }: Props) {
           <Link href="/services" className="text-sm text-muted hover:text-brand">
             All services
           </Link>
-          <div className="mt-8 grid gap-12 lg:grid-cols-[1.2fr_1fr] lg:gap-20">
+          <div className="mt-8 grid gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:gap-20">
             <div>
               <ServiceIcon name={service.icon} className="size-8 text-brand" />
               <h1 className="before:mb-6 before:block before:h-1 before:w-12 before:bg-brand mt-5 font-display text-5xl font-semibold leading-[1.02] tracking-tight text-balance sm:text-7xl">
                 {service.title}
               </h1>
               <p className="mt-6 max-w-xl text-xl text-muted">{service.shortDesc}</p>
-              <Link href={`/contact?service=${service.slug}`} className={cn(buttonClass({ size: "lg" }), "mt-9")}>
-                Ask about {service.title}
-                <ArrowUpRight aria-hidden="true" className="motion-arrow size-4" />
-              </Link>
-            </div>
 
-            <div>
-              <SectionHeading title="What is included" />
-              <ul className="mt-5 border-t border-line">
+              <div className="mt-12">
+                <SectionHeading title="What is included" />
+                <ul className="mt-5 border-t border-line">
                 {service.features.map((f) => (
                   <li key={f} className="flex gap-3 border-b border-line py-3.5">
-                    <span className="mt-2.5 size-1.5 shrink-0 bg-brand" />
+                    <Check aria-hidden="true" className="mt-1 size-4 shrink-0 text-brand" />
                     {f}
                   </li>
                 ))}
-              </ul>
+                </ul>
+              </div>
             </div>
+
+            <aside className="lg:sticky lg:top-28 lg:self-start">
+              <div className="bg-surface p-6 sm:p-8">
+                <p className="font-display text-xl font-semibold">Ask about this service</p>
+                <Link
+                  href={`/contact?service=${service.slug}`}
+                  className={cn(buttonClass({ size: "lg" }), "mt-5 w-full")}
+                >
+                  Ask about {service.title}
+                  <ArrowUpRight aria-hidden="true" className="motion-arrow size-4" />
+                </Link>
+              </div>
+            </aside>
           </div>
         </Container>
       </Section>

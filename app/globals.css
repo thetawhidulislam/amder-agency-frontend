@@ -134,6 +134,92 @@ body {
   transform: scaleX(1);
 }
 
+.cta-shape {
+  transform: translateX(40px);
+  transition: transform var(--dur) var(--ease-out);
+}
+
+.motion-reveal[data-visible="true"] .cta-shape {
+  transform: translateX(0);
+}
+
+.button-wipe-cta-primary::before,
+.button-wipe-cta-outline::before {
+  background: #ffffff;
+}
+
+.button-wipe-cta-primary:hover,
+.button-wipe-cta-primary:focus-visible {
+  color: #0b0b0b;
+}
+
+.button-wipe-cta-outline:hover,
+.button-wipe-cta-outline:focus-visible {
+  color: #e11d27;
+}
+
+.portfolio-image {
+  transition: transform var(--dur) var(--ease-out);
+}
+
+.group:hover .portfolio-image,
+.group:focus-visible .portfolio-image {
+  transform: scale(1.04);
+}
+
+.portfolio-title {
+  position: relative;
+  display: table;
+  max-width: 100%;
+}
+
+.portfolio-title::after {
+  position: absolute;
+  right: 0;
+  bottom: -3px;
+  left: 0;
+  height: 2px;
+  content: "";
+  transform: scaleX(0);
+  transform-origin: left;
+  background: #e11d27;
+  transition: transform var(--dur) var(--ease-out);
+}
+
+.group:hover .portfolio-title::after,
+.group:focus-visible .portfolio-title::after {
+  transform: scaleX(1);
+}
+
+.portfolio-card-arrow {
+  opacity: 0;
+  transform: translateY(4px);
+  transition:
+    opacity var(--dur) var(--ease-out),
+    transform var(--dur) var(--ease-out);
+}
+
+.group:hover .portfolio-card-arrow,
+.group:focus-visible .portfolio-card-arrow {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.contact-field {
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.contact-field:focus-visible {
+  border-color: #e11d27;
+  box-shadow: 0 0 0 3px rgb(225 29 39 / 0.2);
+}
+
+.contact-success-icon {
+  animation: contact-success-in 300ms var(--ease-out) both;
+}
+
 .process-step {
   position: relative;
 }
@@ -270,6 +356,17 @@ body {
   }
 }
 
+@keyframes contact-success-in {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -288,7 +385,12 @@ body {
   .process-icon,
   .process-step::after,
   .section-heading-bar,
-  .industry-highlight::after {
+  .industry-highlight::after,
+  .cta-shape,
+  .portfolio-image,
+  .portfolio-title::after,
+  .portfolio-card-arrow,
+  .contact-field {
     transition: none !important;
   }
 
@@ -302,6 +404,30 @@ body {
 
   .industry-highlight::after {
     transform: scaleX(1);
+  }
+
+  .cta-shape,
+  .portfolio-image {
+    transform: none;
+  }
+
+  .portfolio-title::after {
+    transform: scaleX(1);
+  }
+
+  .portfolio-card-arrow {
+    opacity: 1;
+    transform: none;
+  }
+
+  .contact-success-icon {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .contact-submit-spinner {
+    animation: none !important;
   }
 
   .group:hover .motion-arrow,
@@ -325,7 +451,8 @@ body {
 
   .service-marquee-track,
   .hero-art-float,
-  .mobile-nav-enter {
+  .mobile-nav-enter,
+  .contact-success-icon {
     animation: none !important;
   }
 
