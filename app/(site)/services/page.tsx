@@ -21,6 +21,7 @@ export default async function ServicesPage() {
       <Section className="pb-0">
         <Container>
           <PageHeader
+            chip="Services"
             title="Our services"
             intro="Digital marketing, creative design, video production, and web development with SEO. Use one team or all four."
           />

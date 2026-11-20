@@ -44,7 +44,7 @@ export default async function PortfolioPage({ searchParams }: Props) {
     <>
       <Section className="pb-20">
         <Container>
-          <PageHeader title="Our work" intro="A selection of projects across design, video, marketing and web." />
+          <PageHeader chip="Portfolio" title="Our work" intro="A selection of projects across design, video, marketing and web." />
 
           <nav aria-label="Filter by service" className="mt-10 flex flex-wrap gap-2">
             <Link href="/portfolio" className={chip(!service)}>

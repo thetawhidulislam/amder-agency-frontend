@@ -23,6 +23,7 @@ export default async function AboutPage() {
       <Section className="pb-16">
         <Container>
           <PageHeader
+            chip="About"
             title="Creative thinking. Strategic execution. Business growth."
             intro="Every business has a story. Every brand has the potential to grow."
           />

@@ -66,6 +66,10 @@ body {
   background-image: radial-gradient(circle at 88% 12%, rgb(225 29 39 / 0.08), transparent 34%);
 }
 
+.page-header {
+  background-image: radial-gradient(circle at 50% 0%, rgb(225 29 39 / 0.06), transparent 52%);
+}
+
 .hero-collage {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -140,6 +144,11 @@ body {
 .public-button.button-wipe-outline:hover,
 .public-button.button-wipe-outline:focus-visible {
   color: #0b0b0b;
+}
+
+.cta-card .public-button:focus-visible {
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px #ffffff;
 }
 
 .public-contact-form .contact-field {
@@ -301,15 +310,6 @@ body {
 
 .motion-reveal[data-visible="true"] .industry-highlight::after {
   transform: scaleX(1);
-}
-
-.cta-shape {
-  transform: translateX(40px);
-  transition: transform var(--dur) var(--ease-out);
-}
-
-.motion-reveal[data-visible="true"] .cta-shape {
-  transform: translateX(0);
 }
 
 .portfolio-image {
@@ -478,7 +478,6 @@ body {
   .section-heading-bar,
   .industry-highlight::after,
   .hero-headline-line,
-  .cta-shape,
   .portfolio-image,
   .contact-field {
     transition: none !important;
@@ -497,7 +496,6 @@ body {
     transform: none !important;
   }
 
-  .cta-shape,
   .portfolio-image {
     transform: none;
   }
