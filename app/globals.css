@@ -73,6 +73,40 @@ body {
   display: inline-block;
 }
 
+.hero-headline-line-mask {
+  display: block;
+  overflow: hidden;
+}
+
+.hero-headline-line {
+  display: block;
+  transition:
+    opacity var(--dur) var(--ease-out) var(--line-delay, 0ms),
+    transform var(--dur) var(--ease-out) var(--line-delay, 0ms);
+}
+
+.hero-headline-line-mask:nth-child(1) .hero-headline-line {
+  --line-delay: 0ms;
+}
+
+.hero-headline-line-mask:nth-child(2) .hero-headline-line {
+  --line-delay: 80ms;
+}
+
+.hero-headline-line-mask:nth-child(3) .hero-headline-line {
+  --line-delay: 160ms;
+}
+
+.motion-reveal[data-ready="true"]:not([data-visible="true"]) .hero-headline-line {
+  opacity: 0;
+  transform: translateY(110%);
+}
+
+.motion-reveal[data-visible="true"] .hero-headline-line {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .section-heading-bar {
   transform: scaleX(0);
   transform-origin: left;
@@ -86,6 +120,43 @@ body {
 .service-row-title {
   display: inline-block;
   transition: transform var(--dur) var(--ease-out);
+}
+
+.service-row-inner {
+  --row-delay: 0ms;
+  transition:
+    opacity var(--dur) var(--ease-out) var(--row-delay),
+    transform var(--dur) var(--ease-out) var(--row-delay);
+}
+
+.service-row-item:nth-child(2) .service-row-inner {
+  --row-delay: 80ms;
+}
+
+.service-row-item:nth-child(3) .service-row-inner {
+  --row-delay: 160ms;
+}
+
+.service-row-item:nth-child(4) .service-row-inner {
+  --row-delay: 240ms;
+}
+
+.service-row-item:nth-child(5) .service-row-inner {
+  --row-delay: 320ms;
+}
+
+.service-row-item:nth-child(6) .service-row-inner {
+  --row-delay: 400ms;
+}
+
+.service-list-reveal[data-ready="true"]:not([data-visible="true"]) .service-row-inner {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.service-list-reveal[data-visible="true"] .service-row-inner {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .service-row-content:hover .service-row-title,
@@ -127,7 +198,7 @@ body {
   transform: scaleX(0);
   transform-origin: left;
   background: #e11d27;
-  transition: transform var(--dur) var(--ease-out) var(--reveal-delay, 0ms);
+  transition: transform var(--dur) var(--ease-out) var(--industry-delay, 0ms);
 }
 
 .motion-reveal[data-visible="true"] .industry-highlight::after {
@@ -386,6 +457,8 @@ body {
   .process-step::after,
   .section-heading-bar,
   .industry-highlight::after,
+  .hero-headline-line,
+  .service-row-inner,
   .cta-shape,
   .portfolio-image,
   .portfolio-title::after,
@@ -404,6 +477,12 @@ body {
 
   .industry-highlight::after {
     transform: scaleX(1);
+  }
+
+  .hero-headline-line,
+  .service-row-inner {
+    opacity: 1 !important;
+    transform: none !important;
   }
 
   .cta-shape,
