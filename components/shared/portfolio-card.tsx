@@ -14,7 +14,7 @@ export function PortfolioCard({
   const meta = [item.service?.title, item.client].filter(Boolean).join(", ");
   return (
     <Link href={`/portfolio/${item.slug}`} className={cn("group block", featured && "lg:col-span-2")}>
-      <div className="portfolio-card-frame relative aspect-[4/3] overflow-hidden bg-surface">
+      <div className="portfolio-card-frame relative aspect-[4/3] overflow-hidden rounded-3xl bg-white shadow-[var(--shadow-card)]">
         <Image
           src={item.cover}
           alt={item.title}

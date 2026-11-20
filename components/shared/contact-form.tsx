@@ -117,7 +117,12 @@ export function ContactForm({ services, defaultServiceId = "" }: { services: Ser
         </p>
       ) : null}
 
-      <Button type="submit" size="lg" disabled={isSubmitting}>
+      <Button
+        type="submit"
+        size="lg"
+        disabled={isSubmitting}
+        className="public-button h-12 rounded-xl px-8 text-base shadow-[0_10px_24px_-10px_rgb(225_29_39_/_0.5)]"
+      >
         {isSubmitting ? (
           <>
             <Loader2 aria-hidden="true" className="contact-submit-spinner size-4 animate-spin" strokeWidth={1.75} />

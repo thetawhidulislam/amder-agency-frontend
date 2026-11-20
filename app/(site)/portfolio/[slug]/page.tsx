@@ -48,7 +48,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
             {item.client ? <> for {item.client}</> : null}
           </p>
 
-          <div className="relative mt-12 aspect-[16/9] overflow-hidden rounded-sm bg-surface">
+          <div className="relative mt-12 aspect-[16/9] overflow-hidden rounded-3xl bg-white shadow-[var(--shadow-card)]">
             <Image src={item.cover} alt={item.title} fill priority sizes="(min-width: 1152px) 1100px, 100vw" className="object-cover" />
           </div>
         </Container>
@@ -59,7 +59,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
           {item.tags.length > 0 ? (
             <ul className="flex flex-wrap gap-2">
               {item.tags.map((t) => (
-                <li key={t} className="rounded-sm border border-line px-3 py-1 text-sm text-muted">
+                <li key={t} className="rounded-full border border-line bg-white px-3 py-1 text-sm text-muted">
                   {t}
                 </li>
               ))}
@@ -75,7 +75,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
 
       {embed ? (
         <Container className="pb-20">
-          <div className="aspect-video overflow-hidden rounded-sm bg-surface">
+          <div className="aspect-video overflow-hidden rounded-3xl bg-white shadow-[var(--shadow-card)]">
             <iframe
               src={embed}
               title={`${item.title} video`}
@@ -97,7 +97,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
       {item.gallery.length > 0 ? (
         <Container className="grid gap-6 pb-24 sm:grid-cols-2">
           {item.gallery.map((src, i) => (
-            <div key={src} className="relative aspect-[4/3] overflow-hidden rounded-sm bg-surface">
+            <div key={src} className="relative aspect-[4/3] overflow-hidden rounded-3xl bg-white shadow-[var(--shadow-card)]">
               <Image src={src} alt={`${item.title} image ${i + 1}`} fill sizes="(min-width: 640px) 50vw, 100vw" className="object-cover" />
             </div>
           ))}

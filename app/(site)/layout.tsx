@@ -1,5 +1,6 @@
 import { Footer } from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
+import { ScrollToTop } from "@/components/layout/scroll-to-top";
 import { WhatsAppFab } from "@/components/layout/whatsapp-fab";
 import { siteConfig } from "@/config/site";
 import { getServices, getSettings } from "@/lib/api-server";
@@ -26,6 +27,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
       <main id="main">{children}</main>
       <Footer settings={settings} services={services} />
       <WhatsAppFab href={whatsappLink(settings.whatsapp, "Hello Amader Agency, I would like to know more about your services.")} />
+      <ScrollToTop />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
     </>
   );

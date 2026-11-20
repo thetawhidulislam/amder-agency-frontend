@@ -13,7 +13,7 @@ export function Footer({ settings, services }: { settings: Settings; services: S
       <Container className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
         <div>
           <Link href="/" aria-label="Amader Agency home" className="inline-flex items-center gap-3">
-            <span className="flex size-11 items-center justify-center rounded-sm bg-white p-1">
+            <span className="flex size-11 items-center justify-center rounded-xl bg-white p-1">
               <Image src="/logo.png" alt="" width={36} height={36} className="size-9 object-contain" />
             </span>
             <span className="font-display text-xl font-bold tracking-tight">

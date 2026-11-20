@@ -8,9 +8,12 @@ export function WhatsAppFab({ href }: { href: string | null }) {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat with us on WhatsApp"
-      className="fixed bottom-5 right-5 z-40 inline-flex size-14 items-center justify-center rounded-sm bg-brand text-brand-contrast hover:bg-brand-dark"
+      className="public-button fixed bottom-5 left-5 z-40 inline-flex items-center gap-3 rounded-full bg-brand py-1.5 pl-1.5 pr-5 font-medium text-white shadow-[0_10px_24px_-10px_rgb(225_29_39_/_0.5)] hover:bg-brand-dark"
     >
-      <MessageCircle className="size-6" />
+      <span className="flex size-9 items-center justify-center rounded-full bg-white/20">
+        <MessageCircle aria-hidden="true" className="size-5" strokeWidth={1.75} />
+      </span>
+      <span>Chat with us</span>
     </a>
   );
 }

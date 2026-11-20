@@ -1,10 +1,9 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/shared/container";
-import { buttonClass } from "@/components/ui/button";
+import { publicButtonClass } from "@/components/shared/public-button";
 import { CtaShapes } from "@/components/graphics/cta-shapes";
 import { Reveal } from "@/components/motion/reveal";
-import { cn } from "@/lib/utils";
 
 // The one loud block on each page: full brand color.
 export function CtaBand({ whatsapp, title = "Let's build, promote and grow, together." }: { whatsapp: string | null; title?: string }) {
@@ -19,7 +18,7 @@ export function CtaBand({ whatsapp, title = "Let's build, promote and grow, toge
           <div className="flex flex-wrap gap-3">
             <Link
               href="/contact"
-              className={cn(buttonClass({ variant: "ink", size: "lg" }), "button-wipe button-wipe-cta-primary")}
+              className={publicButtonClass({ variant: "ink", size: "lg" })}
             >
               Start a project
               <ArrowUpRight aria-hidden="true" className="motion-arrow size-4" strokeWidth={1.75} />
@@ -29,7 +28,7 @@ export function CtaBand({ whatsapp, title = "Let's build, promote and grow, toge
                 href={whatsapp}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="button-wipe button-wipe-cta-outline inline-flex h-13 items-center rounded-sm border border-brand-contrast px-8 text-base font-medium"
+                className={publicButtonClass({ variant: "outline", size: "lg" })}
               >
                 Chat on WhatsApp
               </a>

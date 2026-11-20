@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { ArrowUpRight, Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
+import { ArrowRight, Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { Container, Section } from "@/components/shared/container";
 import { ContactForm } from "@/components/shared/contact-form";
 import { PageHeader } from "@/components/shared/page-header";
-import { buttonClass } from "@/components/ui/button";
+import { publicButtonClass } from "@/components/shared/public-button";
 import { getServices, getSettings } from "@/lib/api-server";
 import { cn, whatsappLink } from "@/lib/utils";
 
@@ -32,9 +32,9 @@ export default async function ContactPage({ searchParams }: Props) {
         <div className="mt-14 grid gap-14 lg:grid-cols-[1fr_1.2fr] lg:gap-24">
           <div>
             {whatsapp ? (
-              <a href={whatsapp} target="_blank" rel="noopener noreferrer" className={cn(buttonClass({ size: "lg" }), "mt-8")}>
+              <a href={whatsapp} target="_blank" rel="noopener noreferrer" className={cn(publicButtonClass({ size: "lg" }), "mt-8")}>
                 Chat on WhatsApp
-                <ArrowUpRight aria-hidden="true" className="motion-arrow size-4" strokeWidth={1.75} />
+                <ArrowRight aria-hidden="true" className="size-4" strokeWidth={1.75} />
               </a>
             ) : null}
 

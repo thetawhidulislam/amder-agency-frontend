@@ -18,7 +18,7 @@ type Props = { searchParams: Promise<{ service?: string; page?: string }> };
 
 const chip = (active: boolean) =>
   cn(
-    "inline-flex h-9 items-center rounded-sm border px-4 text-sm",
+    "inline-flex h-9 items-center rounded-full border px-4 text-sm",
     active ? "border-brand bg-brand text-brand-contrast" : "border-line hover:border-fg/50"
   );
 

@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowUpRight, Check } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 import { notFound } from "next/navigation";
 import { CtaBand } from "@/components/home/cta-band";
 import { Container, Section, SectionHeading } from "@/components/shared/container";
+import { publicButtonClass } from "@/components/shared/public-button";
 import { PortfolioCard } from "@/components/shared/portfolio-card";
 import { ServiceIcon } from "@/components/shared/service-icon";
-import { buttonClass } from "@/components/ui/button";
 import { getService, getServices, getSettings } from "@/lib/api-server";
 import { cn, whatsappLink } from "@/lib/utils";
 
@@ -66,14 +66,14 @@ export default async function ServiceDetailPage({ params }: Props) {
             </div>
 
             <aside className="lg:sticky lg:top-28 lg:self-start">
-              <div className="bg-surface p-6 sm:p-8">
+              <div className="rounded-3xl border border-line bg-white p-6 shadow-[var(--shadow-card)] sm:p-8">
                 <p className="font-display text-xl font-semibold">Ask about this service</p>
                 <Link
                   href={`/contact?service=${service.slug}`}
-                  className={cn(buttonClass({ size: "lg" }), "mt-5 w-full")}
+                  className={cn(publicButtonClass({ size: "lg" }), "mt-5 w-full")}
                 >
                   Ask about {service.title}
-                  <ArrowUpRight aria-hidden="true" className="motion-arrow size-4" strokeWidth={1.75} />
+                  <ArrowRight aria-hidden="true" className="size-4" strokeWidth={1.75} />
                 </Link>
               </div>
             </aside>

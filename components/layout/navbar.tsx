@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { buttonClass } from "@/components/ui/button";
+import { publicButtonClass } from "@/components/shared/public-button";
 import { navLinks } from "@/config/site";
 import { cn } from "@/lib/utils";
 
@@ -26,7 +26,7 @@ export function Navbar() {
     <header className="pointer-events-none sticky top-0 z-40 h-20">
       <a
         href="#main"
-        className="pointer-events-auto sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:rounded-sm focus:bg-brand focus:px-3 focus:py-2 focus:text-brand-contrast"
+        className="pointer-events-auto sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:rounded-xl focus:bg-brand focus:px-3 focus:py-2 focus:text-brand-contrast"
       >
         Skip to content
       </a>
@@ -61,7 +61,7 @@ export function Navbar() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <Link href="/contact" className={cn(buttonClass({ variant: "ink", size: "sm" }), "hidden md:inline-flex")}>
+          <Link href="/contact" className={cn(publicButtonClass({ variant: "ink", size: "sm" }), "hidden md:inline-flex")}>
             Start a project
             <ArrowUpRight aria-hidden="true" className="motion-arrow size-4" />
           </Link>
@@ -104,7 +104,7 @@ export function Navbar() {
               </li>
             ))}
             <li className="py-4">
-              <Link href="/contact" onClick={() => setOpen(false)} className={cn(buttonClass({ variant: "ink" }), "w-full")}>
+              <Link href="/contact" onClick={() => setOpen(false)} className={cn(publicButtonClass({ variant: "ink" }), "w-full")}>
                 Start a project
                 <ArrowUpRight aria-hidden="true" className="motion-arrow size-4" />
               </Link>

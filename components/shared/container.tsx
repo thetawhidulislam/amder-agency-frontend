@@ -1,6 +1,7 @@
 import type { ComponentProps } from "react";
 import { cn } from "@/lib/utils";
 import { Reveal } from "@/components/motion/reveal";
+import { SectionChip } from "@/components/shared/section-chip";
 
 export function Container({ className, ...props }: ComponentProps<"div">) {
   return <div className={cn("mx-auto w-full max-w-6xl px-5 sm:px-8", className)} {...props} />;
@@ -15,27 +16,35 @@ export function SectionHeading({
   intro,
   className,
   as = "h2",
+  align = "left",
+  chip,
 }: {
   title: string;
   intro?: string;
   className?: string;
   as?: "h1" | "h2";
+  align?: "center" | "left";
+  chip?: string;
 }) {
   const Heading = as;
   return (
-    <div className={cn("max-w-2xl", className)}>
+    <div className={cn("max-w-2xl", align === "center" && "mx-auto text-center", className)}>
       <Reveal>
         <div>
-          <span aria-hidden="true" className="section-heading-bar mb-6 block h-1 w-12 bg-brand" />
+          {chip ? <SectionChip className="mb-5">{chip}</SectionChip> : null}
           <Heading
             className={cn(
-              "font-display font-semibold tracking-tight text-balance",
-              as === "h2" ? "text-[clamp(2.25rem,5vw,4rem)]" : "text-3xl sm:text-5xl"
+              "font-display font-semibold leading-[1.05] tracking-tight text-balance",
+              as === "h2" ? "text-[clamp(2.25rem,5vw,4rem)]" : "text-[clamp(2.75rem,6vw,5.5rem)]"
             )}
           >
             {title}
           </Heading>
-          {intro ? <p className="mt-4 text-lg text-muted">{intro}</p> : null}
+          {intro ? (
+            <p className={cn("mt-4 text-lg text-muted", align === "center" && "mx-auto max-w-2xl")}>
+              {intro}
+            </p>
+          ) : null}
         </div>
       </Reveal>
     </div>

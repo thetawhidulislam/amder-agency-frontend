@@ -8,7 +8,7 @@ export function PortfolioEmptyState({ className }: { className?: string }) {
         {[0, 1, 2].map((tile) => (
           <div
             key={tile}
-            className="relative aspect-[4/3] overflow-hidden border border-line bg-surface"
+            className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-line bg-white"
             aria-hidden="true"
           >
             <svg className="absolute inset-0 size-full" preserveAspectRatio="none">
