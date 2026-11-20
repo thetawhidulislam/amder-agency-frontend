@@ -53,7 +53,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               <p className="mt-6 max-w-xl text-xl text-muted">{service.shortDesc}</p>
               <Link href={`/contact?service=${service.slug}`} className={cn(buttonClass({ size: "lg" }), "mt-9")}>
                 Ask about {service.title}
-                <ArrowUpRight aria-hidden="true" className="size-4 transition-transform duration-250 ease-[var(--ease-out)] group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                <ArrowUpRight aria-hidden="true" className="motion-arrow size-4" />
               </Link>
             </div>
 

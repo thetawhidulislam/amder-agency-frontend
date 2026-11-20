@@ -51,8 +51,8 @@ export function Navbar() {
               href={link.href}
               aria-current={isActive(link.href) ? "page" : undefined}
               className={cn(
-                "relative py-4 text-sm text-ink after:absolute after:inset-x-0 after:bottom-0 after:h-px after:origin-left after:scale-x-0 after:bg-brand after:transition-transform after:duration-[var(--dur)] after:ease-[var(--ease-out)] hover:text-brand hover:after:scale-x-100",
-                isActive(link.href) ? "font-medium after:scale-x-100" : ""
+                "nav-link-underline relative py-4 text-sm text-ink hover:text-brand",
+                isActive(link.href) ? "font-medium" : ""
               )}
             >
               {link.label}
@@ -61,9 +61,9 @@ export function Navbar() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <Link href="/contact" className={cn(buttonClass({ variant: "ink", size: "sm" }), "hidden md:inline-flex hover:bg-brand")}>
+          <Link href="/contact" className={cn(buttonClass({ variant: "ink", size: "sm" }), "hidden md:inline-flex")}>
             Start a project
-            <ArrowUpRight aria-hidden="true" className="size-4 transition-transform duration-250 ease-[var(--ease-out)] group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            <ArrowUpRight aria-hidden="true" className="motion-arrow size-4" />
           </Link>
           <button
             type="button"
@@ -79,7 +79,14 @@ export function Navbar() {
       </div>
 
       {open ? (
-        <nav id="mobile-nav" aria-label="Mobile" className="mobile-nav-enter pointer-events-auto relative border-t border-line bg-page md:hidden">
+        <nav
+          id="mobile-nav"
+          aria-label="Mobile"
+          className={cn(
+            "mobile-nav-enter pointer-events-auto absolute inset-x-0 border-t border-line bg-page md:hidden",
+            scrolled ? "top-16" : "top-20"
+          )}
+        >
           <ul className="mx-auto max-w-6xl px-5 py-3">
             {navLinks.map((link) => (
               <li key={link.href}>
@@ -97,9 +104,9 @@ export function Navbar() {
               </li>
             ))}
             <li className="py-4">
-              <Link href="/contact" onClick={() => setOpen(false)} className={cn(buttonClass({ variant: "ink" }), "w-full hover:bg-brand")}>
+              <Link href="/contact" onClick={() => setOpen(false)} className={cn(buttonClass({ variant: "ink" }), "w-full")}>
                 Start a project
-                <ArrowUpRight aria-hidden="true" className="size-4 transition-transform duration-250 ease-[var(--ease-out)] group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                <ArrowUpRight aria-hidden="true" className="motion-arrow size-4" />
               </Link>
             </li>
           </ul>

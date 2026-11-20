@@ -6,7 +6,7 @@ export function Container({ className, ...props }: ComponentProps<"div">) {
 }
 
 export function Section({ className, ...props }: ComponentProps<"section">) {
-  return <section className={cn("py-20 sm:py-28", className)} {...props} />;
+  return <section className={cn("py-20 sm:py-28 lg:py-32", className)} {...props} />;
 }
 
 export function SectionHeading({

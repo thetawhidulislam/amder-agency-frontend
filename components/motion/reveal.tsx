@@ -6,14 +6,17 @@ export function Reveal({
   children,
   delay = 0,
   y = 24,
+  as = "div",
 }: {
   children: ReactNode;
   delay?: number;
   y?: number;
+  as?: "div" | "span";
 }) {
-  const elementRef = useRef<HTMLDivElement>(null);
+  const elementRef = useRef<HTMLElement>(null);
   const [ready, setReady] = useState(false);
   const [visible, setVisible] = useState(false);
+  const Element = as;
 
   useEffect(() => {
     setReady(true);
@@ -39,14 +42,16 @@ export function Reveal({
   }, []);
 
   return (
-    <div
-      ref={elementRef}
+    <Element
+      ref={(element) => {
+        elementRef.current = element;
+      }}
       className="motion-reveal overflow-hidden"
       data-ready={ready}
       data-visible={visible}
       style={{ "--reveal-delay": `${delay}ms`, "--reveal-y": `${y}px` } as CSSProperties}
     >
       {children}
-    </div>
+    </Element>
   );
 }

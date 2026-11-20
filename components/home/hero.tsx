@@ -9,13 +9,13 @@ import type { Service } from "@/lib/types";
 
 export function Hero({ services, whatsapp }: { services: Service[]; whatsapp: string | null }) {
   return (
-    <section className="flex min-h-[min(900px,calc(100svh-64px))] items-center py-12 sm:py-16">
+    <section className="flex min-h-[min(900px,calc(100svh-64px))] items-center py-20 sm:py-28 lg:py-32">
       <Container className="grid items-center gap-12 lg:grid-cols-[1.25fr_0.75fr] lg:gap-16">
         <div>
-          <h1 className="max-w-4xl font-display text-[clamp(3rem,7.5vw,7rem)] font-semibold leading-[0.95] tracking-[-0.05em]">
-            <Reveal><span className="block">One agency.</span></Reveal>
-            <Reveal delay={80}><span className="block">Four specialist teams.</span></Reveal>
-            <Reveal delay={160}><span className="block text-brand">One plan for your business.</span></Reveal>
+          <h1 className="max-w-4xl font-display text-[clamp(3rem,7.5vw,7rem)] font-semibold leading-[0.95] tracking-tighter">
+            <Reveal as="span"><span className="block">One agency.</span></Reveal>
+            <Reveal as="span" delay={80}><span className="block">Four specialist teams.</span></Reveal>
+            <Reveal as="span" delay={160}><span className="block text-brand">One plan for your business.</span></Reveal>
           </h1>
           <Reveal delay={240}>
             <p className="mt-8 max-w-xl text-lg text-muted sm:text-xl">
@@ -26,7 +26,7 @@ export function Hero({ services, whatsapp }: { services: Service[]; whatsapp: st
             <div className="mt-10 flex flex-wrap gap-3">
               <Link href="/contact" className={buttonClass({ size: "lg" })}>
                 Start a project
-                <ArrowUpRight aria-hidden="true" className="size-4 transition-transform duration-250 ease-[var(--ease-out)] group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                <ArrowUpRight aria-hidden="true" className="motion-arrow size-4" />
               </Link>
               {whatsapp ? (
                 <a href={whatsapp} target="_blank" rel="noopener noreferrer" className={buttonClass({ size: "lg", variant: "outline" })}>
@@ -50,7 +50,7 @@ export function Hero({ services, whatsapp }: { services: Service[]; whatsapp: st
                     <li key={s.id}>
                       <Link
                         href={`/services/${s.slug}`}
-                        className="group flex gap-4 py-4 transition-transform duration-[var(--dur)] ease-[var(--ease-out)] hover:translate-x-1"
+                        className="group service-row flex gap-4 py-4"
                       >
                         <span className="mt-0.5 flex size-10 shrink-0 items-center justify-center bg-white/10">
                           <ServiceIcon name={s.icon} className="size-5 text-brand group-hover:text-white" />

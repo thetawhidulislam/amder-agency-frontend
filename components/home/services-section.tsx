@@ -36,7 +36,7 @@ export function ServicesSection({
                       <ServiceIcon name={s.icon} className="size-5 text-brand" />
                     </span>
                     <h3 className="mt-4 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
-                      <Link href={`/services/${s.slug}`} className="transition-colors hover:text-brand">
+                      <Link href={`/services/${s.slug}`} className="hover:text-brand">
                         {s.title}
                       </Link>
                     </h3>

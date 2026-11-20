@@ -63,6 +63,7 @@ body {
 }
 
 .motion-reveal {
+  display: block;
   transition:
     opacity var(--dur) var(--ease-out) var(--reveal-delay, 0ms),
     transform var(--dur) var(--ease-out) var(--reveal-delay, 0ms);
@@ -99,6 +100,41 @@ body {
 .button-wipe-outline:hover,
 .button-wipe-outline:focus-visible {
   color: #ffffff;
+}
+
+.nav-link-underline::after {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 1px;
+  content: "";
+  transform: scaleX(0);
+  transform-origin: left;
+  background: #e11d27;
+  transition: transform var(--dur) var(--ease-out);
+}
+
+.nav-link-underline:hover::after,
+.nav-link-underline[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+
+.motion-arrow {
+  transition: transform var(--dur) var(--ease-out);
+}
+
+.group:hover .motion-arrow,
+.group:focus-visible .motion-arrow {
+  transform: translate(2px, -2px);
+}
+
+.service-row {
+  transition: transform var(--dur) var(--ease-out);
+}
+
+.service-row:hover,
+.service-row:focus-visible {
+  transform: translateX(4px);
 }
 
 .service-marquee-track {
@@ -154,6 +190,23 @@ body {
     transition: none !important;
   }
 
+  .motion-arrow,
+  .service-row {
+    transition: none !important;
+  }
+
+  .group:hover .motion-arrow,
+  .group:focus-visible .motion-arrow,
+  .service-row:hover,
+  .service-row:focus-visible {
+    transform: none;
+  }
+
+  .nav-link-underline::after,
+  .button-wipe::before {
+    transition: none !important;
+  }
+
   .service-marquee-track,
   .hero-art-float,
   .mobile-nav-enter {
@@ -161,6 +214,13 @@ body {
   }
 
   .service-marquee-track {
+    width: 100%;
+    min-height: 3.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .service-marquee-track > div:first-child {
     width: 100%;
     flex-wrap: wrap;
     justify-content: center;
