@@ -1,7 +1,26 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
+
+let revealObserver: IntersectionObserver | null = null;
+
+function getRevealObserver() {
+  if (!revealObserver) {
+    revealObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          (entry.target as HTMLElement).dataset.visible = "true";
+          observer.unobserve(entry.target);
+        });
+      },
+      { rootMargin: "0px 0px -8% 0px" }
+    );
+  }
+
+  return revealObserver;
+}
 
 export function Reveal({
   children,
@@ -17,31 +36,21 @@ export function Reveal({
   className?: string;
 }) {
   const elementRef = useRef<HTMLElement>(null);
-  const [ready, setReady] = useState(false);
-  const [visible, setVisible] = useState(false);
   const Element = as;
 
   useEffect(() => {
-    setReady(true);
-
     const element = elementRef.current;
-    if (!element || !("IntersectionObserver" in window)) {
-      setVisible(true);
+    if (!element) return;
+    element.dataset.ready = "true";
+
+    if (!("IntersectionObserver" in window)) {
+      element.dataset.visible = "true";
       return;
     }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      { rootMargin: "0px 0px -8% 0px" }
-    );
-
+    const observer = getRevealObserver();
     observer.observe(element);
-    return () => observer.disconnect();
+    return () => observer.unobserve(element);
   }, []);
 
   return (
@@ -50,8 +59,8 @@ export function Reveal({
         elementRef.current = element;
       }}
       className={cn("motion-reveal overflow-hidden", className)}
-      data-ready={ready}
-      data-visible={visible}
+      data-ready="false"
+      data-visible="false"
       style={{ "--reveal-delay": `${delay}ms`, "--reveal-y": `${y}px` } as CSSProperties}
     >
       {children}

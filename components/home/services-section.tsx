@@ -28,11 +28,11 @@ export function ServicesSection({
             Services will appear here once they are added in the admin panel.
           </p>
         ) : (
-          <ul className={showHeading ? "mt-14 border-t border-line" : "border-t border-line"}>
-            {services.map((s, index) => (
-              <li key={s.id} className="border-b border-line">
-                <Reveal delay={index < 6 ? index * 80 : 0} y={16}>
-                  <div className="group service-row-content grid gap-6 px-3 py-10 hover:bg-surface md:grid-cols-[1fr_1.4fr] md:gap-14">
+          <Reveal y={0} className="service-list-reveal">
+            <ul className={showHeading ? "mt-14 border-t border-line" : "border-t border-line"}>
+              {services.map((s) => (
+                <li key={s.id} className="service-row-item border-b border-line">
+                  <div className="service-row-inner group service-row-content grid gap-6 px-3 py-10 hover:bg-surface md:grid-cols-[1fr_1.4fr] md:gap-14">
                     <div>
                       <span className="flex size-14 items-center justify-center bg-ink group-hover:bg-brand">
                         <ServiceIcon name={s.icon} className="size-7 text-brand group-hover:text-white" />
@@ -62,10 +62,10 @@ export function ServicesSection({
                       </Link>
                     </div>
                   </div>
-                </Reveal>
-              </li>
-            ))}
-          </ul>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
         )}
       </Container>
     </Section>

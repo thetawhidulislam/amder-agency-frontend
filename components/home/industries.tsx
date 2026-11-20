@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { Container } from "@/components/shared/container";
 import { Reveal } from "@/components/motion/reveal";
 import { industries } from "@/config/site";
@@ -21,25 +22,26 @@ export function Industries() {
         <rect width="100%" height="100%" fill="url(#industry-dot-pattern)" />
       </svg>
       <Container className="relative z-10">
-        <p className="max-w-4xl font-display text-2xl font-medium leading-snug tracking-tight text-balance sm:text-4xl">
-          We work with{" "}
-          {industryGroups.map((group, groupIndex) => (
-            <Reveal
-              key={group[0].index}
-              as="span"
-              className="motion-reveal-inline"
-              delay={groupIndex * 80}
-            >
-              {group.map(({ name, index }) => (
-                <span key={index}>
-                  {index > 0 ? ", " : null}
-                  <span className="industry-highlight">{name}</span>
-                </span>
-              ))}
-            </Reveal>
-          ))}
-          .
-        </p>
+        <Reveal y={0}>
+          <p className="max-w-4xl font-display text-2xl font-medium leading-snug tracking-tight text-balance sm:text-4xl">
+            We work with{" "}
+            {industryGroups.map((group, groupIndex) => (
+              <span
+                key={group[0].index}
+                className="industry-group"
+                style={{ "--industry-delay": `${groupIndex * 80}ms` } as CSSProperties}
+              >
+                {group.map(({ name, index }) => (
+                  <span key={index}>
+                    {index > 0 ? ", " : null}
+                    <span className="industry-highlight">{name}</span>
+                  </span>
+                ))}
+              </span>
+            ))}
+            .
+          </p>
+        </Reveal>
       </Container>
     </section>
   );

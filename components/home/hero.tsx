@@ -13,9 +13,17 @@ export function Hero({ services, whatsapp }: { services: Service[]; whatsapp: st
       <Container className="grid items-center gap-12 lg:grid-cols-[1.25fr_0.75fr] lg:gap-16">
         <div>
           <h1 className="max-w-4xl font-display text-[clamp(3rem,7.5vw,7rem)] font-semibold leading-[0.95] tracking-tighter">
-            <Reveal as="span"><span className="block">One agency.</span></Reveal>
-            <Reveal as="span" delay={80}><span className="block">Four specialist teams.</span></Reveal>
-            <Reveal as="span" delay={160}><span className="block text-brand">One plan for your business.</span></Reveal>
+            <Reveal as="span" className="motion-reveal-inline">
+              <span className="hero-headline-line-mask">
+                <span className="hero-headline-line">One agency.</span>
+              </span>
+              <span className="hero-headline-line-mask">
+                <span className="hero-headline-line">Four specialist teams.</span>
+              </span>
+              <span className="hero-headline-line-mask">
+                <span className="hero-headline-line text-brand">One plan for your business.</span>
+              </span>
+            </Reveal>
           </h1>
           <Reveal delay={240}>
             <p className="mt-8 max-w-xl text-lg text-muted sm:text-xl">
