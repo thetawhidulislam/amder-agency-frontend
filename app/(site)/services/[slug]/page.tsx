@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { notFound } from "next/navigation";
 import { CtaBand } from "@/components/home/cta-band";
-import { Container, Section } from "@/components/shared/container";
+import { Container, Section, SectionHeading } from "@/components/shared/container";
 import { PortfolioCard } from "@/components/shared/portfolio-card";
 import { ServiceIcon } from "@/components/shared/service-icon";
 import { buttonClass } from "@/components/ui/button";
@@ -58,7 +58,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             </div>
 
             <div>
-              <h2 className="font-display text-2xl font-semibold">What is included</h2>
+              <SectionHeading title="What is included" />
               <ul className="mt-5 border-t border-line">
                 {service.features.map((f) => (
                   <li key={f} className="flex gap-3 border-b border-line py-3.5">
@@ -83,7 +83,7 @@ export default async function ServiceDetailPage({ params }: Props) {
       {service.portfolio.length > 0 ? (
         <Section className="border-t border-line py-14 sm:py-20">
           <Container>
-            <h2 className="font-display text-3xl font-semibold tracking-tight sm:text-4xl">Work in {service.title}</h2>
+            <SectionHeading title={`Work in ${service.title}`} />
             <div className="mt-10 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
               {service.portfolio.map((item) => (
                 <PortfolioCard key={item.id} item={item} />

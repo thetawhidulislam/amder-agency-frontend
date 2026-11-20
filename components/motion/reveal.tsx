@@ -1,17 +1,20 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { cn } from "@/lib/utils";
 
 export function Reveal({
   children,
   delay = 0,
   y = 24,
   as = "div",
+  className,
 }: {
   children: ReactNode;
   delay?: number;
   y?: number;
   as?: "div" | "span";
+  className?: string;
 }) {
   const elementRef = useRef<HTMLElement>(null);
   const [ready, setReady] = useState(false);
@@ -46,7 +49,7 @@ export function Reveal({
       ref={(element) => {
         elementRef.current = element;
       }}
-      className="motion-reveal overflow-hidden"
+      className={cn("motion-reveal overflow-hidden", className)}
       data-ready={ready}
       data-visible={visible}
       style={{ "--reveal-delay": `${delay}ms`, "--reveal-y": `${y}px` } as CSSProperties}

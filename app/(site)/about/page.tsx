@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { CtaBand } from "@/components/home/cta-band";
 import { Industries } from "@/components/home/industries";
 import { Why } from "@/components/home/why";
-import { Container, Section } from "@/components/shared/container";
+import { Container, Section, SectionHeading } from "@/components/shared/container";
 import { philosophy } from "@/config/site";
 import { getSettings } from "@/lib/api-server";
 import { whatsappLink } from "@/lib/utils";
@@ -43,7 +43,7 @@ export default async function AboutPage() {
 
       <Section className="theme-dark bg-page text-fg">
         <Container>
-          <h2 className="font-display text-3xl font-semibold tracking-tight sm:text-5xl">What we believe</h2>
+          <SectionHeading title="What we believe" />
           <dl className="mt-12 grid gap-x-10 gap-y-10 sm:grid-cols-2">
             {philosophy.map((p) => (
               <div key={p.title} className="border-t border-line pt-5">

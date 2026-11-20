@@ -26,8 +26,8 @@ export default async function HomePage() {
       <ServicesSection services={services} />
       <Process />
       <Why />
-      <Industries />
       {featured.items.length > 0 ? <FeaturedWork items={featured.items} /> : null}
+      <Industries />
       <CtaBand whatsapp={whatsapp} />
     </>
   );
