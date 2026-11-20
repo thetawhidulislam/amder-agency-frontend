@@ -18,6 +18,7 @@ export function SectionHeading({
   as = "h2",
   align = "left",
   chip,
+  chipTone = "default",
 }: {
   title: string;
   intro?: string;
@@ -25,13 +26,14 @@ export function SectionHeading({
   as?: "h1" | "h2";
   align?: "center" | "left";
   chip?: string;
+  chipTone?: "default" | "dark";
 }) {
   const Heading = as;
   return (
     <div className={cn("max-w-2xl", align === "center" && "mx-auto text-center", className)}>
       <Reveal>
         <div>
-          {chip ? <SectionChip className="mb-5">{chip}</SectionChip> : null}
+          {chip ? <SectionChip tone={chipTone} className="mb-5">{chip}</SectionChip> : null}
           <Heading
             className={cn(
               "font-display font-semibold leading-[1.05] tracking-tight text-balance",

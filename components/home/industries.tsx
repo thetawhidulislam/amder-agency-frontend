@@ -12,7 +12,7 @@ industries.forEach((name, index) => {
 
 export function Industries() {
   return (
-    <section className="relative isolate border-y border-line bg-page py-20 sm:py-28 lg:py-32">
+    <section className="relative isolate border-y border-line bg-surface py-20 sm:py-28 lg:py-32">
       <svg aria-hidden="true" className="pointer-events-none absolute inset-0 size-full" preserveAspectRatio="none">
         <defs>
           <pattern id="industry-dot-pattern" width="24" height="24" patternUnits="userSpaceOnUse">

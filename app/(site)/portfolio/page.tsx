@@ -66,8 +66,8 @@ export default async function PortfolioPage({ searchParams }: Props) {
             </div>
           ) : (
             <div className="mt-14 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
-              {items.map((item, index) => (
-                <PortfolioCard key={item.id} item={item} featured={index === 0} />
+              {items.map((item) => (
+                <PortfolioCard key={item.id} item={item} />
               ))}
             </div>
           )}

@@ -2,38 +2,48 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import type { PortfolioSummary } from "@/lib/types";
-import { cn } from "@/lib/utils";
 
 export function PortfolioCard({
   item,
-  featured = false,
+  serviceTitle,
 }: {
   item: PortfolioSummary & { service?: { title: string } };
-  featured?: boolean;
+  serviceTitle?: string;
 }) {
-  const meta = [item.service?.title, item.client].filter(Boolean).join(", ");
+  const service = serviceTitle ?? item.service?.title;
   return (
-    <Link href={`/portfolio/${item.slug}`} className={cn("group block", featured && "lg:col-span-2")}>
-      <div className="portfolio-card-frame relative aspect-[4/3] overflow-hidden rounded-3xl bg-white shadow-[var(--shadow-card)]">
+    <Link
+      href={`/portfolio/${item.slug}`}
+      className="portfolio-card group flex h-full flex-col rounded-3xl border border-line bg-white shadow-[var(--shadow-card)]"
+    >
+      <div className="portfolio-card-frame relative aspect-[4/3] overflow-hidden rounded-t-3xl bg-surface">
         <Image
           src={item.cover}
           alt={item.title}
           fill
-          sizes={
-            featured
-              ? "(min-width: 1024px) 67vw, (min-width: 640px) 50vw, 100vw"
-              : "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-          }
+          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
           className="portfolio-image object-cover"
         />
-        <span aria-hidden="true" className="portfolio-card-arrow absolute bottom-4 right-4 flex size-10 items-center justify-center rounded-full bg-ink text-white">
-          <ArrowUpRight className="size-5" strokeWidth={1.75} />
-        </span>
+        {service ? (
+          <span className="absolute bottom-4 left-4 rounded-full border border-line bg-white px-3 py-1 text-xs font-medium text-ink">
+            {service}
+          </span>
+        ) : null}
       </div>
-      <h3 className="mt-4 font-display text-xl font-semibold group-hover:text-brand">
-        <span className="portfolio-title">{item.title}</span>
-      </h3>
-      {meta ? <p className="mt-1 text-sm text-muted">{meta}</p> : null}
+      <div className="flex flex-1 flex-col p-5 sm:p-6">
+        {item.client ? (
+          <p className="text-xs font-medium uppercase tracking-wider text-muted">{item.client}</p>
+        ) : null}
+        <h3 className="mt-2 line-clamp-2 font-display text-xl font-semibold leading-snug text-ink">
+          {item.title}
+        </h3>
+        <div className="mt-auto flex items-center justify-between gap-4 border-t border-line pt-5">
+          <span className="text-sm font-medium">View project</span>
+          <span className="portfolio-card-arrow flex size-9 shrink-0 items-center justify-center rounded-full bg-surface text-ink group-hover:bg-brand group-hover:text-white">
+            <ArrowUpRight aria-hidden="true" className="size-5" strokeWidth={1.75} />
+          </span>
+        </div>
+      </div>
     </Link>
   );
 }

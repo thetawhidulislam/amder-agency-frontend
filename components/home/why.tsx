@@ -13,14 +13,16 @@ export function Why() {
           intro="Growth needs more than advertising. It needs the right strategy, clear creative and steady execution."
           className="self-start lg:sticky lg:top-28"
         />
-        <dl className="border-t border-line">
+        <dl className="grid gap-4">
           {whyPoints.map((p, index) => {
             const Icon = whyIcons[index];
             return (
-              <div key={p.title} className="grid gap-1 border-b border-line border-l-[3px] border-l-transparent py-6 pl-5 hover:border-l-brand sm:grid-cols-[13rem_1fr] sm:gap-8">
-                <dt className="flex items-center gap-3 font-display text-xl font-semibold">
-                  <Icon aria-hidden="true" className="size-6 shrink-0 text-brand" strokeWidth={1.75} />
-                  {p.title}
+              <div key={p.title} className="why-card group grid gap-4 rounded-2xl border border-line bg-white p-6 shadow-[var(--shadow-card)] sm:grid-cols-[1fr_1.2fr] sm:items-center">
+                <dt className="flex items-center gap-4 font-display text-xl font-semibold">
+                  <span className="why-card-icon flex size-12 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand group-hover:bg-brand group-hover:text-white">
+                    <Icon aria-hidden="true" className="size-6" strokeWidth={1.75} />
+                  </span>
+                  <span>{p.title}</span>
                 </dt>
                 <dd className="text-muted">{p.text}</dd>
               </div>

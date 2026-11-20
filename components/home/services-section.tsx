@@ -21,47 +21,53 @@ export function ServicesSection({
   return (
     <Section id="services">
       <Container>
-        {showHeading ? <SectionHeading title={title} intro={intro} as={pageTitle ? "h1" : "h2"} /> : null}
+        {showHeading ? (
+          <SectionHeading
+            title={title}
+            intro={intro}
+            as={pageTitle ? "h1" : "h2"}
+            align="center"
+            chip="What we do"
+          />
+        ) : null}
 
         {services.length === 0 ? (
           <p className="mt-12 border-t border-line pt-8 text-muted">
             Services will appear here once they are added in the admin panel.
           </p>
         ) : (
-          <Reveal y={0} className="service-list-reveal">
-            <ul className={showHeading ? "mt-14 border-t border-line" : "border-t border-line"}>
+          <Reveal y={0} className="service-grid-reveal mt-12 overflow-visible">
+            <ul className="grid gap-5 md:grid-cols-2">
               {services.map((s) => (
-                <li key={s.id} className="service-row-item border-b border-line">
-                  <div className="service-row-inner group service-row-content grid gap-6 px-3 py-10 hover:bg-surface md:grid-cols-[1fr_1.4fr] md:gap-14">
-                    <div>
-                      <span className="flex size-14 items-center justify-center bg-ink group-hover:bg-brand">
-                        <ServiceIcon name={s.icon} className="size-7 text-brand group-hover:text-white" />
+                <li key={s.id} className="service-card-item">
+                  <article className="service-card group flex h-full flex-col rounded-3xl border border-line bg-white p-8">
+                    <span className="service-card-icon flex size-14 shrink-0 items-center justify-center rounded-2xl bg-brand/10 text-brand group-hover:bg-brand group-hover:text-white">
+                      <ServiceIcon name={s.icon} className="size-7" />
+                    </span>
+                    <h3 className="mt-5 font-display text-3xl font-semibold leading-tight tracking-tight">
+                      {s.title}
+                    </h3>
+                    <p className="mt-3 text-muted">{s.shortDesc}</p>
+                    <ul className="mt-6 grid gap-x-4 gap-y-3 text-sm sm:grid-cols-2">
+                      {s.features.map((feature) => (
+                        <li key={feature} className="flex items-start gap-2.5">
+                          <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-brand/10">
+                            <Check aria-hidden="true" className="size-3.5 text-brand" strokeWidth={1.75} />
+                          </span>
+                          <span>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <Link
+                      href={`/services/${s.slug}`}
+                      className="mt-auto flex items-center justify-between gap-4 border-t border-line pt-6 text-sm font-medium"
+                    >
+                      <span>See what is included</span>
+                      <span className="service-card-arrow flex size-10 shrink-0 items-center justify-center rounded-full bg-surface text-ink group-hover:bg-brand group-hover:text-white">
+                        <ArrowUpRight aria-hidden="true" className="size-5" strokeWidth={1.75} />
                       </span>
-                      <h3 className="mt-4 font-display text-[clamp(2rem,4vw,3.25rem)] font-semibold leading-[1.05] tracking-tight">
-                        <Link href={`/services/${s.slug}`} className="service-row-title hover:text-brand">
-                          {s.title}
-                        </Link>
-                      </h3>
-                    </div>
-                    <div>
-                      <p className="max-w-prose text-lg text-muted">{s.shortDesc}</p>
-                      <ul className="mt-6 grid gap-x-8 gap-y-2 text-sm sm:grid-cols-2">
-                        {s.features.map((f) => (
-                          <li key={f} className="flex items-start gap-2.5">
-                            <Check aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-brand" strokeWidth={1.75} />
-                            {f}
-                          </li>
-                        ))}
-                      </ul>
-                      <Link
-                        href={`/services/${s.slug}`}
-                        className="mt-7 inline-flex items-center gap-1.5 text-sm font-medium underline decoration-brand decoration-2 underline-offset-4 hover:text-brand"
-                      >
-                        See what is included
-                        <ArrowUpRight aria-hidden="true" className="service-included-arrow size-4" />
-                      </Link>
-                    </div>
-                  </div>
+                    </Link>
+                  </article>
                 </li>
               ))}
             </ul>

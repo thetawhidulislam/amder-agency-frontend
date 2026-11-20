@@ -95,7 +95,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             <SectionHeading title={`Work in ${service.title}`} />
             <div className="mt-10 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
               {service.portfolio.map((item) => (
-                <PortfolioCard key={item.id} item={item} />
+                <PortfolioCard key={item.id} item={item} serviceTitle={service.title} />
               ))}
             </div>
           </Container>
