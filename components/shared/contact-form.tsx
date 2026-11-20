@@ -52,7 +52,7 @@ export function ContactForm({ services, defaultServiceId = "" }: { services: Ser
     return (
       <div role="status" className="border-l-2 border-brand py-2 pl-6">
         <div className="flex items-center gap-3">
-          <CircleCheck aria-hidden="true" className="contact-success-icon size-8 shrink-0 text-brand" />
+          <CircleCheck aria-hidden="true" className="contact-success-icon size-7 shrink-0 text-brand" strokeWidth={1.75} />
           <h2 className="font-display text-3xl font-semibold">Message received</h2>
         </div>
         <p className="mt-3 max-w-md text-muted">Thank you. Our team will contact you soon on the number you gave us.</p>
@@ -120,7 +120,7 @@ export function ContactForm({ services, defaultServiceId = "" }: { services: Ser
       <Button type="submit" size="lg" disabled={isSubmitting}>
         {isSubmitting ? (
           <>
-            <Loader2 aria-hidden="true" className="contact-submit-spinner size-4 animate-spin" />
+            <Loader2 aria-hidden="true" className="contact-submit-spinner size-4 animate-spin" strokeWidth={1.75} />
             Sending...
           </>
         ) : (

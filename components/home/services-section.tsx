@@ -48,7 +48,7 @@ export function ServicesSection({
                       <ul className="mt-6 grid gap-x-8 gap-y-2 text-sm sm:grid-cols-2">
                         {s.features.map((f) => (
                           <li key={f} className="flex items-start gap-2.5">
-                            <Check aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-brand" />
+                            <Check aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-brand" strokeWidth={1.75} />
                             {f}
                           </li>
                         ))}

@@ -18,7 +18,7 @@ export function Process() {
                 <li key={step.title} className="process-step group">
                   <div className="relative z-10 flex items-center gap-4">
                     <span className="process-icon flex size-12 items-center justify-center border border-white/30 bg-ink">
-                      <Icon aria-hidden="true" className="size-6 text-brand group-hover:text-white" />
+                      <Icon aria-hidden="true" className="size-6 text-brand group-hover:text-white" strokeWidth={1.75} />
                     </span>
                     <span className="font-display text-5xl font-semibold text-brand" aria-hidden="true">
                       {i + 1}

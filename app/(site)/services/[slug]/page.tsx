@@ -57,7 +57,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 <ul className="mt-5 border-t border-line">
                 {service.features.map((f) => (
                   <li key={f} className="flex gap-3 border-b border-line py-3.5">
-                    <Check aria-hidden="true" className="mt-1 size-4 shrink-0 text-brand" />
+                    <Check aria-hidden="true" className="mt-1 size-4 shrink-0 text-brand" strokeWidth={1.75} />
                     {f}
                   </li>
                 ))}
@@ -73,7 +73,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                   className={cn(buttonClass({ size: "lg" }), "mt-5 w-full")}
                 >
                   Ask about {service.title}
-                  <ArrowUpRight aria-hidden="true" className="motion-arrow size-4" />
+                  <ArrowUpRight aria-hidden="true" className="motion-arrow size-4" strokeWidth={1.75} />
                 </Link>
               </div>
             </aside>

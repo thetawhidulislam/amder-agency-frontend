@@ -55,7 +55,7 @@ export function Footer({ settings, services }: { settings: Settings; services: S
             {settings.phone ? (
               <li>
                 <span className="flex items-center gap-2">
-                  <Phone aria-hidden="true" className="size-4 shrink-0 text-brand" />
+                  <Phone aria-hidden="true" className="size-4 shrink-0 text-brand" strokeWidth={1.75} />
                   <a href={`tel:${settings.phone.replace(/\s/g, "")}`} className="hover:text-white">
                     {settings.phone}
                   </a>
@@ -64,14 +64,14 @@ export function Footer({ settings, services }: { settings: Settings; services: S
             ) : null}
             {settings.whatsapp ? (
               <li className="flex items-center gap-2">
-                <MessageCircle aria-hidden="true" className="size-4 shrink-0 text-brand" />
+                <MessageCircle aria-hidden="true" className="size-4 shrink-0 text-brand" strokeWidth={1.75} />
                 <span>WhatsApp: {settings.whatsapp}</span>
               </li>
             ) : null}
             {settings.email ? (
               <li>
                 <span className="flex items-center gap-2">
-                  <Mail aria-hidden="true" className="size-4 shrink-0 text-brand" />
+                  <Mail aria-hidden="true" className="size-4 shrink-0 text-brand" strokeWidth={1.75} />
                   <a href={`mailto:${settings.email}`} className="hover:text-white">
                     {settings.email}
                   </a>
@@ -80,7 +80,7 @@ export function Footer({ settings, services }: { settings: Settings; services: S
             ) : null}
             {settings.address ? (
               <li className="flex items-center gap-2">
-                <MapPin aria-hidden="true" className="size-4 shrink-0 text-brand" />
+                <MapPin aria-hidden="true" className="size-4 shrink-0 text-brand" strokeWidth={1.75} />
                 <span>{settings.address}</span>
               </li>
             ) : null}

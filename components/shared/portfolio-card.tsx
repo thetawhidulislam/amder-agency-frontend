@@ -27,7 +27,7 @@ export function PortfolioCard({
           className="portfolio-image object-cover"
         />
         <span aria-hidden="true" className="portfolio-card-arrow absolute bottom-4 right-4 flex size-10 items-center justify-center rounded-full bg-ink text-white">
-          <ArrowUpRight className="size-5" />
+          <ArrowUpRight className="size-5" strokeWidth={1.75} />
         </span>
       </div>
       <h3 className="mt-4 font-display text-xl font-semibold group-hover:text-brand">

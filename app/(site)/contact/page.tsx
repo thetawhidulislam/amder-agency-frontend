@@ -34,7 +34,7 @@ export default async function ContactPage({ searchParams }: Props) {
             {whatsapp ? (
               <a href={whatsapp} target="_blank" rel="noopener noreferrer" className={cn(buttonClass({ size: "lg" }), "mt-8")}>
                 Chat on WhatsApp
-                <ArrowUpRight aria-hidden="true" className="motion-arrow size-4" />
+                <ArrowUpRight aria-hidden="true" className="motion-arrow size-4" strokeWidth={1.75} />
               </a>
             ) : null}
 
@@ -42,7 +42,7 @@ export default async function ContactPage({ searchParams }: Props) {
               {settings.phone ? (
                 <div>
                   <dt className="flex items-center gap-2 font-medium">
-                    <Phone aria-hidden="true" className="size-4 text-brand" />
+                    <Phone aria-hidden="true" className="size-4 text-brand" strokeWidth={1.75} />
                     Phone
                   </dt>
                   <dd className="mt-1 text-muted">
@@ -55,7 +55,7 @@ export default async function ContactPage({ searchParams }: Props) {
               {settings.whatsapp ? (
                 <div>
                   <dt className="flex items-center gap-2 font-medium">
-                    <MessageCircle aria-hidden="true" className="size-4 text-brand" />
+                    <MessageCircle aria-hidden="true" className="size-4 text-brand" strokeWidth={1.75} />
                     WhatsApp
                   </dt>
                   <dd className="mt-1 text-muted">{settings.whatsapp}</dd>
@@ -64,7 +64,7 @@ export default async function ContactPage({ searchParams }: Props) {
               {settings.email ? (
                 <div>
                   <dt className="flex items-center gap-2 font-medium">
-                    <Mail aria-hidden="true" className="size-4 text-brand" />
+                    <Mail aria-hidden="true" className="size-4 text-brand" strokeWidth={1.75} />
                     Email
                   </dt>
                   <dd className="mt-1 text-muted">
@@ -77,7 +77,7 @@ export default async function ContactPage({ searchParams }: Props) {
               {settings.address ? (
                 <div>
                   <dt className="flex items-center gap-2 font-medium">
-                    <MapPin aria-hidden="true" className="size-4 text-brand" />
+                    <MapPin aria-hidden="true" className="size-4 text-brand" strokeWidth={1.75} />
                     Address
                   </dt>
                   <dd className="mt-1 text-muted">{settings.address}</dd>
@@ -86,7 +86,7 @@ export default async function ContactPage({ searchParams }: Props) {
               {settings.businessHours ? (
                 <div>
                   <dt className="flex items-center gap-2 font-medium">
-                    <Clock aria-hidden="true" className="size-4 text-brand" />
+                    <Clock aria-hidden="true" className="size-4 text-brand" strokeWidth={1.75} />
                     Business hours
                   </dt>
                   <dd className="mt-1 text-muted">{settings.businessHours}</dd>

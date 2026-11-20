@@ -22,7 +22,7 @@ export function CtaBand({ whatsapp, title = "Let's build, promote and grow, toge
               className={cn(buttonClass({ variant: "ink", size: "lg" }), "button-wipe button-wipe-cta-primary")}
             >
               Start a project
-              <ArrowUpRight aria-hidden="true" className="motion-arrow size-4" />
+              <ArrowUpRight aria-hidden="true" className="motion-arrow size-4" strokeWidth={1.75} />
             </Link>
             {whatsapp ? (
               <a

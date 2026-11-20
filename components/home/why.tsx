@@ -19,7 +19,7 @@ export function Why() {
             return (
               <div key={p.title} className="grid gap-1 border-b border-line border-l-[3px] border-l-transparent py-6 pl-5 hover:border-l-brand sm:grid-cols-[13rem_1fr] sm:gap-8">
                 <dt className="flex items-center gap-3 font-display text-xl font-semibold">
-                  <Icon aria-hidden="true" className="size-6 shrink-0 text-brand" />
+                  <Icon aria-hidden="true" className="size-6 shrink-0 text-brand" strokeWidth={1.75} />
                   {p.title}
                 </dt>
                 <dd className="text-muted">{p.text}</dd>

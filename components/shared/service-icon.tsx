@@ -13,5 +13,5 @@ export const serviceIconNames = Object.keys(icons);
 
 export function ServiceIcon({ name, ...props }: { name?: string | null } & Omit<LucideProps, "name">) {
   const Icon = (name && icons[name as keyof typeof icons]) || Sparkles;
-  return <Icon aria-hidden {...props} />;
+  return <Icon aria-hidden {...props} strokeWidth={props.strokeWidth ?? 1.75} />;
 }
