@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { notFound } from "next/navigation";
 import { CtaBand } from "@/components/home/cta-band";
 import { Container, Section } from "@/components/shared/container";
@@ -52,6 +53,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               <p className="mt-6 max-w-xl text-xl text-muted">{service.shortDesc}</p>
               <Link href={`/contact?service=${service.slug}`} className={cn(buttonClass({ size: "lg" }), "mt-9")}>
                 Ask about {service.title}
+                <ArrowUpRight aria-hidden="true" className="size-4 transition-transform duration-250 ease-[var(--ease-out)] group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
               </Link>
             </div>
 

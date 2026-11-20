@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ArrowUpRight } from "lucide-react";
 import { Container, Section } from "@/components/shared/container";
 import { ContactForm } from "@/components/shared/contact-form";
 import { buttonClass } from "@/components/ui/button";
@@ -32,6 +33,7 @@ export default async function ContactPage({ searchParams }: Props) {
           {whatsapp ? (
             <a href={whatsapp} target="_blank" rel="noopener noreferrer" className={cn(buttonClass({ size: "lg" }), "mt-8")}>
               Chat on WhatsApp
+              <ArrowUpRight aria-hidden="true" className="size-4 transition-transform duration-250 ease-[var(--ease-out)] group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </a>
           ) : null}
 

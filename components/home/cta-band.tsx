@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/shared/container";
 import { buttonClass } from "@/components/ui/button";
 
@@ -13,6 +14,7 @@ export function CtaBand({ whatsapp, title = "Let's build, promote and grow, toge
         <div className="flex flex-wrap gap-3">
           <Link href="/contact" className={buttonClass({ variant: "ink", size: "lg" })}>
             Start a project
+            <ArrowUpRight aria-hidden="true" className="size-4 transition-transform duration-250 ease-[var(--ease-out)] group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
           </Link>
           {whatsapp ? (
             <a

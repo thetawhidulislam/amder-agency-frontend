@@ -3,6 +3,7 @@ import { FeaturedWork } from "@/components/home/featured-work";
 import { Hero } from "@/components/home/hero";
 import { Industries } from "@/components/home/industries";
 import { Process } from "@/components/home/process";
+import { ServiceMarquee } from "@/components/home/service-marquee";
 import { ServicesSection } from "@/components/home/services-section";
 import { Why } from "@/components/home/why";
 import { getPortfolio, getServices, getSettings } from "@/lib/api-server";
@@ -21,6 +22,7 @@ export default async function HomePage() {
   return (
     <>
       <Hero services={services} whatsapp={whatsapp} />
+      <ServiceMarquee services={services} />
       <ServicesSection services={services} />
       <Process />
       <Why />

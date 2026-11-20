@@ -24,6 +24,8 @@
   --surface: #f4f4f4;
   --muted: rgb(11 11 11 / 0.66);
   --line: rgb(11 11 11 / 0.14);
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --dur: 600ms;
 }
 
 .theme-dark {
@@ -55,25 +57,122 @@ body {
   color: var(--color-brand-contrast);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .rise {
-    animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
-    animation-delay: calc(var(--i, 0) * 110ms);
+.motion-reveal[data-ready="true"]:not([data-visible="true"]) {
+  opacity: 0;
+  transform: translateY(var(--reveal-y, 24px));
+}
+
+.motion-reveal {
+  transition:
+    opacity var(--dur) var(--ease-out) var(--reveal-delay, 0ms),
+    transform var(--dur) var(--ease-out) var(--reveal-delay, 0ms);
+}
+
+.button-wipe {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.button-wipe::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  content: "";
+  transform: translateX(-101%);
+  transition: transform 250ms var(--ease-out);
+}
+
+.button-wipe:hover::before,
+.button-wipe:focus-visible::before {
+  transform: translateX(0);
+}
+
+.button-wipe-primary::before {
+  background: #bd141d;
+}
+
+.button-wipe-outline::before {
+  background: #0b0b0b;
+}
+
+.button-wipe-outline:hover,
+.button-wipe-outline:focus-visible {
+  color: #ffffff;
+}
+
+.service-marquee-track {
+  animation: service-marquee 40s linear infinite;
+}
+
+.service-marquee:hover .service-marquee-track {
+  animation-play-state: paused;
+}
+
+.hero-art-float {
+  animation: hero-art-float 8s var(--ease-out) infinite alternate;
+}
+
+.mobile-nav-enter {
+  animation: mobile-nav-enter 200ms var(--ease-out) both;
+}
+
+@keyframes service-marquee {
+  to {
+    transform: translateX(-50%);
   }
-  @keyframes rise {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: none;
-    }
+}
+
+@keyframes hero-art-float {
+  from {
+    transform: translateY(-8px);
+  }
+  to {
+    transform: translateY(8px);
+  }
+}
+
+@keyframes mobile-nav-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  .motion-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .service-marquee-track,
+  .hero-art-float,
+  .mobile-nav-enter {
+    animation: none !important;
+  }
+
+  .service-marquee-track {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .service-marquee-track > [aria-hidden="true"] {
+    display: none;
+  }
+
+  .service-marquee {
+    height: auto;
+    min-height: 3.5rem;
+    overflow: visible;
   }
 }

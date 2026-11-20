@@ -14,6 +14,10 @@ const body = Hind_Siliguri({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
   title: { default: `${siteConfig.name} | ${siteConfig.tagline}`, template: `%s | ${siteConfig.name}` },
   description: siteConfig.description,
   openGraph: {

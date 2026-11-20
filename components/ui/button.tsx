@@ -20,7 +20,9 @@ const sizes: Record<Size, string> = {
 /** Use on <Link> too: <Link className={buttonClass({ variant: "outline" })}> */
 export function buttonClass({ variant = "primary", size = "md" }: { variant?: Variant; size?: Size } = {}) {
   return cn(
-    "inline-flex shrink-0 items-center justify-center gap-2 rounded-sm font-medium transition-colors disabled:pointer-events-none disabled:opacity-50",
+    "group inline-flex shrink-0 items-center justify-center gap-2 rounded-sm font-medium disabled:pointer-events-none disabled:opacity-50",
+    variant === "primary" && "button-wipe button-wipe-primary",
+    variant === "outline" && "button-wipe button-wipe-outline",
     sizes[size],
     variants[variant]
   );
