@@ -15,6 +15,7 @@ import { SplitHeading } from "@/components/motion/split-heading";
 import { whyPoints } from "@/config/site";
 import { MOTION_LEVEL } from "@/lib/motion";
 import type { Service } from "@/lib/types";
+import { useSiteReady } from "@/hooks/use-site-ready";
 
 export function Hero({
   services,
@@ -23,6 +24,7 @@ export function Hero({
   services: Service[];
   whatsapp: string | null;
 }) {
+  const siteReady = useSiteReady();
   const sectionRef = useRef<HTMLElement>(null);
   const reducedMotion = usePrefersReducedMotion();
   const motionEnabled = MOTION_LEVEL === "rich" && !reducedMotion;
@@ -42,10 +44,11 @@ export function Hero({
       <m.div className="relative z-10" style={{ y: contentY, opacity: contentOpacity }}>
       <Container className="relative grid items-center gap-12 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:py-24">
         <div className="relative z-10 min-w-0">
-          <Reveal>
+          <Reveal ready={siteReady}>
             <SectionChip className="mb-6">One-stop solution</SectionChip>
           </Reveal>
           <SplitHeading
+            ready={siteReady}
             as="h1"
             text={"One agency.\nFour specialist teams.\nOne plan for your business."}
             highlight={{ start: 5, end: 10 }}
@@ -53,12 +56,12 @@ export function Hero({
             lineClassName="whitespace-normal lg:whitespace-nowrap"
             className="font-display text-[clamp(2.25rem,3.5vw,3.5rem)] font-semibold leading-[1.04] tracking-tight"
           />
-          <Reveal delay={500}>
+          <Reveal ready={siteReady} delay={500}>
             <p className="mt-6 max-w-lg text-lg leading-relaxed text-muted">
               Marketing, design, video and web, coordinated by one team so every part of your brand works together.
             </p>
           </Reveal>
-          <Reveal delay={620}>
+          <Reveal ready={siteReady} delay={620}>
             <div className="mt-8 flex flex-wrap gap-3">
               <Magnetic>
                 <Link href="/contact" className={publicButtonClass({ size: "lg" })}>
@@ -75,7 +78,7 @@ export function Hero({
               )}
             </div>
           </Reveal>
-          <Reveal delay={720}>
+          <Reveal ready={siteReady} delay={720}>
             <ul className="mt-7 flex flex-wrap gap-x-5 gap-y-3">
               {whyPoints.slice(0, 3).map((point) => (
                 <li key={point.title} className="inline-flex items-center gap-2 text-sm font-medium">
@@ -87,7 +90,7 @@ export function Hero({
           </Reveal>
         </div>
 
-        <Reveal delay={1200} className="hero-flow-reveal overflow-visible">
+        <Reveal ready={siteReady} delay={1200} className="hero-flow-reveal overflow-visible">
           <div className="hero-flow relative isolate flex flex-col">
             <span
               aria-hidden="true"

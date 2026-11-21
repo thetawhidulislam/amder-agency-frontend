@@ -13,6 +13,7 @@ export function SplitHeading({
   lineClassName = "",
   highlight,
   delay = 0,
+  ready = true,
 }: {
   as?: HeadingTag;
   text: string;
@@ -20,6 +21,7 @@ export function SplitHeading({
   lineClassName?: string;
   highlight?: { start: number; end: number };
   delay?: number;
+  ready?: boolean;
 }) {
   const reducedMotion = usePrefersReducedMotion();
   const Heading = as === "h1" ? m.h1 : m.h2;
@@ -52,8 +54,8 @@ export function SplitHeading({
                   className={`${spacingClass} inline-block overflow-hidden align-bottom`}
                 >
                   <m.span
-                    initial={isCalm ? { opacity: 0 } : { y: "110%", opacity: 0 }}
-                    whileInView={isCalm ? { opacity: 1 } : { y: 0, opacity: 1 }}
+                    initial={isStatic || !ready ? false : isCalm ? { opacity: 0 } : { y: "110%", opacity: 0 }}
+                    animate={ready ? (isCalm ? { opacity: 1 } : { y: 0, opacity: 1 }) : undefined}
                     viewport={{ once: true, amount: 0.25 }}
                     transition={{
                       duration: DURATION.reveal,

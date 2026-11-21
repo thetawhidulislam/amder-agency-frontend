@@ -153,7 +153,7 @@ export function ContactForm({ services, defaultServiceId = "" }: { services: Ser
             <div className="grid gap-5 sm:grid-cols-2">
               <Reveal delay={0} className="overflow-visible">
                 <AnimatedContactField label="Your name" htmlFor="name" error={errors.name?.message}>
-                  <Input id="name" autoComplete="name" aria-invalid={!!errors.name} className="contact-field" {...register("name")} />
+                  <Input id="name" autoComplete="name" aria-invalid={!!errors.name} className="contact-field " {...register("name")} />
                 </AnimatedContactField>
               </Reveal>
               <Reveal delay={50} className="overflow-visible">

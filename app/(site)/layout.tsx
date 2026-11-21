@@ -3,7 +3,7 @@ import { Navbar } from "@/components/layout/navbar";
 import { ScrollToTop } from "@/components/layout/scroll-to-top";
 import { WhatsAppFab } from "@/components/layout/whatsapp-fab";
 import { MotionProvider } from "@/components/motion/motion-provider";
-import { PageIntro } from "@/components/motion/page-intro";
+import { Preloader } from "@/components/motion/preloader";
 import { ScrollProgress } from "@/components/motion/scroll-progress";
 import { siteConfig } from "@/config/site";
 import { getServices, getSettings } from "@/lib/api-server";
@@ -26,7 +26,15 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
 
   return (
     <MotionProvider>
-      <PageIntro />
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `(function(){try{var forced=new URLSearchParams(location.search).has("preloader");if(!forced&&(sessionStorage.getItem("aa-preloader")||matchMedia("(prefers-reduced-motion: reduce)").matches)){document.documentElement.dataset.pl="skip"}else{document.documentElement.dataset.pl="active"}}catch(e){document.documentElement.dataset.pl="skip"}})();`,
+        }}
+      />
+      <Preloader />
+      <noscript>
+        <style>{"#preloader{display:none!important}"}</style>
+      </noscript>
       <ScrollProgress />
       <Navbar />
       <main id="main">{children}</main>

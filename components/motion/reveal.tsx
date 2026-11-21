@@ -33,6 +33,7 @@ type RevealProps = {
   distance?: number;
   as?: "div" | "span";
   className?: string;
+  ready?: boolean;
 };
 
 const revealStates: Record<RevealVariant | "fade", { initial: Record<string, string | number>; visible: Record<string, string | number> }> = {
@@ -81,6 +82,7 @@ export function Reveal({
   distance = 24,
   as = "div",
   className,
+  ready = true,
 }: RevealProps) {
   const reducedMotion = usePrefersReducedMotion();
   const [visible, setVisible] = useState(false);
@@ -102,8 +104,8 @@ export function Reveal({
 
   return (
     <MotionElement
-      initial={isStatic ? false : states.initial}
-      whileInView={states.visible}
+      initial={isStatic || !ready ? false : states.initial}
+      whileInView={ready ? states.visible : undefined}
       viewport={{ once, amount }}
       onViewportEnter={() => setVisible(true)}
       onViewportLeave={() => {
@@ -116,7 +118,7 @@ export function Reveal({
       }}
       className={cn("motion-reveal overflow-hidden", className)}
       data-reveal=""
-      data-ready="true"
+      data-ready={ready ? "true" : "false"}
       data-visible={isStatic || visible ? "true" : "false"}
       data-variant={variant}
       data-motion-level={MOTION_LEVEL}

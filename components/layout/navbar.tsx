@@ -12,6 +12,7 @@ import { publicButtonClass } from "@/components/shared/public-button";
 import { navLinks } from "@/config/site";
 import { EASE, MOTION_LEVEL } from "@/lib/motion";
 import { cn } from "@/lib/utils";
+import { useSiteReady } from "@/hooks/use-site-ready";
 
 const menuVariants = {
   hidden: { opacity: 0, y: -8 },
@@ -29,6 +30,7 @@ const menuListVariants = {
 };
 
 export function Navbar() {
+  const siteReady = useSiteReady();
   const pathname = usePathname();
   const reducedMotion = usePrefersReducedMotion();
   const [open, setOpen] = useState(false);
@@ -65,7 +67,11 @@ export function Navbar() {
     <m.header
       className="pointer-events-none sticky top-0 z-40 h-20"
       initial={false}
-      animate={{ y: hidden && motionEnabled ? "-100%" : 0 }}
+      animate={
+        siteReady
+          ? { opacity: 1, y: hidden && motionEnabled ? "-100%" : 0 }
+          : { opacity: 0, y: -12 }
+      }
       transition={{ duration: 0.3, ease: EASE }}
       data-reveal=""
     >
