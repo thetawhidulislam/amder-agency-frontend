@@ -32,7 +32,7 @@ export const viewport: Viewport = { themeColor: "#ffffff" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable}`}>
+    <html lang="en" data-scroll-behavior="smooth" className={`${display.variable} ${body.variable}`}>
       <body className="min-h-screen antialiased">{children}</body>
     </html>
   );

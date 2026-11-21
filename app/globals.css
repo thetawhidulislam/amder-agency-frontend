@@ -62,55 +62,96 @@ body {
 }
 
 .hero-section {
-  background-color: var(--page);
-  background-image: radial-gradient(circle at 88% 12%, rgb(225 29 39 / 0.08), transparent 34%);
+  background-color: #ffffff;
+  background-image: linear-gradient(to bottom, #ffffff, #fafafa);
+}
+
+.hero-section::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  content: "";
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgb(11 11 11 / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(11 11 11 / 0.05) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse at 70% 40%, #000 20%, transparent 70%);
 }
 
 .page-header {
   background-image: radial-gradient(circle at 50% 0%, rgb(225 29 39 / 0.06), transparent 52%);
 }
 
-.hero-collage {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+.hero-flow {
   gap: 1rem;
 }
 
-@media (min-width: 64rem) {
-  .hero-collage {
-    height: 560px;
-    grid-template-rows: repeat(3, minmax(0, 1fr));
-  }
-}
-
-.hero-tile {
-  position: relative;
-  min-width: 0;
-  min-height: 0;
+.hero-service-description {
+  display: -webkit-box;
   overflow: hidden;
-  border-radius: var(--radius-card);
-  box-shadow: var(--shadow-card);
-  transition: transform var(--dur) var(--ease-out);
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
 }
 
-.hero-tile:hover,
-.hero-tile:focus-visible {
+.hero-flow-line {
+  position: absolute;
+  top: 12px;
+  bottom: 12px;
+  left: 5px;
+  z-index: -1;
+  width: 2px;
+  transform: scaleY(0);
+  transform-origin: top;
+  background: rgb(11 11 11 / 0.12);
+  transition: transform 900ms var(--ease-out);
+}
+
+.hero-flow-dot {
+  position: absolute;
+  top: 50%;
+  left: 0;
   z-index: 1;
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lift);
+  width: 12px;
+  height: 12px;
+  transform: translateY(-50%);
+  border-radius: 9999px;
+  background: var(--color-brand);
+  box-shadow: 0 0 0 4px #fafafa;
 }
 
-.hero-tile-arrow {
-  transition: transform var(--dur) var(--ease-out);
+.hero-flow-item {
+  --flow-delay: 0ms;
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity var(--dur) var(--ease-out) var(--flow-delay),
+    transform var(--dur) var(--ease-out) var(--flow-delay);
 }
 
-.hero-tile:hover .hero-tile-arrow,
-.hero-tile:focus-visible .hero-tile-arrow {
-  transform: rotate(45deg);
+.hero-flow-item:nth-of-type(2) {
+  --flow-delay: 120ms;
 }
 
-.hero-floating-card {
-  animation: hero-card-float 6s var(--ease-out) infinite alternate;
+.hero-flow-item:nth-of-type(3) {
+  --flow-delay: 240ms;
+}
+
+.hero-flow-item:nth-of-type(4) {
+  --flow-delay: 360ms;
+}
+
+.hero-flow-item:nth-of-type(5) {
+  --flow-delay: 480ms;
+}
+
+.hero-flow-reveal[data-ready="true"]:not([data-visible="true"]) .hero-flow-item {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.hero-flow-reveal[data-visible="true"] .hero-flow-line {
+  transform: scaleY(1);
 }
 
 .public-button {
@@ -388,15 +429,6 @@ body {
   }
 }
 
-@keyframes hero-card-float {
-  from {
-    transform: translateY(-6px);
-  }
-  to {
-    transform: translateY(6px);
-  }
-}
-
 @keyframes mobile-nav-enter {
   from {
     opacity: 0;
@@ -430,24 +462,37 @@ body {
     transition: none !important;
   }
 
-  .hero-tile,
-  .hero-tile-arrow,
   .public-button,
   .scroll-to-top {
     transition: none !important;
   }
 
-  .hero-tile:hover,
-  .hero-tile:focus-visible,
-  .hero-tile:hover .hero-tile-arrow,
-  .hero-tile:focus-visible .hero-tile-arrow,
   .public-button:hover:not(:disabled),
   .public-button:focus-visible:not(:disabled) {
     transform: none;
   }
 
-  .hero-floating-card {
-    animation: none;
+  .hero-flow-item,
+  .hero-flow-item:hover {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .hero-flow-line {
+    transform: scaleY(1) !important;
+    transition: none !important;
+  }
+
+  .hero-service-card,
+  .hero-service-icon,
+  .hero-service-arrow {
+    transition: none !important;
+  }
+
+  .hero-service-card:hover,
+  .hero-service-card:focus-visible {
+    transform: none !important;
   }
 
   .service-card,
@@ -521,7 +566,6 @@ body {
   }
 
   .service-marquee-track,
-  .hero-floating-card,
   .mobile-nav-enter,
   .contact-success-icon {
     animation: none !important;

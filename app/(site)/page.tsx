@@ -21,7 +21,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <Hero services={services} featured={featured.items} whatsapp={whatsapp} />
+      <Hero services={services} whatsapp={whatsapp} />
       <ServiceMarquee services={services} />
       <ServicesSection services={services} />
       <Process />

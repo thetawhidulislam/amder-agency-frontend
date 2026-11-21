@@ -16,7 +16,7 @@ export function PortfolioCard({
       href={`/portfolio/${item.slug}`}
       className="portfolio-card group flex h-full flex-col rounded-3xl border border-line bg-white shadow-[var(--shadow-card)]"
     >
-      <div className="portfolio-card-frame relative aspect-[4/3] overflow-hidden rounded-t-3xl bg-surface">
+      <div className="portfolio-card-frame relative aspect-[4/3] overflow-hidden rounded-t-3xl bg-surface" style={{ position: "relative" }}>
         <Image
           src={item.cover}
           alt={item.title}
