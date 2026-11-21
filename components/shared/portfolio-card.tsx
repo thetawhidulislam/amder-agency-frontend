@@ -10,11 +10,13 @@ export function PortfolioCard({
   serviceTitle,
   surface = "default",
   imageReveal = false,
+  priority = false,
 }: {
   item: PortfolioSummary & { service?: { title: string } };
   serviceTitle?: string;
   surface?: "default" | "transparent";
   imageReveal?: boolean;
+  priority?: boolean;
 }) {
   const service = serviceTitle ?? item.service?.title;
   return (
@@ -34,6 +36,7 @@ export function PortfolioCard({
               src={item.cover}
               alt={item.title}
               fill
+              priority={priority}
               sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
               className="portfolio-image object-cover"
             />
@@ -43,6 +46,7 @@ export function PortfolioCard({
             src={item.cover}
             alt={item.title}
             fill
+            priority={priority}
             sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
             className="portfolio-image object-cover"
           />

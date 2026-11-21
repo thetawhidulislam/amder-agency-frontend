@@ -218,7 +218,7 @@ body {
   background-color: #ffffff;
 }
 
-.motion-reveal[data-ready="true"]:not([data-visible="true"]):not([data-variant="fade"]):not([data-variant^="mask"]) {
+.motion-reveal[data-ready="true"]:not([data-visible="true"]):not([data-variant="fade"]):not([data-variant^="mask"]):not([data-motion-level="calm"]) {
   opacity: 0;
   transform: translateY(var(--reveal-y, 24px));
 }
@@ -398,6 +398,72 @@ body {
 
 .portfolio-image {
   transition: transform var(--dur-hover) var(--ease-out);
+}
+
+.service-back-link,
+.pagination-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.service-back-arrow,
+.pagination-arrow-prev,
+.pagination-arrow-next {
+  transition: transform var(--dur-hover) var(--ease-out);
+}
+
+.service-back-link:hover .service-back-arrow,
+.service-back-link:focus-visible .service-back-arrow,
+.pagination-link:hover .pagination-arrow-prev,
+.pagination-link:focus-visible .pagination-arrow-prev {
+  transform: translateX(-4px);
+}
+
+.pagination-link:hover .pagination-arrow-next,
+.pagination-link:focus-visible .pagination-arrow-next {
+  transform: translateX(4px);
+}
+
+.portfolio-filter-chip {
+  transition: transform var(--dur-hover) var(--ease-out);
+}
+
+.portfolio-filter-chip[data-motion-level="rich"]:hover,
+.portfolio-filter-chip[data-motion-level="rich"]:focus-visible {
+  transform: translateY(-2px);
+}
+
+.portfolio-gallery-image {
+  transition: transform var(--dur-hover) var(--ease-out);
+}
+
+.portfolio-gallery-frame:hover .portfolio-gallery-image,
+.portfolio-gallery-frame:focus-within .portfolio-gallery-image {
+  transform: scale(1.03);
+}
+
+.loading-skeleton {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.loading-skeleton[data-motion-level="rich"]::after {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  content: "";
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.72), transparent);
+  animation: loading-skeleton-shimmer 1.5s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes loading-skeleton-shimmer {
+  to {
+    transform: translateX(100%);
+  }
 }
 
 .group:hover .portfolio-image,
@@ -582,6 +648,11 @@ body {
   .service-card,
   .portfolio-card,
   .portfolio-work-card,
+  .portfolio-filter-chip,
+  .service-back-arrow,
+  .pagination-arrow-prev,
+  .pagination-arrow-next,
+  .portfolio-gallery-image,
   .process-icon-ring,
   .service-card-icon,
   .footer-link,
@@ -607,7 +678,17 @@ body {
   .footer-social:hover,
   .footer-social:focus-visible,
   .group:hover .portfolio-card-arrow,
-  .group:focus-visible .portfolio-card-arrow {
+  .group:focus-visible .portfolio-card-arrow,
+  .portfolio-filter-chip:hover,
+  .portfolio-filter-chip:focus-visible,
+  .service-back-link:hover .service-back-arrow,
+  .service-back-link:focus-visible .service-back-arrow,
+  .pagination-link:hover .pagination-arrow-prev,
+  .pagination-link:focus-visible .pagination-arrow-prev,
+  .pagination-link:hover .pagination-arrow-next,
+  .pagination-link:focus-visible .pagination-arrow-next,
+  .portfolio-gallery-frame:hover .portfolio-gallery-image,
+  .portfolio-gallery-frame:focus-within .portfolio-gallery-image {
     opacity: 1 !important;
     transform: none !important;
   }
@@ -642,6 +723,11 @@ body {
 
   .portfolio-image {
     transform: none;
+  }
+
+  .loading-skeleton::after {
+    display: none;
+    animation: none !important;
   }
 
   .contact-success-icon {

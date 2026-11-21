@@ -32,7 +32,7 @@ export function AnimatedGrid({
     >
       {items.map((item, index) => (
         <m.div
-          key={item.key ?? index}
+          key={index}
           className="h-full min-w-0"
           variants={{
             hidden: simpleReveal ? { opacity: 0 } : { opacity: 0, y: 16 },

@@ -3,7 +3,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CtaBand } from "@/components/home/cta-band";
+import { AnimatedTags } from "@/components/portfolio/animated-tags";
+import { PortfolioCover } from "@/components/portfolio/portfolio-cover";
 import { Container, Section } from "@/components/shared/container";
+import { Reveal } from "@/components/motion/reveal";
+import { SplitHeading } from "@/components/motion/split-heading";
 import { getPortfolioItem, getSettings } from "@/lib/api-server";
 import { whatsappLink, youtubeEmbed } from "@/lib/utils";
 
@@ -38,44 +42,43 @@ export default async function PortfolioDetailPage({ params }: Props) {
           <Link href="/portfolio" className="text-sm text-muted hover:text-brand">
             All projects
           </Link>
-          <h1 className="before:mb-6 before:block before:h-1 before:w-12 before:bg-brand mt-8 max-w-4xl font-display text-5xl font-semibold leading-[1.02] tracking-tight text-balance sm:text-7xl">
-            {item.title}
-          </h1>
-          <p className="mt-5 text-lg text-muted">
-            <Link href={`/portfolio?service=${item.service.slug}`} className="underline decoration-brand underline-offset-4 hover:text-brand">
-              {item.service.title}
-            </Link>
-            {item.client ? <> for {item.client}</> : null}
-          </p>
+          <SplitHeading
+            as="h1"
+            text={item.title}
+            className="before:mb-6 before:block before:h-1 before:w-12 before:bg-brand mt-8 max-w-4xl font-display text-5xl font-semibold leading-[1.02] tracking-tight text-balance sm:text-7xl"
+          />
+          <Reveal variant="up" className="mt-5">
+            <p className="text-lg text-muted">
+              <Link href={`/portfolio?service=${item.service.slug}`} className="underline decoration-brand underline-offset-4 hover:text-brand">
+                {item.service.title}
+              </Link>
+              {item.client ? <> for {item.client}</> : null}
+            </p>
+          </Reveal>
 
-          <div className="relative mt-12 aspect-[16/9] overflow-hidden rounded-3xl bg-white shadow-[var(--shadow-card)]">
-            <Image src={item.cover} alt={item.title} fill priority sizes="(min-width: 1152px) 1100px, 100vw" className="object-cover" />
-          </div>
+          <PortfolioCover src={item.cover} alt={item.title} />
         </Container>
       </Section>
 
       <Container className="grid gap-10 pb-20 lg:grid-cols-[1fr_2fr] lg:gap-20">
         <div>
           {item.tags.length > 0 ? (
-            <ul className="flex flex-wrap gap-2">
-              {item.tags.map((t) => (
-                <li key={t} className="rounded-full border border-line bg-white px-3 py-1 text-sm text-muted">
-                  {t}
-                </li>
-              ))}
-            </ul>
+            <AnimatedTags tags={item.tags} />
           ) : null}
         </div>
         <div className="max-w-2xl space-y-5 text-lg text-muted">
           {paragraphs.map((p, i) => (
-            <p key={i}>{p}</p>
+            <Reveal key={i} variant="up" delay={i * 100}>
+              <p>{p}</p>
+            </Reveal>
           ))}
         </div>
       </Container>
 
       {embed ? (
         <Container className="pb-20">
-          <div className="aspect-video overflow-hidden rounded-3xl bg-white shadow-[var(--shadow-card)]">
+          <Reveal variant="fade">
+            <div className="aspect-video overflow-hidden rounded-3xl bg-white shadow-[var(--shadow-card)]">
             <iframe
               src={embed}
               title={`${item.title} video`}
@@ -84,7 +87,8 @@ export default async function PortfolioDetailPage({ params }: Props) {
               allowFullScreen
               className="size-full"
             />
-          </div>
+            </div>
+          </Reveal>
         </Container>
       ) : item.videoUrl ? (
         <Container className="pb-20">
@@ -97,9 +101,14 @@ export default async function PortfolioDetailPage({ params }: Props) {
       {item.gallery.length > 0 ? (
         <Container className="grid gap-6 pb-24 sm:grid-cols-2">
           {item.gallery.map((src, i) => (
-            <div key={src} className="relative aspect-[4/3] overflow-hidden rounded-3xl bg-white shadow-[var(--shadow-card)]">
-              <Image src={src} alt={`${item.title} image ${i + 1}`} fill sizes="(min-width: 640px) 50vw, 100vw" className="object-cover" />
-            </div>
+            <Reveal
+              key={src}
+              variant={i % 2 === 0 ? "mask-left" : "mask-right"}
+              duration={800}
+              className="portfolio-gallery-frame group relative aspect-[4/3] overflow-hidden rounded-3xl bg-white shadow-[var(--shadow-card)]"
+            >
+              <Image src={src} alt={`${item.title} image ${i + 1}`} fill sizes="(min-width: 640px) 50vw, 100vw" className="portfolio-gallery-image object-cover" />
+            </Reveal>
           ))}
         </Container>
       ) : null}

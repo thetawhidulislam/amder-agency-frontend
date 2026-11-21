@@ -112,6 +112,7 @@ export function Reveal({
       data-ready="true"
       data-visible={isStatic || visible ? "true" : "false"}
       data-variant={variant}
+      data-motion-level={MOTION_LEVEL}
     >
       {children}
     </MotionElement>

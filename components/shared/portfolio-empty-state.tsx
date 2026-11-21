@@ -2,12 +2,18 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Reveal } from "@/components/motion/reveal";
 
-export function PortfolioEmptyState({ className }: { className?: string }) {
+export function PortfolioEmptyState({
+  className,
+  staggerDelay = 80,
+}: {
+  className?: string;
+  staggerDelay?: number;
+}) {
   return (
     <div className={cn(className)}>
       <div aria-hidden="true" className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {[0, 1, 2].map((tile) => (
-          <Reveal key={tile} delay={tile * 80} className="overflow-visible">
+          <Reveal key={tile} delay={tile * staggerDelay} className="overflow-visible">
             <div className="overflow-hidden rounded-3xl border border-line bg-white shadow-[var(--shadow-card)]">
               <div className="relative aspect-[4/3] bg-surface">
                 <Image

@@ -1,12 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { CtaBand } from "@/components/home/cta-band";
 import { Container, Section } from "@/components/shared/container";
+import { AnimatedGrid } from "@/components/portfolio/animated-grid";
+import { PortfolioFilterChips } from "@/components/portfolio/filter-chips";
+import { PortfolioPageIndicator } from "@/components/portfolio/page-indicator";
 import { PageHeader } from "@/components/shared/page-header";
 import { PortfolioCard } from "@/components/shared/portfolio-card";
 import { PortfolioEmptyState } from "@/components/shared/portfolio-empty-state";
 import { getPortfolio, getServices, getSettings } from "@/lib/api-server";
-import { cn, whatsappLink } from "@/lib/utils";
+import { whatsappLink } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Portfolio",
@@ -15,12 +19,6 @@ export const metadata: Metadata = {
 };
 
 type Props = { searchParams: Promise<{ service?: string; page?: string }> };
-
-const chip = (active: boolean) =>
-  cn(
-    "inline-flex h-9 items-center rounded-full border px-4 text-sm",
-    active ? "border-brand bg-brand text-brand-contrast" : "border-line hover:border-fg/50"
-  );
 
 export default async function PortfolioPage({ searchParams }: Props) {
   const { service, page } = await searchParams;
@@ -47,46 +45,47 @@ export default async function PortfolioPage({ searchParams }: Props) {
           <PageHeader chip="Portfolio" title="Our work" intro="A selection of projects across design, video, marketing and web." />
 
           <nav aria-label="Filter by service" className="mt-10 flex flex-wrap gap-2">
-            <Link href="/portfolio" className={chip(!service)}>
-              All
-            </Link>
-            {services.map((s) => (
-              <Link key={s.id} href={`/portfolio?service=${s.slug}`} className={chip(service === s.slug)}>
-                {s.title}
-              </Link>
-            ))}
+            <PortfolioFilterChips services={services} service={service} />
           </nav>
 
           {items.length === 0 ? (
             <div className="mt-14">
-              <PortfolioEmptyState />
+              <PortfolioEmptyState staggerDelay={60} />
               <p className="mt-6 border-t border-line pt-8 text-muted">
                 No projects here yet. Add them from the admin panel, or check back soon.
               </p>
             </div>
           ) : (
-            <div className="mt-14 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
-              {items.map((item) => (
-                <PortfolioCard key={item.id} item={item} />
+            <AnimatedGrid
+              key={`${service ?? "all"}-${current}`}
+              className="mt-14 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3"
+            >
+              {items.map((item, index) => (
+                <PortfolioCard
+                  key={item.id}
+                  item={item}
+                  imageReveal
+                  priority={index === 0}
+                />
               ))}
-            </div>
+            </AnimatedGrid>
           )}
 
           {meta.totalPages > 1 ? (
             <nav aria-label="Pagination" className="mt-16 flex items-center justify-between border-t border-line pt-6 text-sm">
               {current > 1 ? (
-                <Link href={href(current - 1)} className="hover:text-brand">
+                <Link href={href(current - 1)} className="pagination-link hover:text-brand">
+                  <ArrowLeft aria-hidden="true" className="pagination-arrow-prev size-4" />
                   Previous
                 </Link>
               ) : (
                 <span />
               )}
-              <span className="text-muted">
-                Page {meta.page} of {meta.totalPages}
-              </span>
+              <PortfolioPageIndicator page={meta.page} totalPages={meta.totalPages} />
               {current < meta.totalPages ? (
-                <Link href={href(current + 1)} className="hover:text-brand">
+                <Link href={href(current + 1)} className="pagination-link hover:text-brand">
                   Next
+                  <ArrowRight aria-hidden="true" className="pagination-arrow-next size-4" />
                 </Link>
               ) : (
                 <span />
