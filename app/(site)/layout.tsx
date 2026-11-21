@@ -2,6 +2,9 @@ import { Footer } from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
 import { ScrollToTop } from "@/components/layout/scroll-to-top";
 import { WhatsAppFab } from "@/components/layout/whatsapp-fab";
+import { MotionProvider } from "@/components/motion/motion-provider";
+import { PageIntro } from "@/components/motion/page-intro";
+import { ScrollProgress } from "@/components/motion/scroll-progress";
 import { siteConfig } from "@/config/site";
 import { getServices, getSettings } from "@/lib/api-server";
 import { whatsappLink } from "@/lib/utils";
@@ -22,13 +25,15 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
   };
 
   return (
-    <>
+    <MotionProvider>
+      <PageIntro />
+      <ScrollProgress />
       <Navbar />
       <main id="main">{children}</main>
       <Footer settings={settings} services={services} />
       <WhatsAppFab href={whatsappLink(settings.whatsapp, "Hello Amader Agency, I would like to know more about your services.")} />
       <ScrollToTop />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-    </>
+    </MotionProvider>
   );
 }

@@ -26,6 +26,7 @@
   --line: rgb(11 11 11 / 0.1);
   --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
   --dur: 600ms;
+  --dur-hover: 250ms;
   --radius-card: 1.5rem;
   --radius-tile: 1rem;
   --shadow-card: 0 1px 2px rgb(11 11 11 / .04), 0 12px 32px -12px rgb(11 11 11 / .12);
@@ -66,17 +67,20 @@ body {
   background-image: linear-gradient(to bottom, #ffffff, #fafafa);
 }
 
-.hero-section::before {
+.hero-grid-layer {
   position: absolute;
   inset: 0;
   z-index: 0;
-  content: "";
-  pointer-events: none;
   background-image:
     linear-gradient(to right, rgb(11 11 11 / 0.05) 1px, transparent 1px),
     linear-gradient(to bottom, rgb(11 11 11 / 0.05) 1px, transparent 1px);
   background-size: 56px 56px;
   mask-image: radial-gradient(ellipse at 70% 40%, #000 20%, transparent 70%);
+}
+
+.hero-blush-layer {
+  background: radial-gradient(circle, rgb(225 29 39 / 0.08), transparent 70%);
+  filter: blur(24px);
 }
 
 .page-header {
@@ -129,19 +133,23 @@ body {
     transform var(--dur) var(--ease-out) var(--flow-delay);
 }
 
-.hero-flow-item:nth-of-type(2) {
+.hero-flow-item:nth-child(2) {
+  --flow-delay: 0ms;
+}
+
+.hero-flow-item:nth-child(3) {
   --flow-delay: 120ms;
 }
 
-.hero-flow-item:nth-of-type(3) {
+.hero-flow-item:nth-child(4) {
   --flow-delay: 240ms;
 }
 
-.hero-flow-item:nth-of-type(4) {
+.hero-flow-item:nth-child(5) {
   --flow-delay: 360ms;
 }
 
-.hero-flow-item:nth-of-type(5) {
+.hero-flow-item:nth-child(6) {
   --flow-delay: 480ms;
 }
 
@@ -155,7 +163,7 @@ body {
 }
 
 .public-button {
-  transition: transform var(--dur) var(--ease-out);
+  transition: transform var(--dur-hover) var(--ease-out);
 }
 
 .public-button:hover:not(:disabled),
@@ -164,18 +172,11 @@ body {
 }
 
 .scroll-to-top {
-  opacity: 0;
   pointer-events: none;
-  transform: translateY(8px);
-  transition:
-    opacity var(--dur) var(--ease-out),
-    transform var(--dur) var(--ease-out);
 }
 
 .scroll-to-top-visible {
-  opacity: 1;
   pointer-events: auto;
-  transform: translateY(0);
 }
 
 .public-button::before {
@@ -259,48 +260,23 @@ body {
 }
 
 .service-card {
-  --card-delay: 0ms;
   box-shadow: var(--shadow-card);
-  transition:
-    opacity var(--dur) var(--ease-out) var(--card-delay),
-    transform var(--dur) var(--ease-out) var(--card-delay);
+  transition: transform var(--dur-hover) var(--ease-out);
 }
 
-.service-card-item:nth-child(2) .service-card {
-  --card-delay: 80ms;
-}
-
-.service-card-item:nth-child(3) .service-card {
-  --card-delay: 160ms;
-}
-
-.service-card-item:nth-child(4) .service-card {
-  --card-delay: 240ms;
-}
-
-.service-card-item:nth-child(5) .service-card {
-  --card-delay: 320ms;
-}
-
-.service-card-item:nth-child(6) .service-card {
-  --card-delay: 400ms;
-}
-
-.service-grid-reveal[data-ready="true"]:not([data-visible="true"]) .service-card {
-  opacity: 0;
-  transform: translateY(16px);
-}
-
-.service-grid-reveal[data-visible="true"] .service-card {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.service-grid-reveal[data-visible="true"] .service-card:hover,
-.service-grid-reveal[data-visible="true"] .service-card:focus-within {
+.service-card:hover,
+.service-card:focus-within {
   transform: translateY(-4px);
-  transition-delay: 0ms;
   box-shadow: var(--shadow-lift);
+}
+
+.service-card-icon {
+  transition: transform var(--dur-hover) var(--ease-out);
+}
+
+.service-card:hover .service-card-icon,
+.service-card:focus-within .service-card-icon {
+  transform: rotate(8deg) scale(1.08);
 }
 
 .process-step:hover,
@@ -308,8 +284,28 @@ body {
   border-color: rgb(225 29 39 / 0.5);
 }
 
+.process-step {
+  border-color: rgb(255 255 255 / 0.1);
+}
+
+.process-progress-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 100%;
+  height: 2px;
+  transform-origin: left center;
+  background: #e11d27;
+  pointer-events: none;
+}
+
+.process-step-offset {
+  position: relative;
+}
+
 .process-icon-ring {
-  transition: transform var(--dur) var(--ease-out);
+  transition: transform var(--dur-hover) var(--ease-out);
 }
 
 .process-step:hover .process-icon-ring,
@@ -326,35 +322,59 @@ body {
 }
 
 @media (min-width: 64rem) {
-  .process-step:nth-child(3n + 2) {
+  .process-step-offset {
     transform: translateY(-32px);
+  }
+}
+
+@media (max-width: 47.999rem) {
+  .process-progress-line {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    transform-origin: center top;
+  }
+}
+
+.why-rings {
+  animation: why-ring-rotate 60s linear infinite;
+}
+
+@keyframes why-ring-rotate {
+  to {
+    transform: rotate(360deg);
   }
 }
 
 .industry-highlight {
   display: inline-block;
   position: relative;
+  background-image: linear-gradient(#e11d27, #e11d27);
+  background-position: left bottom;
+  background-repeat: no-repeat;
+  background-size: 0 4px;
+  transition: background-size var(--dur) var(--ease-out) var(--industry-delay, 0ms);
 }
 
-.industry-highlight::after {
-  position: absolute;
-  right: 0;
-  bottom: -2px;
-  left: 0;
-  height: 4px;
-  content: "";
-  transform: scaleX(0);
-  transform-origin: left;
-  background: #e11d27;
-  transition: transform var(--dur) var(--ease-out) var(--industry-delay, 0ms);
+.industry-highlight-static {
+  background-size: 100% 4px;
+  transition: none;
 }
 
-.motion-reveal[data-visible="true"] .industry-highlight::after {
-  transform: scaleX(1);
+.motion-reveal[data-visible="true"] .industry-highlight:not(.industry-highlight-static) {
+  background-size: 100% 4px;
+}
+
+.industry-word-clip {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
 }
 
 .portfolio-image {
-  transition: transform var(--dur) var(--ease-out);
+  transition: transform var(--dur-hover) var(--ease-out);
 }
 
 .group:hover .portfolio-image,
@@ -364,13 +384,50 @@ body {
 
 .portfolio-card {
   box-shadow: var(--shadow-card);
-  transition: transform var(--dur) var(--ease-out);
+  transition: transform var(--dur-hover) var(--ease-out);
 }
 
 .portfolio-card:hover,
 .portfolio-card:focus-visible {
   transform: translateY(-4px);
   box-shadow: var(--shadow-lift);
+}
+
+.portfolio-card-arrow {
+  transition: transform var(--dur-hover) var(--ease-out);
+}
+
+.portfolio-work-card {
+  transition: transform var(--dur-hover) var(--ease-out);
+}
+
+.portfolio-work-card:hover,
+.portfolio-work-card:focus-within {
+  transform: translateY(-4px);
+}
+
+.group:hover .portfolio-card-arrow,
+.group:focus-visible .portfolio-card-arrow {
+  transform: rotate(45deg);
+}
+
+.footer-link {
+  display: inline-block;
+  transition: transform var(--dur-hover) var(--ease-out);
+}
+
+.footer-link:hover,
+.footer-link:focus-visible {
+  transform: translateX(4px);
+}
+
+.footer-social {
+  transition: transform var(--dur-hover) var(--ease-out);
+}
+
+.footer-social:hover,
+.footer-social:focus-visible {
+  transform: translateY(-3px) rotate(-6deg);
 }
 
 .contact-field {
@@ -394,7 +451,7 @@ body {
   transform: scaleX(0);
   transform-origin: left;
   background: #e11d27;
-  transition: transform var(--dur) var(--ease-out);
+  transition: transform var(--dur-hover) var(--ease-out);
 }
 
 .nav-link-underline:hover::after,
@@ -403,7 +460,7 @@ body {
 }
 
 .motion-arrow {
-  transition: transform var(--dur) var(--ease-out);
+  transition: transform var(--dur-hover) var(--ease-out);
 }
 
 .group:hover .motion-arrow,
@@ -413,6 +470,10 @@ body {
 
 .service-marquee-track {
   animation: service-marquee 40s linear infinite;
+}
+
+.service-marquee {
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
 }
 
 .service-marquee:hover .service-marquee-track {
@@ -497,7 +558,12 @@ body {
 
   .service-card,
   .portfolio-card,
-  .process-icon-ring {
+  .portfolio-work-card,
+  .process-icon-ring,
+  .service-card-icon,
+  .footer-link,
+  .footer-social,
+  .portfolio-card-arrow {
     transition: none !important;
   }
 
@@ -507,8 +573,18 @@ body {
   .portfolio-card,
   .portfolio-card:hover,
   .portfolio-card:focus-visible,
+  .portfolio-work-card:hover,
+  .portfolio-work-card:focus-within,
   .process-step:hover .process-icon-ring,
-  .process-step:focus-within .process-icon-ring {
+  .process-step:focus-within .process-icon-ring,
+  .service-card:hover .service-card-icon,
+  .service-card:focus-within .service-card-icon,
+  .footer-link:hover,
+  .footer-link:focus-visible,
+  .footer-social:hover,
+  .footer-social:focus-visible,
+  .group:hover .portfolio-card-arrow,
+  .group:focus-visible .portfolio-card-arrow {
     opacity: 1 !important;
     transform: none !important;
   }
@@ -521,7 +597,6 @@ body {
   .motion-arrow,
   .service-card-arrow,
   .section-heading-bar,
-  .industry-highlight::after,
   .hero-headline-line,
   .portfolio-image,
   .contact-field {
@@ -532,8 +607,9 @@ body {
     transform: scaleX(1) !important;
   }
 
-  .industry-highlight::after {
-    transform: scaleX(1);
+  .industry-highlight {
+    background-size: 100% 4px;
+    transition: none !important;
   }
 
   .hero-headline-line {
@@ -567,7 +643,8 @@ body {
 
   .service-marquee-track,
   .mobile-nav-enter,
-  .contact-success-icon {
+  .contact-success-icon,
+  .why-rings {
     animation: none !important;
   }
 

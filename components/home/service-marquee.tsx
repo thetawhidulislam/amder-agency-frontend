@@ -1,3 +1,7 @@
+"use client";
+
+import { useRef, useState } from "react";
+import { useInView } from "motion/react";
 import type { Service } from "@/lib/types";
 
 function ServiceNames({ services }: { services: Service[] }) {
@@ -16,11 +20,24 @@ function ServiceNames({ services }: { services: Service[] }) {
 }
 
 export function ServiceMarquee({ services }: { services: Service[] }) {
+  const marqueeRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(marqueeRef, { amount: 0.1 });
+  const [isHovered, setIsHovered] = useState(false);
+
   if (services.length === 0) return null;
 
   return (
-    <div className="service-marquee h-14 overflow-hidden bg-ink">
-      <div className="service-marquee-track flex h-full w-max items-center">
+    <div
+      ref={marqueeRef}
+      className="service-marquee h-14 overflow-hidden bg-ink"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div
+        className="service-marquee-track flex h-full w-max items-center"
+        data-reveal=""
+        style={{ animationPlayState: isInView && !isHovered ? "running" : "paused" }}
+      >
         <ServiceNames services={services} />
         <div aria-hidden="true">
           <ServiceNames services={services} />

@@ -14,6 +14,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { Container } from "@/components/shared/container";
+import { Reveal } from "@/components/motion/reveal";
 import { navLinks, siteConfig } from "@/config/site";
 import type { Service, Settings } from "@/lib/types";
 
@@ -82,6 +83,7 @@ export function Footer({ settings, services }: { settings: Settings; services: S
   return (
     <footer className="theme-dark bg-ink pt-12 text-white sm:pt-14">
       <Container className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.25fr_0.7fr_0.9fr_1.2fr]">
+        <Reveal delay={0} className="overflow-visible">
         <div>
           <Link href="/" aria-label="Amader Agency home" className="inline-flex items-center gap-3">
             <span className="flex size-11 items-center justify-center rounded-xl bg-white p-1">
@@ -103,7 +105,7 @@ export function Footer({ settings, services }: { settings: Settings; services: S
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={name}
-                  className="group flex size-10 items-center justify-center rounded-xl border border-white/15 text-white/70 hover:border-brand hover:text-brand"
+                  className="footer-social group flex size-10 items-center justify-center rounded-xl border border-white/15 text-white/70 hover:border-brand hover:text-brand"
                 >
                   {Icon ? (
                     <Icon aria-hidden="true" className="size-5" strokeWidth={1.75} />
@@ -115,46 +117,52 @@ export function Footer({ settings, services }: { settings: Settings; services: S
             </nav>
           ) : null}
         </div>
+        </Reveal>
 
+        <Reveal delay={100} className="overflow-visible">
         <nav aria-label="Company">
           <p className="text-sm font-semibold">Company</p>
           <ul className="mt-4 space-y-3 text-sm text-white/65">
             {companyLinks.map((link) => (
               <li key={link.href}>
-                <Link href={link.href} className="hover:text-white">
+                <Link href={link.href} className="footer-link hover:text-white">
                   {link.label}
                 </Link>
               </li>
             ))}
           </ul>
         </nav>
+        </Reveal>
 
+        <Reveal delay={200} className="overflow-visible">
         <div>
           <p className="text-sm font-semibold">What we do</p>
           <ul className="mt-4 space-y-3 text-sm text-white/65">
             {services.map((service) => (
               <li key={service.id}>
-                <Link href={`/services/${service.slug}`} className="hover:text-white">
+                <Link href={`/services/${service.slug}`} className="footer-link hover:text-white">
                   {service.title}
                 </Link>
               </li>
             ))}
           </ul>
         </div>
+        </Reveal>
 
+        <Reveal delay={300} className="overflow-visible">
         <div>
           <p className="text-sm font-semibold">Official info</p>
           <div className="mt-3 divide-y divide-white/10">
             {settings.email ? (
               <FooterInfoRow icon={Mail} label="Email us">
-                <a href={`mailto:${settings.email}`} className="hover:text-brand">
+                <a href={`mailto:${settings.email}`} className="footer-link hover:text-brand">
                   {settings.email}
                 </a>
               </FooterInfoRow>
             ) : null}
             {phone ? (
               <FooterInfoRow icon={Phone} label="Call us">
-                <a href={`tel:${phone.replace(/\s/g, "")}`} className="hover:text-brand">
+                <a href={`tel:${phone.replace(/\s/g, "")}`} className="footer-link hover:text-brand">
                   {phone}
                 </a>
               </FooterInfoRow>
@@ -171,13 +179,14 @@ export function Footer({ settings, services }: { settings: Settings; services: S
             ) : null}
           </div>
         </div>
+        </Reveal>
       </Container>
 
       <Container className="mt-10 flex flex-col gap-4 border-t border-white/10 py-5 text-xs text-white/55 sm:flex-row sm:items-center sm:justify-between">
         <p>&copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.</p>
         <nav aria-label="Footer legal" className="flex gap-5">
-          <Link href="/about" className="hover:text-white">About</Link>
-          <Link href="/contact" className="hover:text-white">Contact</Link>
+          <Link href="/about" className="footer-link hover:text-white">About</Link>
+          <Link href="/contact" className="footer-link hover:text-white">Contact</Link>
         </nav>
       </Container>
     </footer>

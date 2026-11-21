@@ -1,8 +1,11 @@
 import Link from "next/link";
-import { ArrowUpRight, Check } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { Container, Section, SectionHeading } from "@/components/shared/container";
 import { ServiceIcon } from "@/components/shared/service-icon";
-import { Reveal } from "@/components/motion/reveal";
+import { ResponsiveReveal, Reveal } from "@/components/motion/reveal";
+import { SpotlightCard } from "@/components/motion/spotlight-card";
+import { TiltCard } from "@/components/motion/tilt-card";
+import { ServiceFeatureList } from "@/components/home/service-feature-list";
 import type { Service } from "@/lib/types";
 
 export function ServicesSection({
@@ -28,6 +31,7 @@ export function ServicesSection({
             as={pageTitle ? "h1" : "h2"}
             align="center"
             chip="What we do"
+            splitTitle
           />
         ) : null}
 
@@ -36,42 +40,45 @@ export function ServicesSection({
             Services will appear here once they are added in the admin panel.
           </p>
         ) : (
-          <Reveal y={0} className="service-grid-reveal mt-12 overflow-visible">
-            <ul className="grid gap-5 md:grid-cols-2">
-              {services.map((s) => (
-                <li key={s.id} className="service-card-item">
-                  <article className="service-card group flex h-full flex-col rounded-3xl border border-line bg-white p-8">
-                    <span className="service-card-icon flex size-14 shrink-0 items-center justify-center rounded-2xl bg-brand/10 text-brand group-hover:bg-brand group-hover:text-white">
-                      <ServiceIcon name={s.icon} className="size-7" />
-                    </span>
-                    <h3 className="mt-5 font-display text-3xl font-semibold leading-tight tracking-tight">
-                      {s.title}
-                    </h3>
-                    <p className="mt-3 text-muted">{s.shortDesc}</p>
-                    <ul className="mt-6 grid gap-x-4 gap-y-3 text-sm sm:grid-cols-2">
-                      {s.features.map((feature) => (
-                        <li key={feature} className="flex items-start gap-2.5">
-                          <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-brand/10">
-                            <Check aria-hidden="true" className="size-3.5 text-brand" strokeWidth={1.75} />
-                          </span>
-                          <span>{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    <Link
-                      href={`/services/${s.slug}`}
-                      className="mt-auto flex items-center justify-between gap-4 border-t border-line pt-6 text-sm font-medium"
+          <ul className="mt-12 grid gap-5 md:grid-cols-2">
+            {services.map((s, index) => (
+              <li key={s.id} className="service-card-item min-w-0">
+                <ResponsiveReveal
+                  delay={index * 80}
+                  mobileVariant="up"
+                  desktopVariant={index % 2 === 0 ? "left" : "right"}
+                  className="service-grid-reveal h-full overflow-visible"
+                >
+                  <TiltCard className="h-full rounded-3xl">
+                    <SpotlightCard
+                      className="service-card group h-full rounded-3xl border border-line bg-white p-8"
+                      contentClassName="flex h-full flex-col"
                     >
-                      <span>See what is included</span>
-                      <span className="service-card-arrow flex size-10 shrink-0 items-center justify-center rounded-full bg-surface text-ink group-hover:bg-brand group-hover:text-white">
-                        <ArrowUpRight aria-hidden="true" className="size-5" strokeWidth={1.75} />
-                      </span>
-                    </Link>
-                  </article>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
+                      <article className="flex h-full flex-col">
+                        <span className="service-card-icon flex size-14 shrink-0 items-center justify-center rounded-2xl bg-brand/10 text-brand">
+                          <ServiceIcon name={s.icon} className="size-7" />
+                        </span>
+                        <h3 className="mt-5 font-display text-3xl font-semibold leading-tight tracking-tight">
+                          {s.title}
+                        </h3>
+                        <p className="mt-3 text-muted">{s.shortDesc}</p>
+                        <ServiceFeatureList features={s.features} />
+                        <Link
+                          href={`/services/${s.slug}`}
+                          className="mt-auto flex items-center justify-between gap-4 border-t border-line pt-6 text-sm font-medium"
+                        >
+                          <span>See what is included</span>
+                          <span className="service-card-arrow flex size-10 shrink-0 items-center justify-center rounded-full bg-surface text-ink group-hover:bg-brand group-hover:text-white">
+                            <ArrowUpRight aria-hidden="true" className="size-5" strokeWidth={1.75} />
+                          </span>
+                        </Link>
+                      </article>
+                    </SpotlightCard>
+                  </TiltCard>
+                </ResponsiveReveal>
+              </li>
+            ))}
+          </ul>
         )}
       </Container>
     </Section>

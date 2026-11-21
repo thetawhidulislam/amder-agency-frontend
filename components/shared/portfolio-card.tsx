@@ -2,28 +2,51 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import type { PortfolioSummary } from "@/lib/types";
+import { cn } from "@/lib/utils";
+import { Reveal } from "@/components/motion/reveal";
 
 export function PortfolioCard({
   item,
   serviceTitle,
+  surface = "default",
+  imageReveal = false,
 }: {
   item: PortfolioSummary & { service?: { title: string } };
   serviceTitle?: string;
+  surface?: "default" | "transparent";
+  imageReveal?: boolean;
 }) {
   const service = serviceTitle ?? item.service?.title;
   return (
     <Link
       href={`/portfolio/${item.slug}`}
-      className="portfolio-card group flex h-full flex-col rounded-3xl border border-line bg-white shadow-[var(--shadow-card)]"
+      className={cn(
+        "group flex h-full flex-col rounded-3xl",
+        surface === "default"
+          ? "portfolio-card border border-line bg-white shadow-[var(--shadow-card)]"
+          : "bg-transparent"
+      )}
     >
       <div className="portfolio-card-frame relative aspect-[4/3] overflow-hidden rounded-t-3xl bg-surface" style={{ position: "relative" }}>
-        <Image
-          src={item.cover}
-          alt={item.title}
-          fill
-          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-          className="portfolio-image object-cover"
-        />
+        {imageReveal ? (
+          <Reveal variant="mask" duration={800} className="absolute inset-0">
+            <Image
+              src={item.cover}
+              alt={item.title}
+              fill
+              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+              className="portfolio-image object-cover"
+            />
+          </Reveal>
+        ) : (
+          <Image
+            src={item.cover}
+            alt={item.title}
+            fill
+            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            className="portfolio-image object-cover"
+          />
+        )}
         {service ? (
           <span className="absolute bottom-4 left-4 rounded-full border border-line bg-white px-3 py-1 text-xs font-medium text-ink">
             {service}

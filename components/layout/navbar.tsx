@@ -4,26 +4,71 @@ import { ArrowUpRight, Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { m } from "motion/react";
+import { Magnetic } from "@/components/motion/magnetic";
+import { usePrefersReducedMotion } from "@/components/motion/use-reduced-motion";
 import { publicButtonClass } from "@/components/shared/public-button";
 import { navLinks } from "@/config/site";
+import { EASE, MOTION_LEVEL } from "@/lib/motion";
 import { cn } from "@/lib/utils";
+
+const menuVariants = {
+  hidden: { opacity: 0, y: -8 },
+  visible: { opacity: 1, y: 0 },
+};
+
+const menuItemsVariants = {
+  hidden: { opacity: 0, y: 8 },
+  visible: { opacity: 1, y: 0 },
+};
+
+const menuListVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.04 } },
+};
 
 export function Navbar() {
   const pathname = usePathname();
+  const reducedMotion = usePrefersReducedMotion();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const lastScrollY = useRef(0);
+  const motionEnabled = MOTION_LEVEL === "rich" && !reducedMotion;
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
   useEffect(() => {
-    const updateScrollState = () => setScrolled(window.scrollY > 40);
+    lastScrollY.current = window.scrollY;
+
+    const updateScrollState = () => {
+      const currentY = window.scrollY;
+      setScrolled(currentY > 40);
+
+      if (!motionEnabled || currentY <= 200 || open) {
+        setHidden(false);
+      } else if (currentY > lastScrollY.current + 2) {
+        setHidden(true);
+      } else if (currentY < lastScrollY.current - 2) {
+        setHidden(false);
+      }
+
+      lastScrollY.current = currentY;
+    };
+
     updateScrollState();
     window.addEventListener("scroll", updateScrollState, { passive: true });
     return () => window.removeEventListener("scroll", updateScrollState);
-  }, []);
+  }, [motionEnabled, open]);
 
   return (
-    <header className="pointer-events-none sticky top-0 z-40 h-20">
+    <m.header
+      className="pointer-events-none sticky top-0 z-40 h-20"
+      initial={false}
+      animate={{ y: hidden && motionEnabled ? "-100%" : 0 }}
+      transition={{ duration: 0.3, ease: EASE }}
+      data-reveal=""
+    >
       <a
         href="#main"
         className="pointer-events-auto sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:rounded-xl focus:bg-brand focus:px-3 focus:py-2 focus:text-brand-contrast"
@@ -44,34 +89,49 @@ export function Navbar() {
           </span>
         </Link>
 
-        <nav aria-label="Main" className="hidden items-center gap-8 md:flex">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              aria-current={isActive(link.href) ? "page" : undefined}
-              className={cn(
-                "nav-link-underline relative py-4 text-sm text-ink hover:text-brand",
-                isActive(link.href) ? "font-medium" : ""
-              )}
-            >
-              {link.label}
-            </Link>
-          ))}
+        <nav aria-label="Main" className="hidden items-center gap-2 md:flex">
+          {navLinks.map((link) => {
+            const active = isActive(link.href);
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                aria-current={active ? "page" : undefined}
+                className="relative isolate rounded-full px-3 py-2 text-sm text-ink hover:text-brand"
+              >
+                {active ? (
+                  motionEnabled ? (
+                    <m.span
+                      aria-hidden="true"
+                      className="absolute inset-0 -z-10 rounded-full bg-surface"
+                      layoutId="nav-pill"
+                      transition={{ duration: 0.3, ease: EASE }}
+                      data-reveal=""
+                    />
+                  ) : (
+                    <span aria-hidden="true" className="absolute inset-0 -z-10 rounded-full bg-surface" />
+                  )
+                ) : null}
+                <span className="relative z-10">{link.label}</span>
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="flex items-center gap-3">
-          <Link href="/contact" className={cn(publicButtonClass({ variant: "ink", size: "sm" }), "hidden md:inline-flex")}>
-            Start a project
-            <ArrowUpRight aria-hidden="true" className="motion-arrow size-4" />
-          </Link>
+          <Magnetic className="hidden md:inline-flex">
+            <Link href="/contact" className={publicButtonClass({ variant: "ink", size: "sm" })}>
+              Start a project
+              <ArrowUpRight aria-hidden="true" className="motion-arrow size-4" />
+            </Link>
+          </Magnetic>
           <button
             type="button"
             className="-mr-2 p-2 md:hidden"
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             aria-controls="mobile-nav"
-            onClick={() => setOpen((v) => !v)}
+            onClick={() => setOpen((value) => !value)}
           >
             {open ? <X className="size-6" /> : <Menu className="size-6" />}
           </button>
@@ -79,17 +139,22 @@ export function Navbar() {
       </div>
 
       {open ? (
-        <nav
+        <m.nav
           id="mobile-nav"
           aria-label="Mobile"
           className={cn(
-            "mobile-nav-enter pointer-events-auto absolute inset-x-0 border-t border-line bg-page md:hidden",
+            "pointer-events-auto absolute inset-x-0 border-t border-line bg-page md:hidden",
             scrolled ? "top-16" : "top-20"
           )}
+          variants={menuVariants}
+          initial={motionEnabled ? "hidden" : false}
+          animate={motionEnabled ? "visible" : false}
+          transition={{ duration: 0.3, ease: EASE }}
+          data-reveal=""
         >
-          <ul className="mx-auto max-w-6xl px-5 py-3">
+          <m.ul className="mx-auto max-w-6xl px-5 py-3" variants={menuListVariants}>
             {navLinks.map((link) => (
-              <li key={link.href}>
+              <m.li key={link.href} variants={menuItemsVariants} transition={{ duration: 0.3, ease: EASE }} data-reveal="">
                 <Link
                   href={link.href}
                   onClick={() => setOpen(false)}
@@ -101,17 +166,25 @@ export function Navbar() {
                 >
                   {link.label}
                 </Link>
-              </li>
+              </m.li>
             ))}
-            <li className="py-4">
-              <Link href="/contact" onClick={() => setOpen(false)} className={cn(publicButtonClass({ variant: "ink" }), "w-full")}>
-                Start a project
-                <ArrowUpRight aria-hidden="true" className="motion-arrow size-4" />
-              </Link>
-            </li>
-          </ul>
-        </nav>
+            <m.li variants={menuItemsVariants} transition={{ duration: 0.3, ease: EASE }} data-reveal="">
+              <div className="py-4">
+                <Magnetic className="flex w-full">
+                  <Link
+                    href="/contact"
+                    onClick={() => setOpen(false)}
+                    className={cn(publicButtonClass({ variant: "ink" }), "w-full")}
+                  >
+                    Start a project
+                    <ArrowUpRight aria-hidden="true" className="motion-arrow size-4" />
+                  </Link>
+                </Magnetic>
+              </div>
+            </m.li>
+          </m.ul>
+        </m.nav>
       ) : null}
-    </header>
+    </m.header>
   );
 }

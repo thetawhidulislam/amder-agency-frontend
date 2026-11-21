@@ -1,69 +1,124 @@
 "use client";
 
-import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
+import { useState, useSyncExternalStore, type ReactNode } from "react";
+import { m } from "motion/react";
 import { cn } from "@/lib/utils";
+import { DURATION, EASE, MOTION_LEVEL } from "@/lib/motion";
+import { usePrefersReducedMotion } from "@/components/motion/use-reduced-motion";
 
-let revealObserver: IntersectionObserver | null = null;
+type RevealVariant = "up" | "left" | "right" | "scale" | "mask";
 
-function getRevealObserver() {
-  if (!revealObserver) {
-    revealObserver = new IntersectionObserver(
-      (entries, observer) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          (entry.target as HTMLElement).dataset.visible = "true";
-          observer.unobserve(entry.target);
-        });
-      },
-      { rootMargin: "0px 0px -8% 0px" }
-    );
-  }
-
-  return revealObserver;
+function subscribeToDesktop(callback: () => void) {
+  const media = window.matchMedia("(min-width: 768px)");
+  media.addEventListener("change", callback);
+  return () => media.removeEventListener("change", callback);
 }
+
+function getDesktopSnapshot() {
+  return window.matchMedia("(min-width: 768px)").matches;
+}
+
+function getDesktopServerSnapshot() {
+  return false;
+}
+
+type RevealProps = {
+  children: ReactNode;
+  variant?: RevealVariant;
+  delay?: number;
+  once?: boolean;
+  amount?: number;
+  duration?: number;
+  scaleFrom?: number;
+  as?: "div" | "span";
+  className?: string;
+};
+
+const revealStates: Record<RevealVariant | "fade", { initial: Record<string, string | number>; visible: Record<string, string | number> }> = {
+  up: {
+    initial: { opacity: 0, y: 24 },
+    visible: { opacity: 1, y: 0 },
+  },
+  left: {
+    initial: { opacity: 0, x: -24 },
+    visible: { opacity: 1, x: 0 },
+  },
+  right: {
+    initial: { opacity: 0, x: 24 },
+    visible: { opacity: 1, x: 0 },
+  },
+  scale: {
+    initial: { opacity: 0, scale: 0.96 },
+    visible: { opacity: 1, scale: 1 },
+  },
+  mask: {
+    initial: { opacity: 0, clipPath: "inset(0 0 100% 0)" },
+    visible: { opacity: 1, clipPath: "inset(0 0 0 0)" },
+  },
+  fade: {
+    initial: { opacity: 0 },
+    visible: { opacity: 1 },
+  },
+};
 
 export function Reveal({
   children,
+  variant = "up",
   delay = 0,
-  y = 24,
+  once = true,
+  amount = 0.25,
+  duration = DURATION.reveal * 1000,
+  scaleFrom = 0.96,
   as = "div",
   className,
-}: {
-  children: ReactNode;
-  delay?: number;
-  y?: number;
-  as?: "div" | "span";
-  className?: string;
-}) {
-  const elementRef = useRef<HTMLElement>(null);
-  const Element = as;
-
-  useEffect(() => {
-    const element = elementRef.current;
-    if (!element) return;
-    element.dataset.ready = "true";
-
-    if (!("IntersectionObserver" in window)) {
-      element.dataset.visible = "true";
-      return;
-    }
-
-    const observer = getRevealObserver();
-    observer.observe(element);
-    return () => observer.unobserve(element);
-  }, []);
+}: RevealProps) {
+  const reducedMotion = usePrefersReducedMotion();
+  const [visible, setVisible] = useState(false);
+  const MotionElement = as === "span" ? m.span : m.div;
+  const defaultStates = revealStates[MOTION_LEVEL === "calm" ? "fade" : variant ?? "up"];
+  const states =
+    MOTION_LEVEL !== "calm" && selectedVariant === "scale" && scaleFrom !== 0.96
+      ? {
+          initial: { opacity: 0, scale: scaleFrom },
+          visible: { opacity: 1, scale: 1 },
+        }
+      : defaultStates;
+  const isStatic = reducedMotion;
 
   return (
-    <Element
-      ref={(element) => {
-        elementRef.current = element;
+    <MotionElement
+      initial={isStatic ? false : states.initial}
+      whileInView={states.visible}
+      viewport={{ once, amount }}
+      onViewportEnter={() => setVisible(true)}
+      onViewportLeave={() => {
+        if (!once) setVisible(false);
+      }}
+      transition={{
+        duration: isStatic ? 0 : duration / 1000,
+        ease: EASE,
+        delay: delay / 1000,
       }}
       className={cn("motion-reveal overflow-hidden", className)}
-      data-ready="false"
-      data-visible="false"
-      style={{ "--reveal-delay": `${delay}ms`, "--reveal-y": `${y}px` } as CSSProperties}
+      data-reveal=""
+      data-ready="true"
+      data-visible={isStatic || visible ? "true" : "false"}
     >
       {children}
-    </Element>
+    </MotionElement>
   );
+}
+
+export function ResponsiveReveal({
+  mobileVariant,
+  desktopVariant,
+  ...props
+}: RevealProps & { mobileVariant: RevealVariant; desktopVariant: RevealVariant }) {
+  const isDesktop = useSyncExternalStore(
+    subscribeToDesktop,
+    getDesktopSnapshot,
+    getDesktopServerSnapshot
+  );
+
+  return <Reveal {...props} variant={isDesktop ? desktopVariant : mobileVariant} />;
 }

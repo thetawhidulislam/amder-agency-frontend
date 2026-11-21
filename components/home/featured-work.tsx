@@ -2,6 +2,9 @@ import Link from "next/link";
 import { Container, Section, SectionHeading } from "@/components/shared/container";
 import { PortfolioCard } from "@/components/shared/portfolio-card";
 import { PortfolioEmptyState } from "@/components/shared/portfolio-empty-state";
+import { SpotlightCard } from "@/components/motion/spotlight-card";
+import { TiltCard } from "@/components/motion/tilt-card";
+import { Reveal } from "@/components/motion/reveal";
 import type { PortfolioListItem } from "@/lib/types";
 
 export function FeaturedWork({ items }: { items: PortfolioListItem[] }) {
@@ -18,8 +21,14 @@ export function FeaturedWork({ items }: { items: PortfolioListItem[] }) {
           <PortfolioEmptyState className="mt-12" />
         ) : (
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {items.map((item) => (
-              <PortfolioCard key={item.id} item={item} />
+            {items.map((item, index) => (
+              <Reveal key={item.id} delay={index * 80} className="h-full overflow-visible">
+                <TiltCard className="h-full rounded-3xl">
+                  <SpotlightCard className="portfolio-work-card h-full overflow-hidden rounded-3xl border border-line bg-white shadow-[var(--shadow-card)]">
+                    <PortfolioCard item={item} surface="transparent" imageReveal />
+                  </SpotlightCard>
+                </TiltCard>
+              </Reveal>
             ))}
           </div>
         )}

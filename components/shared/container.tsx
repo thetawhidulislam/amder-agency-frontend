@@ -1,6 +1,7 @@
 import type { ComponentProps } from "react";
 import { cn } from "@/lib/utils";
 import { Reveal } from "@/components/motion/reveal";
+import { SplitHeading } from "@/components/motion/split-heading";
 import { SectionChip } from "@/components/shared/section-chip";
 
 export function Container({ className, ...props }: ComponentProps<"div">) {
@@ -19,6 +20,7 @@ export function SectionHeading({
   align = "left",
   chip,
   chipTone = "default",
+  splitTitle = false,
 }: {
   title: string;
   intro?: string;
@@ -27,21 +29,23 @@ export function SectionHeading({
   align?: "center" | "left";
   chip?: string;
   chipTone?: "default" | "dark";
+  splitTitle?: boolean;
 }) {
   const Heading = as;
+  const headingClassName = cn(
+    "font-display font-semibold leading-[1.05] tracking-tight text-balance",
+    as === "h2" ? "text-[clamp(2.25rem,5vw,4rem)]" : "text-[clamp(2.75rem,6vw,5.5rem)]"
+  );
   return (
     <div className={cn("max-w-2xl", align === "center" && "mx-auto text-center", className)}>
       <Reveal>
         <div>
           {chip ? <SectionChip tone={chipTone} className="mb-5">{chip}</SectionChip> : null}
-          <Heading
-            className={cn(
-              "font-display font-semibold leading-[1.05] tracking-tight text-balance",
-              as === "h2" ? "text-[clamp(2.25rem,5vw,4rem)]" : "text-[clamp(2.75rem,6vw,5.5rem)]"
-            )}
-          >
-            {title}
-          </Heading>
+          {splitTitle ? (
+            <SplitHeading as={as} text={title} className={headingClassName} />
+          ) : (
+            <Heading className={headingClassName}>{title}</Heading>
+          )}
           {intro ? (
             <p className={cn("mt-4 text-lg text-muted", align === "center" && "mx-auto max-w-2xl")}>
               {intro}
