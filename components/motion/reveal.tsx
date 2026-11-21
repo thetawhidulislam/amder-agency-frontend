@@ -30,6 +30,7 @@ type RevealProps = {
   amount?: number;
   duration?: number;
   scaleFrom?: number;
+  distance?: number;
   as?: "div" | "span";
   className?: string;
 };
@@ -77,6 +78,7 @@ export function Reveal({
   amount = 0.25,
   duration = DURATION.reveal * 1000,
   scaleFrom = 0.96,
+  distance = 24,
   as = "div",
   className,
 }: RevealProps) {
@@ -90,6 +92,11 @@ export function Reveal({
           initial: { opacity: 0, scale: scaleFrom },
           visible: { opacity: 1, scale: 1 },
         }
+      : MOTION_LEVEL !== "calm" && variant === "up" && distance !== 24
+        ? {
+            initial: { opacity: 0, y: distance },
+            visible: { opacity: 1, y: 0 },
+          }
       : defaultStates;
   const isStatic = reducedMotion;
 

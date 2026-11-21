@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import { m } from "motion/react";
 import { Reveal } from "@/components/motion/reveal";
+import { FadeImage } from "@/components/shared/fade-image";
 import { usePrefersReducedMotion } from "@/components/motion/use-reduced-motion";
 import { EASE, MOTION_LEVEL } from "@/lib/motion";
 
@@ -21,7 +21,7 @@ export function PortfolioCover({ src, alt }: { src: string; alt: string }) {
           transition={{ duration: staticMotion ? 0 : 1, ease: EASE }}
           data-reveal=""
         >
-          <Image
+          <FadeImage
             src={src}
             alt={alt}
             fill

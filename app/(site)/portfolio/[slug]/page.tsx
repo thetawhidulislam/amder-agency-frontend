@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CtaBand } from "@/components/home/cta-band";
@@ -8,6 +7,7 @@ import { PortfolioCover } from "@/components/portfolio/portfolio-cover";
 import { Container, Section } from "@/components/shared/container";
 import { Reveal } from "@/components/motion/reveal";
 import { SplitHeading } from "@/components/motion/split-heading";
+import { FadeImage } from "@/components/shared/fade-image";
 import { getPortfolioItem, getSettings } from "@/lib/api-server";
 import { whatsappLink, youtubeEmbed } from "@/lib/utils";
 
@@ -39,7 +39,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
     <>
       <Section className="pb-14">
         <Container>
-          <Link href="/portfolio" className="text-sm text-muted hover:text-brand">
+          <Link href="/portfolio" className="link-underline text-sm text-muted hover:text-brand">
             All projects
           </Link>
           <SplitHeading
@@ -49,7 +49,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
           />
           <Reveal variant="up" className="mt-5">
             <p className="text-lg text-muted">
-              <Link href={`/portfolio?service=${item.service.slug}`} className="underline decoration-brand underline-offset-4 hover:text-brand">
+              <Link href={`/portfolio?service=${item.service.slug}`} className="link-underline underline decoration-brand underline-offset-4 hover:text-brand">
                 {item.service.title}
               </Link>
               {item.client ? <> for {item.client}</> : null}
@@ -92,7 +92,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
         </Container>
       ) : item.videoUrl ? (
         <Container className="pb-20">
-          <a href={item.videoUrl} target="_blank" rel="noopener noreferrer" className="font-medium underline decoration-brand decoration-2 underline-offset-4">
+          <a href={item.videoUrl} target="_blank" rel="noopener noreferrer" className="link-underline font-medium underline decoration-brand decoration-2 underline-offset-4">
             Watch the video
           </a>
         </Container>
@@ -107,7 +107,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
               duration={800}
               className="portfolio-gallery-frame group relative aspect-[4/3] overflow-hidden rounded-3xl bg-white shadow-[var(--shadow-card)]"
             >
-              <Image src={src} alt={`${item.title} image ${i + 1}`} fill sizes="(min-width: 640px) 50vw, 100vw" className="portfolio-gallery-image object-cover" />
+              <FadeImage src={src} alt={`${item.title} image ${i + 1}`} fill sizes="(min-width: 640px) 50vw, 100vw" className="portfolio-gallery-image object-cover" />
             </Reveal>
           ))}
         </Container>

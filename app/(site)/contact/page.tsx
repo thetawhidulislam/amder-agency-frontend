@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
-import { ArrowRight, Clock, Globe, Mail, MapPin, MessageCircle, Phone, type LucideIcon } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Container, Section } from "@/components/shared/container";
 import { ContactForm } from "@/components/shared/contact-form";
+import { AnimatedContactDetail } from "@/components/shared/animated-contact";
 import { PageHeader } from "@/components/shared/page-header";
 import { publicButtonClass } from "@/components/shared/public-button";
+import { Magnetic } from "@/components/motion/magnetic";
+import { Reveal } from "@/components/motion/reveal";
 import { getServices, getSettings } from "@/lib/api-server";
 import { cn, whatsappLink } from "@/lib/utils";
 
@@ -32,77 +34,68 @@ export default async function ContactPage({ searchParams }: Props) {
           intro="Tell us what you need. We will review it and get back to you with next steps."
         />
         <div className="mt-14 grid gap-14 lg:grid-cols-[1fr_1.2fr] lg:gap-24">
+          <Reveal variant="left" className="overflow-visible">
           <div>
             {whatsapp ? (
-              <a href={whatsapp} target="_blank" rel="noopener noreferrer" className={cn(publicButtonClass({ size: "lg" }), "mt-8")}>
-                Chat on WhatsApp
-                <ArrowRight aria-hidden="true" className="size-4" strokeWidth={1.75} />
-              </a>
+              <Magnetic className="mt-8">
+                <a href={whatsapp} target="_blank" rel="noopener noreferrer" className={cn(publicButtonClass({ size: "lg" }))}>
+                  Chat on WhatsApp
+                  <ArrowRight aria-hidden="true" className="size-4" strokeWidth={1.75} />
+                </a>
+              </Magnetic>
             ) : null}
 
             <dl className="mt-10 grid gap-3 text-sm">
               {settings.phone ? (
-                <ContactDetail icon={Phone} label="Phone">
-                  <a href={`tel:${settings.phone.replace(/\s/g, "")}`} className="hover:text-brand">
+                <AnimatedContactDetail icon="phone" label="Phone" delay={0}>
+                  <a href={`tel:${settings.phone.replace(/\s/g, "")}`} className="link-underline hover:text-brand">
                     {settings.phone}
                   </a>
-                </ContactDetail>
+                </AnimatedContactDetail>
               ) : null}
               {settings.whatsapp ? (
-                <ContactDetail icon={MessageCircle} label="WhatsApp">
+                <AnimatedContactDetail icon="whatsapp" label="WhatsApp" delay={80}>
                   {settings.whatsapp}
-                </ContactDetail>
+                </AnimatedContactDetail>
               ) : null}
               {settings.email ? (
-                <ContactDetail icon={Mail} label="Email">
-                  <a href={`mailto:${settings.email}`} className="hover:text-brand">
+                <AnimatedContactDetail icon="email" label="Email" delay={160}>
+                  <a href={`mailto:${settings.email}`} className="link-underline hover:text-brand">
                     {settings.email}
                   </a>
-                </ContactDetail>
+                </AnimatedContactDetail>
               ) : null}
               {settings.address ? (
-                <ContactDetail icon={MapPin} label="Address">
+                <AnimatedContactDetail icon="address" label="Address" delay={240}>
                   {settings.address}
-                </ContactDetail>
+                </AnimatedContactDetail>
               ) : null}
               {settings.businessHours ? (
-                <ContactDetail icon={Clock} label="Business hours">
+                <AnimatedContactDetail icon="hours" label="Business hours" delay={320}>
                   {settings.businessHours}
-                </ContactDetail>
+                </AnimatedContactDetail>
               ) : null}
               {socials.length > 0 ? (
-                <ContactDetail icon={Globe} label="Follow us">
+                <AnimatedContactDetail icon="social" label="Follow us" delay={400}>
                   <span className="flex flex-wrap gap-x-5 gap-y-1 text-muted">
                     {socials.map(([name, url]) => (
-                      <a key={name} href={url} target="_blank" rel="noopener noreferrer" className="capitalize hover:text-brand">
+                      <a key={name} href={url} target="_blank" rel="noopener noreferrer" className="link-underline capitalize hover:text-brand">
                         {name}
                       </a>
                     ))}
                   </span>
-                </ContactDetail>
+                </AnimatedContactDetail>
               ) : null}
             </dl>
           </div>
 
-          <div className="rounded-3xl border border-line bg-white p-10 shadow-[var(--shadow-card)]">
+          </Reveal>
+
+          <Reveal variant="right" className="overflow-visible">
             <ContactForm services={services} defaultServiceId={defaultServiceId} />
-          </div>
+          </Reveal>
         </div>
       </Container>
     </Section>
-  );
-}
-
-function ContactDetail({ icon: Icon, label, children }: { icon: LucideIcon; label: string; children: ReactNode }) {
-  return (
-    <div className="flex items-start gap-3 rounded-2xl border border-line bg-white p-4">
-      <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-brand/10">
-        <Icon aria-hidden="true" className="size-5 text-brand" strokeWidth={1.75} />
-      </span>
-      <div className="min-w-0 pt-0.5">
-        <dt className="font-medium">{label}</dt>
-        <dd className="mt-1 break-words text-muted">{children}</dd>
-      </div>
-    </div>
   );
 }

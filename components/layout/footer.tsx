@@ -125,7 +125,7 @@ export function Footer({ settings, services }: { settings: Settings; services: S
           <ul className="mt-4 space-y-3 text-sm text-white/65">
             {companyLinks.map((link) => (
               <li key={link.href}>
-                <Link href={link.href} className="footer-link hover:text-white">
+                <Link href={link.href} className="footer-link link-underline hover:text-white">
                   {link.label}
                 </Link>
               </li>
@@ -140,7 +140,7 @@ export function Footer({ settings, services }: { settings: Settings; services: S
           <ul className="mt-4 space-y-3 text-sm text-white/65">
             {services.map((service) => (
               <li key={service.id}>
-                <Link href={`/services/${service.slug}`} className="footer-link hover:text-white">
+                <Link href={`/services/${service.slug}`} className="footer-link link-underline hover:text-white">
                   {service.title}
                 </Link>
               </li>
@@ -155,14 +155,14 @@ export function Footer({ settings, services }: { settings: Settings; services: S
           <div className="mt-3 divide-y divide-white/10">
             {settings.email ? (
               <FooterInfoRow icon={Mail} label="Email us">
-                <a href={`mailto:${settings.email}`} className="footer-link hover:text-brand">
+                <a href={`mailto:${settings.email}`} className="footer-link link-underline hover:text-brand">
                   {settings.email}
                 </a>
               </FooterInfoRow>
             ) : null}
             {phone ? (
               <FooterInfoRow icon={Phone} label="Call us">
-                <a href={`tel:${phone.replace(/\s/g, "")}`} className="footer-link hover:text-brand">
+                <a href={`tel:${phone.replace(/\s/g, "")}`} className="footer-link link-underline hover:text-brand">
                   {phone}
                 </a>
               </FooterInfoRow>
@@ -185,8 +185,8 @@ export function Footer({ settings, services }: { settings: Settings; services: S
       <Container className="mt-10 flex flex-col gap-4 border-t border-white/10 py-5 text-xs text-white/55 sm:flex-row sm:items-center sm:justify-between">
         <p>&copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.</p>
         <nav aria-label="Footer legal" className="flex gap-5">
-          <Link href="/about" className="footer-link hover:text-white">About</Link>
-          <Link href="/contact" className="footer-link hover:text-white">Contact</Link>
+          <Link href="/about" className="footer-link link-underline hover:text-white">About</Link>
+          <Link href="/contact" className="footer-link link-underline hover:text-white">Contact</Link>
         </nav>
       </Container>
     </footer>

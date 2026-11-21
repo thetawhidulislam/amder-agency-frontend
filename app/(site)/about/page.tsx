@@ -4,6 +4,8 @@ import { Industries } from "@/components/home/industries";
 import { Why } from "@/components/home/why";
 import { Container, Section, SectionHeading } from "@/components/shared/container";
 import { PageHeader } from "@/components/shared/page-header";
+import { PhilosophyGrid } from "@/components/shared/philosophy-grid";
+import { Reveal } from "@/components/motion/reveal";
 import { philosophy } from "@/config/site";
 import { getSettings } from "@/lib/api-server";
 import { whatsappLink } from "@/lib/utils";
@@ -28,15 +30,19 @@ export default async function AboutPage() {
             intro="Every business has a story. Every brand has the potential to grow."
           />
           <div className="mt-10 max-w-2xl space-y-5 text-lg text-muted">
-            <p>
-              At Amader Agency, we believe business growth requires more than just advertising. It requires the right
-              strategy, creative communication and consistent execution.
-            </p>
-            <p>
-              We are a full-stack marketing agency providing creative and digital solutions under one roof. From graphic
-              design and video production to digital marketing, website development and SEO, we bring specialized
-              services together through a coordinated team.
-            </p>
+            <Reveal variant="up" distance={16} delay={240}>
+              <p>
+                At Amader Agency, we believe business growth requires more than just advertising. It requires the right
+                strategy, creative communication and consistent execution.
+              </p>
+            </Reveal>
+            <Reveal variant="up" distance={16} delay={360}>
+              <p>
+                We are a full-stack marketing agency providing creative and digital solutions under one roof. From graphic
+                design and video production to digital marketing, website development and SEO, we bring specialized
+                services together through a coordinated team.
+              </p>
+            </Reveal>
           </div>
         </Container>
       </Section>
@@ -46,14 +52,7 @@ export default async function AboutPage() {
       <Section className="theme-dark bg-page text-fg">
         <Container>
           <SectionHeading title="What we believe" />
-          <dl className="mt-12 grid gap-x-10 gap-y-10 sm:grid-cols-2">
-            {philosophy.map((p) => (
-              <div key={p.title} className="border-t border-line pt-5">
-                <dt className="font-display text-2xl font-semibold">{p.title}</dt>
-                <dd className="mt-2 max-w-sm text-muted">{p.text}</dd>
-              </div>
-            ))}
-          </dl>
+          <PhilosophyGrid items={philosophy} />
         </Container>
       </Section>
 

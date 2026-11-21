@@ -1,9 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import type { PortfolioSummary } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { Reveal } from "@/components/motion/reveal";
+import { FadeImage } from "@/components/shared/fade-image";
 
 export function PortfolioCard({
   item,
@@ -32,7 +32,7 @@ export function PortfolioCard({
       <div className="portfolio-card-frame relative aspect-[4/3] overflow-hidden rounded-t-3xl bg-surface" style={{ position: "relative" }}>
         {imageReveal ? (
           <Reveal variant="mask" duration={800} className="absolute inset-0">
-            <Image
+            <FadeImage
               src={item.cover}
               alt={item.title}
               fill
@@ -42,7 +42,7 @@ export function PortfolioCard({
             />
           </Reveal>
         ) : (
-          <Image
+          <FadeImage
             src={item.cover}
             alt={item.title}
             fill
