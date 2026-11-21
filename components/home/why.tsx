@@ -21,13 +21,6 @@ import { whyPoints } from "@/config/site";
 import { MOTION_LEVEL } from "@/lib/motion";
 
 const whyIcons = [Layers, Users, Target, BadgeCheck, HeartHandshake];
-const cardPlacements = [
-  "md:col-span-2 lg:col-span-2 lg:row-start-1 lg:min-h-[300px]",
-  "md:min-h-[360px] lg:col-start-3 lg:row-start-1 lg:row-span-2 lg:min-h-[500px]",
-  "lg:col-start-1 lg:row-start-2 lg:min-h-[260px]",
-  "md:min-h-[300px] lg:col-start-2 lg:row-start-2 lg:min-h-[300px]",
-  "lg:col-span-3 lg:row-start-3 lg:min-h-[180px]",
-];
 const serviceIcons = [Megaphone, Palette, Video, Code];
 const decorativeMotion =
   "motion-safe:transition-transform motion-safe:duration-[600ms] motion-safe:ease-[cubic-bezier(0.2,0.7,0.2,1)] motion-safe:group-hover:translate-x-2 motion-safe:group-hover:-translate-y-2 motion-safe:group-focus-within:translate-x-2 motion-safe:group-focus-within:-translate-y-2";
@@ -35,19 +28,19 @@ const decorativeClassName = MOTION_LEVEL === "rich" ? decorativeMotion : "";
 
 export function Why() {
   return (
-    <Section>
+    <Section className="py-12 sm:py-16 lg:py-20">
       <Container>
         <header className="mx-auto max-w-3xl text-center">
-          <SectionChip className="mb-5">Why Amader Agency</SectionChip>
+          <SectionChip className="mb-4">Why Amader Agency</SectionChip>
           <h2 className="font-display text-[clamp(2rem,4.2vw,3.5rem)] font-semibold leading-[1.05] tracking-tight text-balance">
             Why businesses choose Amader Agency
           </h2>
-          <p className="mx-auto mt-4 max-w-3xl text-lg leading-relaxed text-muted">
+          <p className="mx-auto mt-3 max-w-3xl text-lg leading-relaxed text-muted">
             Growth needs more than advertising. It needs the right strategy, clear creative and steady execution.
           </p>
         </header>
 
-        <dl className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+        <dl className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {whyPoints.slice(0, 5).map((point, index) => {
             const Icon = whyIcons[index];
             const isDark = index === 0;
@@ -89,7 +82,7 @@ export function Why() {
                         />
                         <div
                           aria-hidden="true"
-                          className={`absolute bottom-8 left-8 z-0 flex -space-x-3 ${decorativeClassName}`}
+                          className={`absolute bottom-4 right-4 z-0 flex -space-x-3 ${decorativeClassName}`}
                         >
                           <span className="flex size-11 items-center justify-center rounded-full bg-brand text-white ring-4 ring-white">
                             <Users className="size-5" />
@@ -136,7 +129,7 @@ export function Why() {
                         <Icon aria-hidden="true" className="size-7" strokeWidth={1.75} />
                       </span>
                       <dt
-                        className={`mt-6 font-display text-2xl font-semibold leading-tight ${
+                        className={`mt-4 font-display text-xl font-semibold leading-tight ${
                           index === 3
                             ? "max-w-[9rem] sm:max-w-none"
                             : index === 4
@@ -147,7 +140,7 @@ export function Why() {
                         {point.title}
                       </dt>
                       <dd
-                        className={`mt-3 max-w-sm text-base leading-relaxed ${
+                        className={`mt-2 max-w-sm text-sm leading-6 ${
                           isDark ? "text-white/70" : isRed ? "text-white/90" : "text-muted"
                         } ${
                           index === 0 || index === 2 || index === 3 || index === 4
@@ -165,7 +158,7 @@ export function Why() {
                       </dd>
 
                       {index === 0 ? (
-                        <div aria-hidden="true" className="mt-auto flex flex-wrap gap-3 pt-8">
+                        <div aria-hidden="true" className="mt-4 flex flex-wrap gap-3">
                           {serviceIcons.map((ServiceIcon, iconIndex) => (
                             <span key={iconIndex} className="flex size-10 items-center justify-center rounded-full bg-white/10 text-white">
                               <ServiceIcon className="size-4" strokeWidth={1.75} />
@@ -174,12 +167,10 @@ export function Why() {
                         </div>
                       ) : null}
 
-                      {index === 1 ? <div className="mt-auto min-h-14 pt-8" aria-hidden="true" /> : null}
-
                       {index === 4 ? (
                         <Link
                           href="/contact"
-                          className="mt-6 hidden w-fit shrink-0 items-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-semibold text-brand-dark motion-safe:transition-transform motion-safe:duration-[600ms] motion-safe:ease-[cubic-bezier(0.2,0.7,0.2,1)] motion-safe:hover:-translate-y-1 motion-safe:focus-visible:-translate-y-1 sm:inline-flex sm:mt-0 sm:self-end"
+                          className="mt-4 hidden w-fit shrink-0 items-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-semibold text-brand-dark motion-safe:transition-transform motion-safe:duration-[600ms] motion-safe:ease-[cubic-bezier(0.2,0.7,0.2,1)] motion-safe:hover:-translate-y-1 motion-safe:focus-visible:-translate-y-1 sm:inline-flex sm:mt-auto sm:self-end"
                         >
                           Start a project
                           <ArrowRight aria-hidden="true" className="size-4" strokeWidth={1.75} />
@@ -188,7 +179,7 @@ export function Why() {
                     </div>
                 </>
               );
-              const cardClassName = `why-card group relative isolate flex h-full min-w-0 flex-col overflow-hidden rounded-3xl p-8 shadow-[var(--shadow-card)] motion-safe:transition-transform motion-safe:duration-[600ms] motion-safe:ease-[cubic-bezier(0.2,0.7,0.2,1)] motion-safe:hover:-translate-y-1 motion-safe:focus-within:-translate-y-1 hover:shadow-[var(--shadow-lift)] focus-within:shadow-[var(--shadow-lift)] ${cardTone}`;
+              const cardClassName = `why-card group relative isolate flex h-full min-w-0 flex-col overflow-hidden rounded-3xl p-5 shadow-[var(--shadow-card)] motion-safe:transition-transform motion-safe:duration-[600ms] motion-safe:ease-[cubic-bezier(0.2,0.7,0.2,1)] motion-safe:hover:-translate-y-1 motion-safe:focus-within:-translate-y-1 hover:shadow-[var(--shadow-lift)] focus-within:shadow-[var(--shadow-lift)] sm:p-6 ${cardTone}`;
 
               return (
                 <Reveal
@@ -196,7 +187,7 @@ export function Why() {
                   delay={index * 80}
                   variant="scale"
                   scaleFrom={0.94}
-                  className={`overflow-visible ${cardPlacements[index]}`}
+                  className={`overflow-visible ${index === 0 ? "md:col-span-2" : ""}`}
                 >
                   {lightCard ? (
                     <SpotlightCard className={cardClassName} contentClassName="flex h-full flex-col">

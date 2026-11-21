@@ -9,7 +9,7 @@ import type { PortfolioListItem } from "@/lib/types";
 
 export function FeaturedWork({ items }: { items: PortfolioListItem[] }) {
   return (
-    <Section>
+    <Section className="py-12 sm:py-16 lg:py-20">
       <Container>
         <SectionHeading title="Recent work" chip="Our work" align="center" />
         <div className="mt-5 flex justify-center">
@@ -18,9 +18,9 @@ export function FeaturedWork({ items }: { items: PortfolioListItem[] }) {
           </Link>
         </div>
         {items.length === 0 ? (
-          <PortfolioEmptyState className="mt-12" />
+          <PortfolioEmptyState className="mt-10" />
         ) : (
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {items.map((item, index) => (
               <Reveal key={item.id} delay={index * 80} className="h-full overflow-visible">
                 <TiltCard className="h-full rounded-3xl">

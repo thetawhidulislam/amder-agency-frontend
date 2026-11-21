@@ -86,7 +86,7 @@ html[data-pl="active"] {
 .aa-preloader-brand {
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: calc(50% - 1px);
   display: flex;
   width: max-content;
   transform: translate(-50%, -50%);
@@ -558,7 +558,7 @@ body {
 
 .process-progress-line {
   position: absolute;
-  top: 0;
+  top: 50%;
   left: 0;
   z-index: 0;
   width: 100%;
@@ -566,10 +566,6 @@ body {
   transform-origin: left center;
   background: #e11d27;
   pointer-events: none;
-}
-
-.process-step-offset {
-  position: relative;
 }
 
 .process-icon-ring {
@@ -589,20 +585,9 @@ body {
   z-index: -1;
 }
 
-@media (min-width: 64rem) {
-  .process-step-offset {
-    transform: translateY(-32px);
-  }
-}
-
 @media (max-width: 47.999rem) {
   .process-progress-line {
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 2px;
-    height: 100%;
-    transform-origin: center top;
+    display: none;
   }
 }
 

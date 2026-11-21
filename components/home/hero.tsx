@@ -42,7 +42,7 @@ export function Hero({
       <m.span aria-hidden="true" className="hero-grid-layer pointer-events-none absolute inset-0 z-0" style={{ y: gridY }} />
       <m.span aria-hidden="true" className="hero-blush-layer pointer-events-none absolute -right-20 top-0 z-0 size-96" style={{ y: blushY }} />
       <m.div className="relative z-10" style={{ y: contentY, opacity: contentOpacity }}>
-      <Container className="relative grid items-center gap-12 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:py-24">
+      <Container className="relative grid items-center gap-8 py-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:py-20">
         <div className="relative z-10 min-w-0">
           <Reveal ready={siteReady}>
             <SectionChip className="mb-6">One-stop solution</SectionChip>
@@ -57,7 +57,7 @@ export function Hero({
             className="font-display text-[clamp(2.25rem,3.5vw,3.5rem)] font-semibold leading-[1.04] tracking-tight"
           />
           <Reveal ready={siteReady} delay={500}>
-            <p className="mt-6 max-w-lg text-lg leading-relaxed text-muted">
+            <p className="mt-4 max-w-lg text-lg leading-relaxed text-muted">
               Marketing, design, video and web, coordinated by one team so every part of your brand works together.
             </p>
           </Reveal>

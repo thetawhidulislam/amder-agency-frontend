@@ -22,7 +22,7 @@ export function ServicesSection({
   showHeading?: boolean;
 }) {
   return (
-    <Section id="services">
+    <Section id="services" className={showHeading ? "py-12 sm:py-16 lg:py-20" : undefined}>
       <Container>
         {showHeading ? (
           <SectionHeading
@@ -36,11 +36,11 @@ export function ServicesSection({
         ) : null}
 
         {services.length === 0 ? (
-          <p className="mt-12 border-t border-line pt-8 text-muted">
+          <p className={showHeading ? "mt-10 border-t border-line pt-6 text-muted" : "mt-12 border-t border-line pt-8 text-muted"}>
             Services will appear here once they are added in the admin panel.
           </p>
         ) : (
-          <ul className="mt-12 grid gap-5 md:grid-cols-2">
+          <ul className={`grid md:grid-cols-2 ${showHeading ? "mt-10 gap-4" : "mt-12 gap-5"}`}>
             {services.map((s, index) => (
               <li key={s.id} className="service-card-item min-w-0">
                 <ResponsiveReveal
@@ -51,21 +51,25 @@ export function ServicesSection({
                 >
                   <TiltCard className="h-full rounded-3xl">
                     <SpotlightCard
-                      className="service-card group h-full rounded-3xl border border-line bg-white p-8"
+                      className={`service-card group h-full rounded-3xl border border-line bg-white ${
+                        showHeading ? "p-5 sm:p-6" : "p-8"
+                      }`}
                       contentClassName="flex h-full flex-col"
                     >
                       <article className="flex h-full flex-col">
                         <span className="service-card-icon flex size-14 shrink-0 items-center justify-center rounded-2xl bg-brand/10 text-brand">
                           <ServiceIcon name={s.icon} className="size-7" />
                         </span>
-                        <h3 className="mt-5 font-display text-3xl font-semibold leading-tight tracking-tight">
+                        <h3 className={`font-display font-semibold leading-tight tracking-tight ${showHeading ? "mt-4 text-2xl" : "mt-5 text-3xl"}`}>
                           {s.title}
                         </h3>
-                        <p className="mt-3 text-muted">{s.shortDesc}</p>
+                        <p className={showHeading ? "mt-2 text-sm leading-6 text-muted" : "mt-3 text-muted"}>{s.shortDesc}</p>
                         <ServiceFeatureList features={s.features} />
                         <Link
                           href={`/services/${s.slug}`}
-                          className="mt-auto flex items-center justify-between gap-4 border-t border-line pt-6 text-sm font-medium"
+                          className={`mt-auto flex items-center justify-between gap-4 border-t border-line text-sm font-medium ${
+                            showHeading ? "pt-4" : "pt-6"
+                          }`}
                         >
                           <span>See what is included</span>
                           <span className="service-card-arrow flex size-10 shrink-0 items-center justify-center rounded-full bg-surface text-ink group-hover:bg-brand group-hover:text-white">

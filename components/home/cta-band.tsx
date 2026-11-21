@@ -23,10 +23,10 @@ export function CtaBand({ whatsapp, title = "Let's build, promote and grow, toge
   const circleTwoY = useTransform(scrollYProgress, [0, 1], [0, motionEnabled ? 30 : 0]);
 
   return (
-    <section ref={sectionRef} className="bg-ink pt-20 sm:pt-24 lg:pt-28">
+    <section ref={sectionRef} className="bg-ink pt-16 lg:pt-20">
       <Reveal variant="scale" className="overflow-visible">
         <Container>
-          <div className="cta-card relative isolate overflow-hidden rounded-3xl bg-brand p-8 sm:p-12 lg:p-16">
+          <div className="cta-card relative isolate overflow-hidden rounded-3xl bg-brand p-8 lg:p-12">
             <m.span aria-hidden="true" className="pointer-events-none absolute -right-20 -top-28 size-80 rounded-full bg-brand-dark/60" style={{ y: circleOneY }} />
             <m.span aria-hidden="true" className="pointer-events-none absolute -bottom-48 right-16 size-80 rounded-full bg-brand-dark/60" style={{ y: circleTwoY }} />
             <div className="relative z-10 grid gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">

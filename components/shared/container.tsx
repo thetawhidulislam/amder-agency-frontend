@@ -21,6 +21,7 @@ export function SectionHeading({
   chip,
   chipTone = "default",
   splitTitle = false,
+  titleClassName,
 }: {
   title: string;
   intro?: string;
@@ -30,11 +31,14 @@ export function SectionHeading({
   chip?: string;
   chipTone?: "default" | "dark";
   splitTitle?: boolean;
+  titleClassName?: string;
 }) {
   const Heading = as;
   const headingClassName = cn(
-    "font-display font-semibold leading-[1.05] tracking-tight text-balance",
-    as === "h2" ? "text-[clamp(2.25rem,5vw,4rem)]" : "text-[clamp(2.75rem,6vw,5.5rem)]"
+    "font-display font-semibold tracking-tight text-balance",
+    as === "h2" ? "text-[clamp(2.25rem,5vw,4rem)]" : "text-[clamp(2.75rem,6vw,5.5rem)]",
+    titleClassName,
+    "leading-[1.05]"
   );
   return (
     <div className={cn("max-w-2xl", align === "center" && "mx-auto text-center", className)}>

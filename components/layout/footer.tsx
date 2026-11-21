@@ -81,7 +81,7 @@ export function Footer({ settings, services }: { settings: Settings; services: S
   const phone = settings.phone || settings.whatsapp;
 
   return (
-    <footer className="theme-dark bg-ink pt-12 text-white sm:pt-14">
+    <footer className="theme-dark bg-ink pt-12 text-white">
       <Container className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.25fr_0.7fr_0.9fr_1.2fr]">
         <Reveal delay={0} className="overflow-visible">
         <div>
