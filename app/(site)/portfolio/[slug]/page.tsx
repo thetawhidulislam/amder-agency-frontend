@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { CtaBand } from "@/components/home/cta-band";
 import { AnimatedTags } from "@/components/portfolio/animated-tags";
 import { PortfolioCover } from "@/components/portfolio/portfolio-cover";
+import { ImageReveal } from "@/components/shared/image-reveal";
 import { Container, Section } from "@/components/shared/container";
 import { Reveal } from "@/components/motion/reveal";
 import { SplitHeading } from "@/components/motion/split-heading";
@@ -101,14 +102,14 @@ export default async function PortfolioDetailPage({ params }: Props) {
       {item.gallery.length > 0 ? (
         <Container className="grid gap-6 pb-24 sm:grid-cols-2">
           {item.gallery.map((src, i) => (
-            <Reveal
+            <div
               key={src}
-              variant={i % 2 === 0 ? "mask-left" : "mask-right"}
-              duration={800}
               className="portfolio-gallery-frame group relative aspect-[4/3] overflow-hidden rounded-3xl bg-white shadow-[var(--shadow-card)]"
             >
-              <FadeImage src={src} alt={`${item.title} image ${i + 1}`} fill sizes="(min-width: 640px) 50vw, 100vw" className="portfolio-gallery-image object-cover" />
-            </Reveal>
+              <ImageReveal>
+                <FadeImage src={src} alt={`${item.title} image ${i + 1}`} fill sizes="(min-width: 640px) 50vw, 100vw" className="portfolio-gallery-image object-cover" />
+              </ImageReveal>
+            </div>
           ))}
         </Container>
       ) : null}

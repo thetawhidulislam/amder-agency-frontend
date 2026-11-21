@@ -25,7 +25,12 @@ export function FeaturedWork({ items }: { items: PortfolioListItem[] }) {
               <Reveal key={item.id} delay={index * 80} className="h-full overflow-visible">
                 <TiltCard className="h-full rounded-3xl">
                   <SpotlightCard className="portfolio-work-card h-full overflow-hidden rounded-3xl border border-line bg-white shadow-[var(--shadow-card)]">
-                    <PortfolioCard item={item} surface="transparent" imageReveal />
+                    <PortfolioCard
+                      item={item}
+                      surface="transparent"
+                      imageReveal
+                      loading={index === 0 ? "eager" : "lazy"}
+                    />
                   </SpotlightCard>
                 </TiltCard>
               </Reveal>

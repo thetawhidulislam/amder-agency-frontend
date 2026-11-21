@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useSyncExternalStore, type ReactNode } from "react";
+import { useEffect, useState, useSyncExternalStore, type ReactNode } from "react";
 import { m } from "motion/react";
 import { cn } from "@/lib/utils";
 import { DURATION, EASE, MOTION_LEVEL } from "@/lib/motion";
@@ -86,6 +86,7 @@ export function Reveal({
 }: RevealProps) {
   const reducedMotion = usePrefersReducedMotion();
   const [visible, setVisible] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const MotionElement = as === "span" ? m.span : m.div;
   const defaultStates = revealStates[MOTION_LEVEL === "calm" ? "fade" : variant];
   const states =
@@ -102,10 +103,17 @@ export function Reveal({
       : defaultStates;
   const isStatic = reducedMotion;
 
+  useEffect(() => {
+    setMounted(true);
+    const timeout = window.setTimeout(() => setVisible(true), 2500);
+    return () => window.clearTimeout(timeout);
+  }, []);
+
   return (
     <MotionElement
-      initial={isStatic || !ready ? false : states.initial}
-      whileInView={ready ? states.visible : undefined}
+      initial={isStatic || !ready || !mounted ? false : states.initial}
+      whileInView={ready && mounted ? states.visible : undefined}
+      animate={isStatic || !ready || !mounted || visible ? states.visible : undefined}
       viewport={{ once, amount }}
       onViewportEnter={() => setVisible(true)}
       onViewportLeave={() => {
@@ -118,7 +126,7 @@ export function Reveal({
       }}
       className={cn("motion-reveal overflow-hidden", className)}
       data-reveal=""
-      data-ready={ready ? "true" : "false"}
+      data-ready={ready && mounted ? "true" : "false"}
       data-visible={isStatic || visible ? "true" : "false"}
       data-variant={variant}
       data-motion-level={MOTION_LEVEL}

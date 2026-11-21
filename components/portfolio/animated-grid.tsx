@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react";
 import { Children } from "react";
+import { useEffect, useState } from "react";
 import { m } from "motion/react";
 import { usePrefersReducedMotion } from "@/components/motion/use-reduced-motion";
 import { cn } from "@/lib/utils";
@@ -16,13 +17,23 @@ export function AnimatedGrid({
 }) {
   const reducedMotion = usePrefersReducedMotion();
   const simpleReveal = MOTION_LEVEL === "calm" && !reducedMotion;
+  const [mounted, setMounted] = useState(false);
+  const [visible, setVisible] = useState(false);
   const items = Children.toArray(children);
+
+  useEffect(() => {
+    setMounted(true);
+    const timeout = window.setTimeout(() => setVisible(true), 2500);
+    return () => window.clearTimeout(timeout);
+  }, []);
 
   return (
     <m.div
       className={cn(className)}
-      initial={reducedMotion ? false : "hidden"}
-      whileInView="visible"
+      initial={reducedMotion || !mounted ? false : "hidden"}
+      whileInView={mounted && !reducedMotion ? "visible" : undefined}
+      animate={reducedMotion || visible ? "visible" : undefined}
+      onViewportEnter={() => setVisible(true)}
       viewport={{ once: true, amount: 0.1 }}
       variants={{
         hidden: {},

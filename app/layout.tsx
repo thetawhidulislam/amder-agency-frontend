@@ -38,7 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${display.variable} ${body.variable}`}
       suppressHydrationWarning
     >
-      <body className="min-h-screen antialiased">
+      <body className="min-h-screen antialiased" suppressHydrationWarning>
         <noscript>
           <style>{"[data-reveal]{opacity:1!important;transform:none!important;clip-path:none!important}"}</style>
         </noscript>

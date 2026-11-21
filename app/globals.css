@@ -441,13 +441,18 @@ body {
 }
 
 .fade-image {
-  opacity: 0;
+  opacity: 1;
   background-color: #f4f4f4;
-  transition: opacity 600ms var(--ease-out);
+}
+
+.fade-image-pending {
+  opacity: 0;
+  transition: none;
 }
 
 .fade-image-loaded {
   opacity: 1;
+  transition: opacity 600ms var(--ease-out);
 }
 
 .link-underline {
