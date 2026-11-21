@@ -236,16 +236,19 @@ body {
   transition: border-color 150ms ease, box-shadow 150ms ease, outline-color 150ms ease;
 }
 
-.contact-field:focus {
-  border-color: #0b0b0b;
-  box-shadow: 0 0 0 3px rgb(225 29 39 / 0.2);
+.contact-field:focus,
+.contact-field:focus-visible {
+  border: 1px solid #0b0b0b !important;
+  box-shadow: 0 0 0 3px rgb(225 29 39 / 0.2) !important;
 }
 
 .contact-field-label {
   transition: color 150ms ease;
 }
 
-.contact-field-label:has(+ .contact-field:focus) {
+.contact-field-label:has(+ input:focus),
+.contact-field-label:has(+ select:focus),
+.contact-field-label:has(+ textarea:focus) {
   color: #bd141d;
 }
 
@@ -264,7 +267,7 @@ body {
   background-position: left bottom;
   background-repeat: no-repeat;
   background-size: 0 1px;
-  transition: background-size 250ms var(--ease-out);
+  transition: background-size 250ms var(--ease-out), outline-color 150ms ease;
 }
 
 .link-underline:hover,
