@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { DURATION, EASE, MOTION_LEVEL } from "@/lib/motion";
 import { usePrefersReducedMotion } from "@/components/motion/use-reduced-motion";
 
-type RevealVariant = "up" | "left" | "right" | "scale" | "mask";
+type RevealVariant = "up" | "left" | "right" | "scale" | "mask" | "mask-left" | "mask-right" | "fade";
 
 function subscribeToDesktop(callback: () => void) {
   const media = window.matchMedia("(min-width: 768px)");
@@ -55,6 +55,14 @@ const revealStates: Record<RevealVariant | "fade", { initial: Record<string, str
     initial: { opacity: 0, clipPath: "inset(0 0 100% 0)" },
     visible: { opacity: 1, clipPath: "inset(0 0 0 0)" },
   },
+  "mask-left": {
+    initial: { opacity: 0, clipPath: "inset(0 100% 0 0)" },
+    visible: { opacity: 1, clipPath: "inset(0 0 0 0)" },
+  },
+  "mask-right": {
+    initial: { opacity: 0, clipPath: "inset(0 0 0 100%)" },
+    visible: { opacity: 1, clipPath: "inset(0 0 0 0)" },
+  },
   fade: {
     initial: { opacity: 0 },
     visible: { opacity: 1 },
@@ -75,9 +83,9 @@ export function Reveal({
   const reducedMotion = usePrefersReducedMotion();
   const [visible, setVisible] = useState(false);
   const MotionElement = as === "span" ? m.span : m.div;
-  const defaultStates = revealStates[MOTION_LEVEL === "calm" ? "fade" : variant ?? "up"];
+  const defaultStates = revealStates[MOTION_LEVEL === "calm" ? "fade" : variant];
   const states =
-    MOTION_LEVEL !== "calm" && selectedVariant === "scale" && scaleFrom !== 0.96
+    MOTION_LEVEL !== "calm" && variant === "scale" && scaleFrom !== 0.96
       ? {
           initial: { opacity: 0, scale: scaleFrom },
           visible: { opacity: 1, scale: 1 },
@@ -103,6 +111,7 @@ export function Reveal({
       data-reveal=""
       data-ready="true"
       data-visible={isStatic || visible ? "true" : "false"}
+      data-variant={variant}
     >
       {children}
     </MotionElement>

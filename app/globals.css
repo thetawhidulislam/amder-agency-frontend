@@ -84,7 +84,21 @@ body {
 }
 
 .page-header {
+  overflow: hidden;
+}
+
+.page-header-blush {
+  z-index: 0;
   background-image: radial-gradient(circle at 50% 0%, rgb(225 29 39 / 0.06), transparent 52%);
+}
+
+.page-header-bar {
+  left: calc(50% - 24px);
+  bottom: -14px;
+  width: 48px;
+  height: 4px;
+  transform-origin: left center;
+  background: #e11d27;
 }
 
 .hero-flow {
@@ -109,6 +123,11 @@ body {
   transform-origin: top;
   background: rgb(11 11 11 / 0.12);
   transition: transform 900ms var(--ease-out);
+}
+
+.hero-flow-line-static {
+  transform: scaleY(1);
+  transition: none;
 }
 
 .hero-flow-dot {
@@ -199,9 +218,13 @@ body {
   background-color: #ffffff;
 }
 
-.motion-reveal[data-ready="true"]:not([data-visible="true"]) {
+.motion-reveal[data-ready="true"]:not([data-visible="true"]):not([data-variant="fade"]):not([data-variant^="mask"]) {
   opacity: 0;
   transform: translateY(var(--reveal-y, 24px));
+}
+
+.motion-reveal[data-variant^="mask"][data-ready="true"]:not([data-visible="true"]) {
+  transform: none;
 }
 
 .motion-reveal {

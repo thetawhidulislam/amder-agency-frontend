@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import { useInView } from "motion/react";
+import { MOTION_LEVEL } from "@/lib/motion";
 import type { Service } from "@/lib/types";
 
 function ServiceNames({ services }: { services: Service[] }) {
@@ -36,7 +37,10 @@ export function ServiceMarquee({ services }: { services: Service[] }) {
       <div
         className="service-marquee-track flex h-full w-max items-center"
         data-reveal=""
-        style={{ animationPlayState: isInView && !isHovered ? "running" : "paused" }}
+        style={{
+          animationPlayState:
+            MOTION_LEVEL === "rich" && isInView && !isHovered ? "running" : "paused",
+        }}
       >
         <ServiceNames services={services} />
         <div aria-hidden="true">

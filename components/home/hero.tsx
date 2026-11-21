@@ -43,7 +43,7 @@ export function Hero({
       <Container className="relative grid items-center gap-12 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:py-24">
         <div className="relative z-10 min-w-0">
           <Reveal>
-            <SectionChip className="mb-6">Full-stack marketing agency</SectionChip>
+            <SectionChip className="mb-6">One-stop solution</SectionChip>
           </Reveal>
           <SplitHeading
             as="h1"
@@ -89,7 +89,10 @@ export function Hero({
 
         <Reveal delay={1200} className="hero-flow-reveal overflow-visible">
           <div className="hero-flow relative isolate flex flex-col">
-            <span aria-hidden="true" className="hero-flow-line" />
+            <span
+              aria-hidden="true"
+              className={`hero-flow-line${motionEnabled ? "" : " hero-flow-line-static"}`}
+            />
             {services.slice(0, 4).map((service, index) => (
               <div key={service.id} className="hero-flow-item relative pl-6">
                 <span aria-hidden="true" className="hero-flow-dot" />
