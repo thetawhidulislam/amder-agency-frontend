@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { Briefcase, Images, Inbox, LayoutDashboard, LogOut, Settings } from "lucide-react";
+import { Briefcase, Images, Inbox, LayoutDashboard, LogOut, Settings, Users } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -13,6 +13,7 @@ const items = [
   { href: "/admin/leads", label: "Leads", icon: Inbox },
   { href: "/admin/services", label: "Services", icon: Briefcase },
   { href: "/admin/portfolio", label: "Portfolio", icon: Images },
+  { href: "/admin/team", label: "Team", icon: Users },
   { href: "/admin/settings", label: "Settings", icon: Settings },
 ];
 

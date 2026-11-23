@@ -7,7 +7,8 @@ import { PageHeader } from "@/components/shared/page-header";
 import { PhilosophyGrid } from "@/components/shared/philosophy-grid";
 import { Reveal } from "@/components/motion/reveal";
 import { philosophy } from "@/config/site";
-import { getSettings } from "@/lib/api-server";
+import { TeamSection } from "@/components/shared/team-section";
+import { getSettings, getTeam } from "@/lib/api-server";
 import { whatsappLink } from "@/lib/utils";
 
 export const revalidate = 3600;
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
 };
 
 export default async function AboutPage() {
-  const settings = await getSettings();
+  const [settings, team] = await Promise.all([getSettings(), getTeam()]);
   return (
     <>
       <Section className="pb-16">
@@ -48,6 +49,8 @@ export default async function AboutPage() {
       </Section>
 
       <Why />
+
+      <TeamSection members={team} id="team" />
 
       <Section className="theme-dark bg-page text-fg">
         <Container>

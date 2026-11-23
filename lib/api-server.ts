@@ -5,6 +5,7 @@ import type {
   Service,
   ServiceDetail,
   Settings,
+  TeamMember,
 } from "./types";
 
 const BASE = `${process.env.API_URL ?? process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000"}/api/v1`;
@@ -35,6 +36,16 @@ const emptySettings: Settings = {
 
 export async function getServices() {
   const res = await get<{ data: Service[] }>("/services", ["services"]);
+  return res?.data ?? [];
+}
+
+export async function getTeam(params: { home?: boolean; limit?: number } = {}) {
+  const qs = new URLSearchParams();
+  if (params.home !== undefined) qs.set("home", String(params.home));
+  if (params.limit !== undefined) qs.set("limit", String(params.limit));
+
+  const query = qs.toString();
+  const res = await get<{ data: TeamMember[] }>(`/team${query ? `?${query}` : ""}`, ["team"]);
   return res?.data ?? [];
 }
 

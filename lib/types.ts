@@ -51,6 +51,22 @@ export interface Settings {
   socials: Record<string, string> | null;
 }
 
+export interface TeamSocials {
+  linkedin?: string;
+  facebook?: string;
+  instagram?: string;
+}
+
+export interface TeamMember {
+  id: string;
+  name: string;
+  role: string;
+  department: string | null;
+  bio: string | null;
+  photo: string | null;
+  socials: TeamSocials | null;
+}
+
 export interface PageMeta {
   page: number;
   limit: number;
@@ -90,6 +106,12 @@ export interface AdminPortfolioItem {
   order: number;
   serviceId: string;
   service: { id: string; title: string };
+}
+
+export interface AdminTeamMember extends TeamMember {
+  order: number;
+  isActive: boolean;
+  showOnHome: boolean;
 }
 
 export type LeadStatus = "NEW" | "CONTACTED" | "CLOSED";
