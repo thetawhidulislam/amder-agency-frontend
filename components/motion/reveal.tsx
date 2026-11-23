@@ -113,7 +113,7 @@ export function Reveal({
     <MotionElement
       initial={isStatic || !ready || !mounted ? false : states.initial}
       whileInView={ready && mounted ? states.visible : undefined}
-      animate={isStatic || !ready || !mounted || visible ? states.visible : undefined}
+      animate={isStatic || !ready || !mounted || visible ? states.visible : states.initial}
       viewport={{ once, amount }}
       onViewportEnter={() => setVisible(true)}
       onViewportLeave={() => {

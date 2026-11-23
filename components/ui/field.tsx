@@ -2,7 +2,7 @@ import type { ComponentProps, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 const fieldClass =
-  "w-full rounded-sm border border-fg/15 bg-page px-3.5 py-2.5 text-sm placeholder:text-muted/70 focus-visible:border-2 focus-visible:border-fg focus-visible:outline-none focus-visible:ring-0 aria-[invalid=true]:border-brand";
+  "w-full rounded-sm border border-fg/15 bg-page px-3.5 py-2.5 text-sm placeholder:text-muted/70 focus:border-fg focus:outline-none focus:ring-0 aria-[invalid=true]:border-brand";
 
 export function Input({ className, ...props }: ComponentProps<"input">) {
   return <input className={cn(fieldClass, className)} {...props} />;

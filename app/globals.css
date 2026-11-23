@@ -249,7 +249,20 @@ body {
   transition: outline-color 150ms ease;
 }
 
-:focus-visible {
+:where(input, textarea, select) {
+  transition: border-color 150ms ease;
+}
+
+:where(input, textarea, select):focus {
+  outline: none;
+  box-shadow: none;
+}
+
+:where(input, textarea, select):focus:not([aria-invalid="true"]) {
+  border-color: var(--fg);
+}
+
+:focus-visible:not(:where(input, textarea, select)) {
   outline: 2px solid var(--color-brand);
   outline-offset: 3px;
 }
@@ -421,13 +434,12 @@ body {
 }
 
 .contact-field {
-  transition: border-color 150ms ease, box-shadow 150ms ease, outline-color 150ms ease;
+  transition: border-color 150ms ease;
 }
 
-.contact-field:focus,
-.contact-field:focus-visible {
-  border: 1px solid #0b0b0b !important;
-  box-shadow: 0 0 0 3px rgb(225 29 39 / 0.2) !important;
+.contact-field:focus:not([aria-invalid="true"]),
+.contact-field:focus-visible:not([aria-invalid="true"]) {
+  border-color: #0b0b0b;
 }
 
 .contact-field-label {
