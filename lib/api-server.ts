@@ -6,6 +6,7 @@ import type {
   ServiceDetail,
   Settings,
   TeamMember,
+  TeamMemberDetail,
 } from "./types";
 
 const BASE = `${process.env.API_URL ?? process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000"}/api/v1`;
@@ -47,6 +48,11 @@ export async function getTeam(params: { home?: boolean; limit?: number } = {}) {
   const query = qs.toString();
   const res = await get<{ data: TeamMember[] }>(`/team${query ? `?${query}` : ""}`, ["team"]);
   return res?.data ?? [];
+}
+
+export async function getTeamMember(slug: string) {
+  const res = await get<{ data: TeamMemberDetail }>(`/team/${encodeURIComponent(slug)}`, ["team"]);
+  return res?.data ?? null;
 }
 
 export async function getService(slug: string) {

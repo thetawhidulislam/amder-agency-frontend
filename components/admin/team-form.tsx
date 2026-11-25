@@ -19,11 +19,22 @@ const optionalUrl = z
   .trim()
   .refine((value) => value === "" || urlSchema.safeParse(value).success, "Enter a valid URL");
 
+const parseSkills = (value: string) => value.split(",").map((skill) => skill.trim()).filter(Boolean);
+
 const schema = z.object({
   name: z.string().trim().min(2, "Enter a name").max(100),
+  slug: z.string().trim().regex(/^$|^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Use lowercase letters, numbers and hyphens"),
   role: z.string().trim().min(2, "Enter a role").max(100),
   department: z.string().max(100),
   bio: z.string().max(400, "Keep the bio under 400 characters"),
+  about: z.string().max(5000, "Keep the profile under 5000 characters"),
+  skills: z
+    .string()
+    .refine((value) => parseSkills(value).length <= 15, "Enter no more than 15 skills")
+    .refine(
+      (value) => parseSkills(value).every((skill) => skill.length <= 40),
+      "Each skill must be 40 characters or fewer"
+    ),
   photo: z.string(),
   linkedin: optionalUrl,
   facebook: optionalUrl,
@@ -48,9 +59,12 @@ export function TeamForm({ initial }: { initial?: AdminTeamMember }) {
     resolver: zodResolver(schema),
     defaultValues: {
       name: initial?.name ?? "",
+      slug: initial?.slug ?? "",
       role: initial?.role ?? "",
       department: initial?.department ?? "",
       bio: initial?.bio ?? "",
+      about: initial?.about ?? "",
+      skills: (initial?.skills ?? []).join(", "),
       photo: initial?.photo ?? "",
       linkedin: initial?.socials?.linkedin ?? "",
       facebook: initial?.socials?.facebook ?? "",
@@ -71,9 +85,12 @@ export function TeamForm({ initial }: { initial?: AdminTeamMember }) {
 
       const payload = {
         name: values.name,
+        ...(values.slug ? { slug: values.slug } : {}),
         role: values.role,
         department: values.department,
         bio: values.bio,
+        about: values.about,
+        skills: parseSkills(values.skills),
         photo: values.photo,
         socials,
         order: values.order,
@@ -104,6 +121,15 @@ export function TeamForm({ initial }: { initial?: AdminTeamMember }) {
         </Field>
       </div>
 
+      <Field
+        label="URL slug"
+        htmlFor="slug"
+        error={errors.slug?.message}
+        hint="Leave empty to create it from the name."
+      >
+        <Input id="slug" aria-invalid={!!errors.slug} {...register("slug")} />
+      </Field>
+
       <Field label="Department" htmlFor="department" error={errors.department?.message} hint="Optional.">
         <Input id="department" aria-invalid={!!errors.department} {...register("department")} />
       </Field>
@@ -112,9 +138,27 @@ export function TeamForm({ initial }: { initial?: AdminTeamMember }) {
         label="Bio"
         htmlFor="bio"
         error={errors.bio?.message}
-        hint={`${bioLength}/400 characters. Optional.`}
+        hint={`Shown on cards, max 400. ${bioLength}/400 characters. Optional.`}
       >
         <Textarea id="bio" rows={4} maxLength={400} aria-invalid={!!errors.bio} {...register("bio")} />
+      </Field>
+
+      <Field
+        label="About"
+        htmlFor="about"
+        error={errors.about?.message}
+        hint="Longer profile. Separate paragraphs with a blank line."
+      >
+        <Textarea id="about" rows={8} maxLength={5000} aria-invalid={!!errors.about} {...register("about")} />
+      </Field>
+
+      <Field
+        label="Skills"
+        htmlFor="skills"
+        error={errors.skills?.message}
+        hint="Separate with commas. Add up to 15 skills."
+      >
+        <Input id="skills" aria-invalid={!!errors.skills} {...register("skills")} />
       </Field>
 
       <div>

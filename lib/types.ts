@@ -60,11 +60,19 @@ export interface TeamSocials {
 export interface TeamMember {
   id: string;
   name: string;
+  slug: string | null;
   role: string;
   department: string | null;
   bio: string | null;
+  about?: string | null;
+  skills?: string[];
   photo: string | null;
   socials: TeamSocials | null;
+}
+
+export interface TeamMemberDetail extends TeamMember {
+  about: string | null;
+  skills: string[];
 }
 
 export interface PageMeta {
@@ -108,7 +116,7 @@ export interface AdminPortfolioItem {
   service: { id: string; title: string };
 }
 
-export interface AdminTeamMember extends TeamMember {
+export interface AdminTeamMember extends TeamMemberDetail {
   order: number;
   isActive: boolean;
   showOnHome: boolean;

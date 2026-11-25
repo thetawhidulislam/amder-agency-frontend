@@ -1,8 +1,6 @@
-"use client";
-
-import { Facebook, Instagram, Linkedin } from "lucide-react";
-import { useState } from "react";
-import { FadeImage } from "@/components/shared/fade-image";
+import Link from "next/link";
+import { ArrowUpRight, Facebook, Instagram, Linkedin } from "lucide-react";
+import { TeamAvatar } from "@/components/shared/team-avatar";
 import type { TeamMember } from "@/lib/types";
 
 const socialProfiles = [
@@ -11,44 +9,21 @@ const socialProfiles = [
   { key: "instagram", label: "Instagram", Icon: Instagram },
 ] as const;
 
-function initials(name: string) {
-  return name
-    .trim()
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((part) => part[0])
-    .join("")
-    .toUpperCase();
-}
-
 export function TeamCard({ member }: { member: TeamMember }) {
-  const [imageFailed, setImageFailed] = useState(false);
   const socials = socialProfiles.flatMap(({ key, label, Icon }) => {
     const href = member.socials?.[key];
     return href ? [{ href, label, Icon }] : [];
   });
 
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-3xl border border-black/10 bg-white text-ink shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-md motion-reduce:transition-none">
+    <article className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-black/10 bg-white text-ink shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-md motion-reduce:transition-none">
       <div className="relative aspect-[4/5] overflow-hidden bg-zinc-100">
-        {member.photo && !imageFailed ? (
-          <FadeImage
-            src={member.photo}
-            alt={member.name}
-            fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-            className="object-cover motion-safe:transition-transform motion-safe:duration-500 motion-safe:group-hover:scale-[1.04]"
-            onError={() => setImageFailed(true)}
-          />
-        ) : (
-          <div
-            aria-hidden="true"
-            className="absolute inset-0 flex items-center justify-center bg-zinc-100 font-display text-5xl font-semibold text-ink/35"
-          >
-            {initials(member.name)}
-          </div>
-        )}
+        <TeamAvatar
+          name={member.name}
+          photo={member.photo}
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+          className="object-cover motion-safe:transition-transform motion-safe:duration-500 motion-safe:group-hover:scale-[1.04]"
+        />
 
         {socials.length ? (
           <nav
@@ -62,7 +37,7 @@ export function TeamCard({ member }: { member: TeamMember }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`${member.name} on ${label}`}
-                className="flex size-9 items-center justify-center rounded-full bg-black text-white transition-colors hover:bg-brand focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                className="relative z-10 flex size-9 items-center justify-center rounded-full bg-black text-white transition-colors hover:bg-brand focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
                 <Icon aria-hidden="true" className="size-4" />
               </a>
@@ -72,7 +47,15 @@ export function TeamCard({ member }: { member: TeamMember }) {
       </div>
 
       <div className="flex flex-1 flex-col p-5 sm:p-6">
-        <h3 className="font-display text-xl font-semibold leading-tight">{member.name}</h3>
+        <h3 className="font-display text-xl font-semibold leading-tight">
+          {member.slug ? (
+            <Link href={`/team/${member.slug}`} className="after:absolute after:inset-0">
+              {member.name}
+            </Link>
+          ) : (
+            member.name
+          )}
+        </h3>
         <p className="mt-1 text-sm text-muted">{member.role}</p>
         {member.department ? (
           <span className="mt-3 w-fit rounded-full bg-surface px-2.5 py-1 text-xs font-medium text-muted">
@@ -93,12 +76,21 @@ export function TeamCard({ member }: { member: TeamMember }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`${member.name} on ${label}`}
-                className="flex size-9 items-center justify-center rounded-full bg-black text-white transition-colors hover:bg-brand focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+                className="relative z-10 flex size-9 items-center justify-center rounded-full bg-black text-white transition-colors hover:bg-brand focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
               >
                 <Icon aria-hidden="true" className="size-4" />
               </a>
             ))}
           </nav>
+        ) : null}
+
+        {member.slug ? (
+          <div className="mt-auto flex items-center justify-between pt-5 text-sm font-semibold">
+            <span>View profile</span>
+            <span className="flex size-9 items-center justify-center rounded-full border border-line text-ink transition-colors group-hover:border-brand group-hover:bg-brand group-hover:text-white">
+              <ArrowUpRight aria-hidden="true" className="size-4" />
+            </span>
+          </div>
         ) : null}
       </div>
     </article>
