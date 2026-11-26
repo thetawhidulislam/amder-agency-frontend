@@ -30,12 +30,17 @@ export function ImageUploader({
     try {
       const urls: string[] = [];
       for (const file of files) {
+        if (file.size > 4 * 1024 * 1024) {
+          toast.error("Image must be 4MB or smaller. Please compress it first.");
+          continue;
+        }
+
         const form = new FormData();
         form.append("file", file);
         const res = await api.post<{ data: { url: string } }>(`/admin/upload/image?folder=${folder}`, form);
         urls.push(res.data.data.url);
       }
-      onChange([...value, ...urls]);
+      if (urls.length > 0) onChange([...value, ...urls]);
     } catch (err) {
       toast.error(getErrorMessage(err, "Upload failed"));
     } finally {
@@ -74,7 +79,7 @@ export function ImageUploader({
         ) : null}
       </div>
       <input ref={inputRef} type="file" accept="image/jpeg,image/png,image/webp,image/avif" multiple={max > 1} className="hidden" onChange={onPick} />
-      <p className="mt-2 text-xs text-muted">JPG, PNG, WEBP or AVIF, up to 5MB each.</p>
+      <p className="mt-2 text-xs text-muted">JPG, PNG, WEBP or AVIF, up to 4MB each.</p>
     </div>
   );
 }
