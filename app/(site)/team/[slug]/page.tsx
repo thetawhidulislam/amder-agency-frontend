@@ -9,8 +9,8 @@ import { Container, Section } from "@/components/shared/container";
 import { publicButtonClass } from "@/components/shared/public-button";
 import { TeamAvatar } from "@/components/shared/team-avatar";
 import { TeamSection } from "@/components/shared/team-section";
-import { getSettings, getTeam, getTeamMember } from "@/lib/api-server";
 import { siteConfig } from "@/config/site";
+import { getSettings, getTeam, getTeamMember } from "@/lib/api-server";
 import { whatsappLink } from "@/lib/utils";
 
 export const revalidate = 3600;
@@ -58,9 +58,7 @@ export default async function TeamMemberPage({ params }: Props) {
     .split(/\r?\n\s*\r?\n/)
     .map((paragraph) => paragraph.trim())
     .filter(Boolean);
-  const otherMembers = team
-    .filter((other) => other.id !== member.id)
-    .slice(0, 3);
+  const otherMembers = team.filter((other) => other.id !== member.id).slice(0, 3);
   const sameAs = Object.values(member.socials ?? {}).filter(
     (profile): profile is string => Boolean(profile)
   );
@@ -152,10 +150,7 @@ export default async function TeamMemberPage({ params }: Props) {
                     <h2 className="font-display text-lg font-semibold">Skills</h2>
                     <ul className="mt-3 flex flex-wrap gap-2">
                       {member.skills.map((skill) => (
-                        <li
-                          key={skill}
-                          className="rounded-full bg-surface px-3.5 py-1.5 text-sm text-muted"
-                        >
+                        <li key={skill} className="rounded-full bg-surface px-3.5 py-1.5 text-sm text-muted">
                           {skill}
                         </li>
                       ))}
@@ -163,10 +158,7 @@ export default async function TeamMemberPage({ params }: Props) {
                   </div>
                 ) : null}
 
-                <Link
-                  href="/contact"
-                  className={`${publicButtonClass()} mt-8`}
-                >
+                <Link href="/contact" className={`${publicButtonClass()} mt-8`}>
                   Work with us
                   <ArrowUpRight aria-hidden="true" className="size-4" />
                 </Link>
@@ -176,9 +168,7 @@ export default async function TeamMemberPage({ params }: Props) {
         </Container>
       </Section>
 
-      {otherMembers.length ? (
-        <TeamSection members={otherMembers} title="More from the team" />
-      ) : null}
+      {otherMembers.length ? <TeamSection members={otherMembers} title="More from the team" /> : null}
 
       <CtaBand whatsapp={whatsappLink(settings.whatsapp)} />
       <script

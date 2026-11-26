@@ -121,12 +121,7 @@ export function TeamForm({ initial }: { initial?: AdminTeamMember }) {
         </Field>
       </div>
 
-      <Field
-        label="URL slug"
-        htmlFor="slug"
-        error={errors.slug?.message}
-        hint="Leave empty to create it from the name."
-      >
+      <Field label="URL slug" htmlFor="slug" error={errors.slug?.message} hint="Leave empty to create it from the name.">
         <Input id="slug" aria-invalid={!!errors.slug} {...register("slug")} />
       </Field>
 
@@ -156,7 +151,7 @@ export function TeamForm({ initial }: { initial?: AdminTeamMember }) {
         label="Skills"
         htmlFor="skills"
         error={errors.skills?.message}
-        hint="Separate with commas. Add up to 15 skills."
+        hint="Separate with commas."
       >
         <Input id="skills" aria-invalid={!!errors.skills} {...register("skills")} />
       </Field>
