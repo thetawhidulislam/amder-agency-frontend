@@ -7,12 +7,6 @@ const extraImageHosts = (process.env.NEXT_PUBLIC_IMAGE_HOSTS ?? "")
   .map((hostname) => hostname.trim().toLowerCase())
   .filter((hostname) => hostnamePattern.test(hostname) && hostname !== "res.cloudinary.com");
 
-const backendUrl = (
-  process.env.API_URL ??
-  process.env.NEXT_PUBLIC_API_URL ??
-  "https://amader-agency-backend.vercel.app"
-).replace(/\/$/, "");
-
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: ["res.cloudinary.com", ...extraImageHosts].map((hostname) => ({
@@ -20,14 +14,6 @@ const nextConfig: NextConfig = {
       hostname,
       pathname: "/**",
     })),
-  },
-  async rewrites() {
-    return [
-      {
-        source: "/api/:path*",
-        destination: `${backendUrl}/api/:path*`,
-      },
-    ];
   },
 };
 
