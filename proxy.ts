@@ -1,9 +1,9 @@
 import { NextResponse, type NextRequest } from "next/server";
 
-// Light gate for /admin: only checks that the login cookie exists.
+// Light gate for /admin: only checks that a login cookie or session flag exists.
 // The real permission check happens in the API (401 => the admin app sends you to /admin/login).
 export function proxy(req: NextRequest) {
-  const hasSession = Boolean(req.cookies.get("aa_token")?.value);
+  const hasSession = Boolean(req.cookies.get("aa_token")?.value || req.cookies.get("aa_session")?.value);
   const { pathname } = req.nextUrl;
   const isLogin = pathname === "/admin/login";
 

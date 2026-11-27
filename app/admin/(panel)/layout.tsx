@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { api } from "@/lib/api-client";
+import { clearSessionFlag, clearToken } from "@/lib/auth-token";
 import type { SystemInfo } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -39,6 +40,8 @@ export default function PanelLayout({ children }: { children: React.ReactNode })
 
   async function logout() {
     await api.post("/auth/logout").catch(() => null);
+    clearToken();
+    clearSessionFlag();
     router.push("/admin/login");
     router.refresh();
   }

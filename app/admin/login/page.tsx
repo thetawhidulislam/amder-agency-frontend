@@ -9,6 +9,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Field, Input } from "@/components/ui/field";
 import { api, getErrorMessage } from "@/lib/api-client";
+import { setSessionFlag, setToken } from "@/lib/auth-token";
 
 const schema = z.object({
   email: z.string().trim().email("Enter your email address"),
@@ -28,7 +29,9 @@ export default function LoginPage() {
   async function onSubmit(values: Values) {
     setError(null);
     try {
-      await api.post("/auth/login", values);
+      const response = await api.post<{ token?: string }>("/auth/login", values);
+      if (response.data.token) setToken(response.data.token);
+      setSessionFlag(7);
       router.push("/admin");
       router.refresh();
     } catch (err) {

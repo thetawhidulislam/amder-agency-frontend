@@ -1,9 +1,16 @@
 import axios from "axios";
+import { clearSessionFlag, clearToken, getToken } from "@/lib/auth-token";
 
 /** Browser-side API client (contact form + admin panel). Sends the login cookie. */
 export const api = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000"}/api/v1`,
   withCredentials: true,
+});
+
+api.interceptors.request.use((config) => {
+  const token = getToken();
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
 });
 
 api.interceptors.response.use(
@@ -15,6 +22,8 @@ api.interceptors.response.use(
       err.response?.status === 401 &&
       !window.location.pathname.startsWith("/admin/login")
     ) {
+      clearToken();
+      clearSessionFlag();
       window.location.href = "/admin/login";
     }
     return Promise.reject(err);
