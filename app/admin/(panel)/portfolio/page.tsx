@@ -7,11 +7,13 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Badge, PageHeader } from "@/components/admin/page-header";
 import { Button, buttonClass } from "@/components/ui/button";
+import { useConfirmDelete } from "@/hooks/use-confirm-delete";
 import { api, getErrorMessage } from "@/lib/api-client";
 import type { AdminPortfolioItem, PageMeta } from "@/lib/types";
 
 export default function AdminPortfolioPage() {
   const qc = useQueryClient();
+  const confirmDelete = useConfirmDelete();
   const [page, setPage] = useState(1);
 
   const items = useQuery({
@@ -72,7 +74,7 @@ export default function AdminPortfolioPage() {
                   size="sm"
                   aria-label={`Delete ${p.title}`}
                   onClick={() => {
-                    if (window.confirm(`Delete "${p.title}"? This cannot be undone.`)) remove.mutate(p.id);
+                    if (confirmDelete(`Delete "${p.title}"? This cannot be undone.`)) remove.mutate(p.id);
                   }}
                 >
                   <Trash2 className="size-4" />

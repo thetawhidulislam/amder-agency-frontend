@@ -84,6 +84,12 @@ export interface PageMeta {
 
 /* ---------- admin ---------- */
 
+export interface SystemInfo {
+  mode: "production" | "development";
+  dbHost: string;
+  nodeEnv: string;
+}
+
 export interface AdminService {
   id: string;
   title: string;

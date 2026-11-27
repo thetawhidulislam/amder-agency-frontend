@@ -8,6 +8,7 @@ import Link from "next/link";
 import { toast } from "sonner";
 import { Badge, PageHeader } from "@/components/admin/page-header";
 import { Button, buttonClass } from "@/components/ui/button";
+import { useConfirmDelete } from "@/hooks/use-confirm-delete";
 import { api, getErrorMessage } from "@/lib/api-client";
 import type { AdminTeamMember } from "@/lib/types";
 
@@ -24,6 +25,7 @@ function initials(name: string) {
 
 export default function AdminTeamPage() {
   const qc = useQueryClient();
+  const confirmDelete = useConfirmDelete();
   const [failedPhotos, setFailedPhotos] = useState<Set<string>>(() => new Set());
   const members = useQuery({
     queryKey: ["admin", "team"],
@@ -135,7 +137,7 @@ export default function AdminTeamPage() {
                   size="sm"
                   aria-label={`Delete ${member.name}`}
                   onClick={() => {
-                    if (window.confirm(`Delete "${member.name}"? This cannot be undone.`)) {
+                    if (confirmDelete(`Delete "${member.name}"? This cannot be undone.`)) {
                       remove.mutate(member.id);
                     }
                   }}

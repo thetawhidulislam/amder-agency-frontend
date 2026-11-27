@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { PageHeader } from "@/components/admin/page-header";
 import { Button } from "@/components/ui/button";
 import { Input, Select } from "@/components/ui/field";
+import { useConfirmDelete } from "@/hooks/use-confirm-delete";
 import { api, getErrorMessage } from "@/lib/api-client";
 import type { Lead, LeadStatus, PageMeta } from "@/lib/types";
 import { formatDate } from "@/lib/utils";
@@ -15,6 +16,7 @@ const statuses: LeadStatus[] = ["NEW", "CONTACTED", "CLOSED"];
 
 export default function LeadsPage() {
   const qc = useQueryClient();
+  const confirmDelete = useConfirmDelete();
   const [status, setStatus] = useState("");
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
@@ -135,7 +137,7 @@ export default function LeadsPage() {
                     size="sm"
                     aria-label={`Delete lead from ${lead.name}`}
                     onClick={() => {
-                      if (window.confirm(`Delete the lead from ${lead.name}? This cannot be undone.`)) remove.mutate(lead.id);
+                      if (confirmDelete(`Delete the lead from ${lead.name}? This cannot be undone.`)) remove.mutate(lead.id);
                     }}
                   >
                     <Trash2 className="size-4" />

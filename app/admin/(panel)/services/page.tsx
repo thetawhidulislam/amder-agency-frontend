@@ -6,11 +6,13 @@ import Link from "next/link";
 import { toast } from "sonner";
 import { Badge, PageHeader } from "@/components/admin/page-header";
 import { Button, buttonClass } from "@/components/ui/button";
+import { useConfirmDelete } from "@/hooks/use-confirm-delete";
 import { api, getErrorMessage } from "@/lib/api-client";
 import type { AdminService } from "@/lib/types";
 
 export default function AdminServicesPage() {
   const qc = useQueryClient();
+  const confirmDelete = useConfirmDelete();
   const services = useQuery({
     queryKey: ["admin", "services"],
     queryFn: async () => (await api.get<{ data: AdminService[] }>("/admin/services")).data.data,
@@ -91,7 +93,7 @@ export default function AdminServicesPage() {
                   size="sm"
                   aria-label={`Delete ${s.title}`}
                   onClick={() => {
-                    if (window.confirm(`Delete "${s.title}"? This cannot be undone.`)) remove.mutate(s.id);
+                    if (confirmDelete(`Delete "${s.title}"? This cannot be undone.`)) remove.mutate(s.id);
                   }}
                 >
                   <Trash2 className="size-4" />
